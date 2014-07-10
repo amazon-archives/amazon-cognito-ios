@@ -1,0 +1,49 @@
+/**
+ * Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ */
+
+FOUNDATION_EXPORT NSString *const AWSCognitoDefaultSqliteDataTableName;
+FOUNDATION_EXPORT NSString *const AWSCognitoTableIdentityKeyName;
+FOUNDATION_EXPORT NSString *const AWSCognitoTableDatasetKeyName;
+FOUNDATION_EXPORT NSString *const AWSCognitoTableRecordKeyName;
+FOUNDATION_EXPORT NSString *const AWSCognitoUnknownIdentity;
+FOUNDATION_EXPORT NSString *const AWSCognitoRecordValueName;
+FOUNDATION_EXPORT NSString *const AWSCognitoDataFieldKeyName;
+FOUNDATION_EXPORT NSString *const AWSCognitoTypeFieldName;
+FOUNDATION_EXPORT NSString *const AWSCognitoLastModifiedFieldName;
+FOUNDATION_EXPORT NSString *const AWSCognitoModifiedByFieldName;
+FOUNDATION_EXPORT NSString *const AWSCognitoRecordCountFieldName;
+FOUNDATION_EXPORT NSString *const AWSCognitoDataStorageFieldName;
+FOUNDATION_EXPORT NSString *const AWSCognitoDatasetCreationDateFieldName;
+FOUNDATION_EXPORT NSString *const AWSCognitoDirtyFieldName;
+FOUNDATION_EXPORT NSString *const AWSCognitoSyncCountFieldName;
+FOUNDATION_EXPORT NSString *const AWSCognitoDefaultSqliteMetadataTableName;
+FOUNDATION_EXPORT NSString *const AWSCognitoDatasetFieldName;
+FOUNDATION_EXPORT NSString *const AWSCognitoLastSyncCount;
+
+FOUNDATION_EXPORT NSString* const AWSCognitoDeletedRecord;
+FOUNDATION_EXPORT int64_t const AWSCognitoNotSyncedDeletedRecordDirty;
+FOUNDATION_EXPORT NSString *const AWSCognitoUserDefaultsUserAgentPrefix;
+
+FOUNDATION_EXPORT int const AWSCognitoMaxSyncRetries;
+FOUNDATION_EXPORT int const AWSCognitoMaxDatasetSize;
+FOUNDATION_EXPORT int const AWSCognitoMinKeySize;
+FOUNDATION_EXPORT int const AWSCognitoMaxKeySize;
+FOUNDATION_EXPORT int const AWSCognitoMaxRecordValueSize;
+FOUNDATION_EXPORT int const AWSCognitoMaxNumRecords;
+
+
+#pragma mark - Standard error messages
+
+FOUNDATION_EXPORT NSString *const AWSCognitoErrorRemoteDataStorageFailedDescription;
+FOUNDATION_EXPORT NSString *const AWSCognitoErrorRemoteDataStorageFailedRecoverySuggestion;
+FOUNDATION_EXPORT NSString *const AWSCognitoErrorInvalidDataValueDescription;
+FOUNDATION_EXPORT NSString *const AWSCognitoErrorInvalidDataValueRecoverySuggestion;
+FOUNDATION_EXPORT NSString *const AWSCognitoErrorUserDataSizeLimitExceededDescription;
+FOUNDATION_EXPORT NSString *const AWSCognitoErrorUserDataSizeLimitExceededRecoverySuggestion;
+FOUNDATION_EXPORT NSString *const AWSCognitoErrorLocalDataStorageFailedDescription;
+FOUNDATION_EXPORT NSString *const AWSCognitoErrorLocalDataStorageFailedRecoverySuggestion;
+FOUNDATION_EXPORT NSString *const AWSCognitoErrorIllegalArgumentDescription;
+FOUNDATION_EXPORT NSString *const AWSCognitoErrorIllegalArgumentRecoverySuggestion;
+FOUNDATION_EXPORT NSString *const AWSCognitoErrorUnknownDataTypeDescription;
+FOUNDATION_EXPORT NSString *const AWSCognitoErrorUnknownDataTypeRecoverySuggestion;

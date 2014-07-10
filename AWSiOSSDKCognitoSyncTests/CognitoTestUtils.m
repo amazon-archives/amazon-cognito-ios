@@ -1,0 +1,129 @@
+/**
+ * Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ */
+
+#import "CognitoTestUtils.h"
+#import "AWSCore.h"
+
+NSString * AWSCognitoClientTestsAccountID = nil;
+NSString * AWSCognitoClientTestsFacebookAppID = nil;
+NSString * AWSCognitoClientTestsFacebookAppSecret = nil;
+NSString * AWSCognitoClientTestsUnauthRoleArn = nil;
+NSString * AWSCognitoClientTestsAuthRoleArn = nil;
+
+NSString *_identityPoolId = nil;
+NSString *_facebookToken = nil;
+NSString *_facebookAppToken = nil;
+NSString *_facebookId = nil;
+
+@implementation CognitoTestUtils
+
++ (void)loadConfig {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *filePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"credentials"
+                                                                              ofType:@"json"];
+        NSDictionary *credentialsJson = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath]
+                                                                        options:NSJSONReadingMutableContainers
+                                                                          error:nil];
+        AWSCognitoClientTestsAccountID = credentialsJson[@"accountId"];
+        AWSCognitoClientTestsFacebookAppID = credentialsJson[@"facebookAppId"];
+        AWSCognitoClientTestsFacebookAppSecret = credentialsJson[@"facebookAppSecret"];
+        AWSCognitoClientTestsUnauthRoleArn = credentialsJson[@"unauthRoleArn"];
+        AWSCognitoClientTestsAuthRoleArn = credentialsJson[@"authRoleArn"];
+    });
+}
+
++ (NSString *) accountId {
+    [CognitoTestUtils loadConfig];
+    return AWSCognitoClientTestsAccountID;
+}
+
++ (NSString *) unauthRoleArn {
+    [CognitoTestUtils loadConfig];
+    return AWSCognitoClientTestsUnauthRoleArn;
+}
+
++ (NSString *) authRoleArn {
+    [CognitoTestUtils loadConfig];
+    return AWSCognitoClientTestsAuthRoleArn;
+}
+
++ (NSString *) identityPoolId {
+    return _identityPoolId;
+}
+
++ (NSString *) facebookToken {
+    return _facebookToken;
+}
+
++ (void)createFBAccount {
+    [CognitoTestUtils loadConfig];
+    
+    NSString *accessURI = [NSString stringWithFormat:@"https://graph.facebook.com/oauth/access_token?client_id=%@&client_secret=%@&grant_type=client_credentials", AWSCognitoClientTestsFacebookAppID, AWSCognitoClientTestsFacebookAppSecret];
+    
+    /* This code uses FB's test user API
+     See the following URL for more information
+     https://developers.facebook.com/docs/test_users/ */
+    
+    // Get the FB APP access token
+    NSString *raw_response = [NSString stringWithContentsOfURL:[NSURL URLWithString:accessURI] encoding:NSUTF8StringEncoding error:nil];
+    NSRange startOfToken = [raw_response rangeOfString:@"="];
+    // Strip the 'access_token=' so we can easily encode result
+    _facebookAppToken = [[raw_response substringFromIndex:startOfToken.location + 1] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    // Add a new test user, the result contains an access key we can use to test assume role
+    NSString *addUserURI = [NSString stringWithFormat:@"https://graph.facebook.com/%@/accounts/test-users?installed=true&name=Foo%%20Bar&locale=en_US&permissions=read_stream&method=post&access_token=%@", AWSCognitoClientTestsFacebookAppID, _facebookAppToken];
+    
+    NSString *newUser = [NSString stringWithContentsOfURL:[NSURL URLWithString:addUserURI] encoding:NSASCIIStringEncoding error:nil];
+    NSDictionary *user = [NSJSONSerialization JSONObjectWithData: [newUser dataUsingEncoding:NSUTF8StringEncoding]
+                                                         options: NSJSONReadingMutableContainers
+                                                           error: nil];
+    
+    _facebookToken = [user objectForKey:@"access_token"];
+    _facebookId = [user objectForKey:@"id"];
+}
+
++ (void)deleteFBAccount {
+    NSString *deleteURI = [NSString stringWithFormat:@"https://graph.facebook.com/%@?method=delete&access_token=%@", _facebookId, [_facebookAppToken stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:deleteURI]]
+                          returningResponse:nil
+                                      error:nil];
+}
+
++ (void)createIdentityPool {
+    [CognitoTestUtils loadConfig];
+    
+    AWSStaticCredentialsProvider *credentialsProvider = [AWSStaticCredentialsProvider credentialsWithCredentialsFilename:@"credentials"];
+    AWSServiceConfiguration *configuration = [AWSServiceConfiguration  configurationWithRegion:AWSRegionUSEast1
+                                                                           credentialsProvider:credentialsProvider];
+    AWSCognitoIdentityService *cib = [[AWSCognitoIdentityService alloc] initWithConfiguration:configuration];
+    
+    AWSCognitoIdentityServiceCreateIdentityPoolInput *createPoolForAuthProvider = [AWSCognitoIdentityServiceCreateIdentityPoolInput new];
+    createPoolForAuthProvider.identityPoolName = @"CognitoSynciOSTests";
+    createPoolForAuthProvider.allowUnauthenticatedIdentities = @YES;
+    createPoolForAuthProvider.supportedLoginProviders = @{@"graph.facebook.com" : AWSCognitoClientTestsFacebookAppID};
+    
+    [[[cib createIdentityPool:createPoolForAuthProvider] continueWithSuccessBlock:^id(BFTask *task) {
+        AWSCognitoIdentityServiceIdentityPool *identityPool = task.result;
+        _identityPoolId = identityPool.identityPoolId;
+        
+        return nil;
+    }] waitUntilFinished];
+    
+}
+
++ (void)deleteIdentityPool {
+    AWSStaticCredentialsProvider *credentialsProvider = [AWSStaticCredentialsProvider credentialsWithCredentialsFilename:@"credentials"];
+    AWSServiceConfiguration *configuration = [AWSServiceConfiguration  configurationWithRegion:AWSRegionUSEast1
+                                                                           credentialsProvider:credentialsProvider];
+    AWSCognitoIdentityService *cib = [[AWSCognitoIdentityService alloc] initWithConfiguration:configuration];
+    
+    AWSCognitoIdentityServiceDeleteIdentityPoolInput *deletePoolForAuth = [AWSCognitoIdentityServiceDeleteIdentityPoolInput new];
+    deletePoolForAuth.identityPoolId = _identityPoolId;
+    [[cib deleteIdentityPool:deletePoolForAuth] waitUntilFinished];
+    
+}
+
+
+@end
