@@ -156,6 +156,10 @@
     return self.dirtyCount != 0;
 }
 
+- (BOOL)isDeleted {
+    return self.data.type == AWSCognitoRecordValueTypeDeleted;
+}
+
 - (NSString *)description
 {
     NSMutableString *buffer = [NSMutableString new];
@@ -187,8 +191,7 @@
 }
 
 - (instancetype)initWithString:(NSString *)value {
-    return [self initWithString:value
-                           type:AWSCognitoRecordValueTypeString];
+    return [self initWithString:value type:AWSCognitoRecordValueTypeString];
 }
 
 #pragma mark - Private init methods
@@ -219,21 +222,15 @@
 - (instancetype)initWithString:(NSString *)value
                           type:(AWSCognitoRecordValueType)type
 {
-    // check for the presence of a null character in the value
-    // initialize as the empty string
-    if ([value length] > 0) {
-        unichar firstChar = [value characterAtIndex:0];
-        if (firstChar == 0) {
-            value = @"";
-        }
-    }
-    
     if(self = [super init])
     {
         _type = type;
         switch (type) {
             case AWSCognitoRecordValueTypeString:
                 _stringValue = value;
+                break;
+            case AWSCognitoRecordValueTypeDeleted:
+                _stringValue = AWSCognitoDeletedRecord;
                 break;
             default:
                 NSAssert(YES,@"Type: %lld is unsupported for this initializer", (long long)type);

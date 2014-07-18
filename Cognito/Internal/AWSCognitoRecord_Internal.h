@@ -36,6 +36,10 @@
 @property (nonatomic, assign) AWSCognitoRecordValueType type;
 @property (nonatomic, strong) NSObject *stringValue;
 
+
+- (instancetype)initWithString:(NSString *)value
+                          type:(AWSCognitoRecordValueType)type;
+
 - (NSString *)toJsonString;
 - (instancetype)initWithJson:(NSString *)json
                         type:(AWSCognitoRecordValueType)type;

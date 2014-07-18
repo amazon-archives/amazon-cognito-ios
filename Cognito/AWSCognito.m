@@ -71,6 +71,7 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
         // set other default values
         _deviceId = @"LOCAL";
         _synchronizeRetries = AWSCognitoMaxSyncRetries;
+        _synchronizeOnWiFiOnly = AWSCognitoSynchronizeOnWiFiOnly;
         
         _conflictHandler = [AWSCognito defaultConflictHandler];
         _sqliteManager = [[AWSCognitoSQLiteManager alloc] initWithIdentityId:_cognitoCredentialsProvider.identityId deviceId:_deviceId];
@@ -83,12 +84,17 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
     return self;
 }
 
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (AWSCognitoDataset *)openOrCreateDataset:(NSString * ) datasetName{
     AWSCognitoDataset *dataset = [[AWSCognitoDataset alloc] initWithDatasetName:datasetName sqliteManager:self.sqliteManager cognitoService:self.cognitoService];
     dataset.conflictHandler = self.conflictHandler;
     dataset.datasetDeletedHandler = self.datasetDeletedHandler;
     dataset.datasetMergedHandler = self.datasetMergedHandler;
     dataset.synchronizeRetries = self.synchronizeRetries;
+    dataset.synchronizeOnWiFiOnly = self.synchronizeOnWiFiOnly;
     
     // register the dataset to receive notifications from this instance when the identity changes
     [[NSNotificationCenter defaultCenter] addObserver:dataset selector:@selector(identityChanged:) name:AWSCognitoIdentityIdChangedNotification object:self];

@@ -75,6 +75,7 @@ extern NSString *const AWSCognitoDidFailToSynchronizeNotification;
  * <li>AWSCognitoErrorIllegalArgument - The input value is invalid.</li>
  * <li>AWSCognitoErrorConflictRetriesExhausted - The number of attempts to resolve a conflict 
  * has exceeded the max number of retries.</li>
+ * <li>AWSCognitoErrorWiFiNotAvailable - WiFi is required and not currently available.</li>
  * </ul>
  */
 FOUNDATION_EXPORT NSString *const AWSCognitoErrorDomain;
@@ -87,7 +88,8 @@ typedef NS_ENUM(NSInteger, AWSCognitoErrorType) {
     AWSCognitoErrorIllegalArgument = -3000,
     AWSCognitoAuthenticationFailed = -4000,
     AWSCognitoErrorTaskCanceled = -5000,
-    AWSCognitoErrorConflictRetriesExhausted = -6000
+    AWSCognitoErrorConflictRetriesExhausted = -6000,
+    AWSCognitoErrorWiFiNotAvailable = -7000
 };
 
 @property (nonatomic, strong, readonly) AWSServiceConfiguration *configuration;
@@ -132,7 +134,12 @@ typedef NS_ENUM(NSInteger, AWSCognitoErrorType) {
  * The number of times to attempt a synchronization before failing. This will
  * be set on any AWSCognitoDatasets opened with this client. Defaults to 5 if not set.
  */
-@property (nonatomic, assign) int synchronizeRetries;
+@property (nonatomic, assign) uint32_t synchronizeRetries;
+
+/**
+ * Only synchronize if device is on a WiFi network. Defaults to NO if not set.
+ */
+@property (nonatomic, assign) BOOL synchronizeOnWiFiOnly;
 
 /**
  * Initialize the instance with the supplied service config.

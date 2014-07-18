@@ -43,6 +43,7 @@
         _dispatchQueue = dispatch_queue_create("com.amazon.cognito.SerialDispatchQueue", DISPATCH_QUEUE_SERIAL);
 
         [self setupSQL];
+        [self initializeTables];
     }
 
     return self;
@@ -97,7 +98,7 @@
     });
 }
 
-- (void)initializeDatasetTables:(NSString *) datasetName {
+- (void)initializeTables {
     
     dispatch_sync(self.dispatchQueue, ^{
         NSString *createString = [NSString stringWithFormat:
@@ -164,6 +165,12 @@
             return;
         }
         
+    });
+}
+
+- (void)initializeDatasetTables:(NSString *) datasetName {
+    
+    dispatch_sync(self.dispatchQueue, ^{
         NSString *sqlString = [NSString stringWithFormat:@"INSERT INTO %@(%@,%@,%@) VALUES (?,?,?)",
                                AWSCognitoDefaultSqliteMetadataTableName,
                                AWSCognitoTableDatasetKeyName,
@@ -544,15 +551,14 @@
                 NSString *recordId = [[NSString alloc] initWithUTF8String:recordIdChars];
                 AWSCognitoRecordValue *data = [[AWSCognitoRecordValue alloc] initWithJson:dataString type:(int)type];
 
-                if (type != AWSCognitoRecordValueTypeDeleted || (type == AWSCognitoRecordValueTypeDeleted && record.dirty)) {
-                    record = [[AWSCognitoRecord alloc] initWithId:recordId data:data];
-                    record.lastModifiedBy = modBy;
-                    record.lastModified = [AWSCognitoUtil millisSinceEpochToDate:[NSNumber numberWithLongLong:lastMod]];
-                    record.dirtyCount = dirtyInt;
-                    record.syncCount = syncCount;
-
-                    [allRecords addObject:record];
-                }
+                record = [[AWSCognitoRecord alloc] initWithId:recordId data:data];
+                record.lastModifiedBy = modBy;
+                record.lastModified = [AWSCognitoUtil millisSinceEpochToDate:[NSNumber numberWithLongLong:lastMod]];
+                record.dirtyCount = dirtyInt;
+                record.syncCount = syncCount;
+                
+                [allRecords addObject:record];
+                
             }
         }
         else
@@ -594,8 +600,10 @@
                                %@, \
                                %@, \
                                %@, \
+                               %@, \
                                %@ \
                                ) VALUES ( \
+                               ?, \
                                ?, \
                                ?, \
                                ?, \
@@ -611,6 +619,7 @@
                                AWSCognitoModifiedByFieldName,
                                AWSCognitoRecordValueName,
                                AWSCognitoTypeFieldName,
+                               AWSCognitoSyncCountFieldName,
                                AWSCognitoDirtyFieldName,
                                AWSCognitoTableIdentityKeyName,
                                AWSCognitoTableDatasetKeyName,
@@ -628,13 +637,14 @@
             sqlite3_bind_text(statement, 3, lastModifiedBy, -1, SQLITE_TRANSIENT);
             sqlite3_bind_text(statement, 4, data, -1, SQLITE_TRANSIENT);
             sqlite3_bind_int64(statement, 5, record.data.type);
+            sqlite3_bind_int64(statement, 6, record.syncCount);
             
-            sqlite3_bind_text(statement, 6, recordID, -1, SQLITE_TRANSIENT);
-            sqlite3_bind_text(statement, 7, identityIdChars, -1, SQLITE_TRANSIENT);
-            sqlite3_bind_text(statement, 8, datasetNameChars, -1, SQLITE_TRANSIENT);
+            sqlite3_bind_text(statement, 7, recordID, -1, SQLITE_TRANSIENT);
+            sqlite3_bind_text(statement, 8, identityIdChars, -1, SQLITE_TRANSIENT);
+            sqlite3_bind_text(statement, 9, datasetNameChars, -1, SQLITE_TRANSIENT);
 
-            sqlite3_bind_text(statement, 9, identityIdChars, -1, SQLITE_TRANSIENT);
-            sqlite3_bind_text(statement, 10, datasetNameChars, -1, SQLITE_TRANSIENT);
+            sqlite3_bind_text(statement, 10, identityIdChars, -1, SQLITE_TRANSIENT);
+            sqlite3_bind_text(statement, 11, datasetNameChars, -1, SQLITE_TRANSIENT);
 
             if(SQLITE_DONE == sqlite3_step(statement)) {
                 result = YES;
@@ -756,8 +766,10 @@
                                %@, \
                                %@, \
                                %@, \
+                               %@, \
                                %@ \
                                ) VALUES ( \
+                               ?, \
                                ?, \
                                ?, \
                                ?, \
@@ -775,6 +787,7 @@
                                AWSCognitoModifiedByFieldName,
                                AWSCognitoRecordValueName,
                                AWSCognitoTypeFieldName,
+                               AWSCognitoSyncCountFieldName,
                                AWSCognitoTableIdentityKeyName,
                                AWSCognitoTableDatasetKeyName,
                                AWSCognitoDirtyFieldName];
@@ -785,9 +798,10 @@
             sqlite3_bind_text(statement, 3, modifiedBy, -1, SQLITE_TRANSIENT);
             sqlite3_bind_text(statement, 4, data, -1, SQLITE_TRANSIENT);
             sqlite3_bind_int64(statement, 5, record.data.type);
-            sqlite3_bind_text(statement, 6, identityIdChars, -1, SQLITE_TRANSIENT);
-            sqlite3_bind_text(statement, 7, datasetNameChars, -1, SQLITE_TRANSIENT);
-            sqlite3_bind_int64(statement, 8, 0);
+            sqlite3_bind_int64(statement, 6, record.syncCount);
+            sqlite3_bind_text(statement, 7, identityIdChars, -1, SQLITE_TRANSIENT);
+            sqlite3_bind_text(statement, 8, datasetNameChars, -1, SQLITE_TRANSIENT);
+            sqlite3_bind_int64(statement, 9, 0);
             
             
             if(SQLITE_DONE != sqlite3_step(statement)) {
@@ -913,7 +927,7 @@
         int64_t lastModified = [AWSCognitoUtil getTimeMillisForDate:[NSDate date]];
         const char *recordID = [recordId UTF8String];
         const char *lastModifiedBy = [self.deviceId UTF8String];
-        AWSCognitoRecordValue *value = [[AWSCognitoRecordValue alloc] initWithString:AWSCognitoDeletedRecord];
+        AWSCognitoRecordValue *value = [[AWSCognitoRecordValue alloc] initWithString:AWSCognitoDeletedRecord type:AWSCognitoRecordValueTypeDeleted];
         const char *data = [[value toJsonString] UTF8String];
         const char *datasetNameChars = [datasetName UTF8String];
         const char *identityIdChars = [[self identityId] UTF8String];
@@ -1620,6 +1634,23 @@
     return result;
 }
 
+-(BOOL)columnExists:(NSString *) tableName columnName:(NSString *) columnName;
+{
+    __block BOOL result = NO;
+    
+    dispatch_sync(self.dispatchQueue, ^{
+        
+        NSString *statementString = [NSString stringWithFormat:@"SELECT %@ FROM %@", columnName, tableName];
+        sqlite3_stmt *statement;
+        if(sqlite3_prepare_v2(self.sqlite, [statementString UTF8String], -1, &statement, NULL) == SQLITE_OK)
+        {
+            result = YES;
+        }
+        sqlite3_reset(statement);
+        sqlite3_finalize(statement);
+    });
+    return result;
+}
 
 - (void)deleteSQLiteDatabase
 {

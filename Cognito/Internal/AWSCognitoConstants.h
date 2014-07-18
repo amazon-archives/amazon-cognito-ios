@@ -25,12 +25,14 @@ FOUNDATION_EXPORT NSString* const AWSCognitoDeletedRecord;
 FOUNDATION_EXPORT int64_t const AWSCognitoNotSyncedDeletedRecordDirty;
 FOUNDATION_EXPORT NSString *const AWSCognitoUserDefaultsUserAgentPrefix;
 
-FOUNDATION_EXPORT int const AWSCognitoMaxSyncRetries;
-FOUNDATION_EXPORT int const AWSCognitoMaxDatasetSize;
-FOUNDATION_EXPORT int const AWSCognitoMinKeySize;
-FOUNDATION_EXPORT int const AWSCognitoMaxKeySize;
-FOUNDATION_EXPORT int const AWSCognitoMaxRecordValueSize;
-FOUNDATION_EXPORT int const AWSCognitoMaxNumRecords;
+FOUNDATION_EXPORT uint32_t const AWSCognitoMaxSyncRetries;
+FOUNDATION_EXPORT BOOL const AWSCognitoSynchronizeOnWiFiOnly;
+
+FOUNDATION_EXPORT uint32_t const AWSCognitoMaxDatasetSize;
+FOUNDATION_EXPORT uint32_t const AWSCognitoMinKeySize;
+FOUNDATION_EXPORT uint32_t const AWSCognitoMaxKeySize;
+FOUNDATION_EXPORT uint32_t const AWSCognitoMaxRecordValueSize;
+FOUNDATION_EXPORT uint32_t const AWSCognitoMaxNumRecords;
 
 
 #pragma mark - Standard error messages

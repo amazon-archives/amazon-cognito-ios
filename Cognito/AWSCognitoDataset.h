@@ -39,6 +39,11 @@
  */
 @property (nonatomic, readonly) NSNumber *numRecords;
 
+/**
+ * Returns true if this dataset has been cleared locally, but not synchronized.
+ */
+- (BOOL)isDeleted;
+
 @end
 
 @interface AWSCognitoDataset : AWSCognitoDatasetMetadata
@@ -74,7 +79,13 @@
  * The number of times to attempt a synchronization before failing. Defaults to 
  * to the value on the AWSCognito client that opened this dataset.
  */
-@property (nonatomic, assign) int synchronizeRetries;
+@property (nonatomic, assign) uint32_t synchronizeRetries;
+
+/**
+ * Only synchronize if device is on a WiFi network. Defaults to
+ * to the value on the AWSCognito client that opened this dataset.
+ */
+@property (nonatomic, assign) BOOL synchronizeOnWiFiOnly;
 
 /**
  * Sets a string object for the specified key in the dataset.
@@ -93,6 +104,17 @@
  * all conflicts are resolved.
  */
 - (BFTask *)synchronize;
+
+/**
+ * Attempts to synchronize when device has connectivity.  First it checks connectivity, if device is online
+ * immediately invokes synchronize and returns the BFTask associated with the attempt.  If the device is offline,
+ * schedules a synchronize for the next time the device comes online and returns a BFTask with a nil result.
+ * The scheduled synchronize is only valid for the lifecycle of the dataset object.  The data will not be synchronized
+ * if the app is exited before connectivity is regained.  If you want to be notified when events occur during the
+ * scheduled synchronize, you must add observers of the notifications found in AWSCognito
+ */
+- (BFTask *)synchronizeOnConnectivity;
+
 
 /**
  * Returns all of the records in the dataset. Will return deleted records.
@@ -128,5 +150,6 @@
  * Returns the size in bytes for the specified key.
  */
 - (long) sizeForKey:(NSString *) aKey;
+
 
 @end

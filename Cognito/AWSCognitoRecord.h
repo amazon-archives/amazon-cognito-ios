@@ -117,4 +117,9 @@ typedef NS_ENUM(NSInteger, AWSCognitoRecordValueType) {
 - (instancetype)initWithId:(NSString *)recordId
                       data:(AWSCognitoRecordValue *)data;
 
+/**
+ * Returns true if this record has been deleted
+ */
+- (BOOL)isDeleted;
+
 @end

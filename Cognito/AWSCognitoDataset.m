@@ -12,6 +12,7 @@
 #import "AZLogging.h"
 #import "AWSCognitoRecord.h"
 #import "CognitoSyncService.h"
+#import "Reachability.h"
 
 @interface AWSCognitoDatasetMetadata()
 
@@ -22,10 +23,10 @@
 @property (nonatomic, strong) NSString *lastModifiedBy;
 @property (nonatomic, strong) NSDate *lastModifiedDate;
 @property (nonatomic, strong) NSNumber *numRecords;
-
 @end
 
 @implementation AWSCognitoDatasetMetadata
+
 
 -(id)initWithDatasetName:(NSString *) datasetName dataSource:(AWSCognitoSQLiteManager *)manager {
     [manager initializeDatasetTables:datasetName];
@@ -36,6 +37,10 @@
     return self;
 }
 
+- (BOOL)isDeleted {
+    return [self.lastSyncCount intValue] == -1;
+}
+
 @end
 
 @interface AWSCognitoDataset()
@@ -44,19 +49,26 @@
 
 @property (nonatomic, strong) AWSCognitoSyncService *cognitoService;
 
+@property (nonatomic, strong) Reachability *reachability;
+
 @property (nonatomic, strong) NSNumber *currentSyncCount;
 @property (nonatomic, strong) NSDictionary *records;
-
 @end
 
 @implementation AWSCognitoDataset
 
--(id)initWithDatasetName:(NSString *) datasetName sqliteManager:(AWSCognitoSQLiteManager *)sqliteManager cognitoService:(AWSCognitoSyncService *)cognitoService{
+-(id)initWithDatasetName:(NSString *) datasetName sqliteManager:(AWSCognitoSQLiteManager *)sqliteManager cognitoService:(AWSCognitoSyncService *)cognitoService {
     if(self = [super initWithDatasetName:datasetName dataSource:sqliteManager]) {
         _sqliteManager = sqliteManager;
         _cognitoService = cognitoService;
+        _reachability = [Reachability reachabilityWithHostname:@"cognito-sync.us-east-1.amazonaws.com"];
     }
     return self;
+}
+
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    _reachability.reachableBlock = nil;
 }
 
 #pragma mark - CRUD operations
@@ -71,7 +83,9 @@
         AZLogDebug(@"Error: %@", error);
     }
     
-    string = record.data.string;
+    if (record != nil && ![record isDeleted]) {
+        string = record.data.string;
+    }
     
     return string;
 }
@@ -79,8 +93,13 @@
 - (void)setString:(NSString *)aString forKey:(NSString *)aKey
 {
     AWSCognitoRecordValue *data = [[AWSCognitoRecordValue alloc] initWithString:aString];
-    AWSCognitoRecord *record = [[AWSCognitoRecord alloc] initWithId:aKey
-                                              data:data];
+    AWSCognitoRecord *record = [self recordForKey:aKey];
+    if (record == nil) {
+        record = [[AWSCognitoRecord alloc] initWithId:aKey data:data];
+    }
+    else {
+        record.data = data;
+    }
     
     //do some limit checks
     if([self sizeForRecord:record] > AWSCognitoMaxDatasetSize){
@@ -160,11 +179,6 @@
                                                      datasetName:(NSString *)self.name
                                                            error:error];
     
-    if (fetchedRecord.data.type == AWSCognitoRecordValueTypeDeleted)
-    {
-        fetchedRecord = nil;
-    }
-    
     return fetchedRecord;
 }
 
@@ -200,13 +214,7 @@
     
     allRecords = [self.sqliteManager allRecords:self.name];
     for (AWSCognitoRecord *record in allRecords) {
-        // ignore any deleted/invalid data where that data satisfies any of the following
-        // type is 'deleted'
-        // dirty count is -1
-        // value is nil
-        // value is empty string
-        if (record.data.type == AWSCognitoRecordValueTypeDeleted || record.dirtyCount == AWSCognitoNotSyncedDeletedRecordDirty ||
-            record.data.string == nil || record.data.string.length == 0) {
+        if ([record isDeleted]) {
             continue;
         }
         [recordsAsDictionary setObject:record.data.string forKey:record.recordId];
@@ -231,29 +239,8 @@
     {
         AZLogDebug(@"Error: %@", error);
     }
-}
-
-#pragma mark - Get all data
-
-- (NSDictionary *)dictionaryRepresentation
-{
-    NSMutableDictionary *mutableDictionary = [NSMutableDictionary dictionary];
-    for(AWSCognitoRecord *record in [self getAllRecords])
-    {
-        id value = [AWSCognitoUtil retrieveValue:record.data];
-        if(value)
-        {
-            [mutableDictionary setValue:value forKey:record.recordId];
-        }
-    }
-    
-    if([mutableDictionary count] > 0)
-    {
-        return [NSDictionary dictionaryWithDictionary:mutableDictionary];
-    }
-    else
-    {
-        return nil;
+    else {
+        self.lastSyncCount = [NSNumber numberWithInt:-1];
     }
 }
 
@@ -283,7 +270,7 @@
     long sizeOfKey = [self sizeForString:aRecord.recordId];
     
     //if it has been deleted, just return the size of the key
-    if(aRecord.data.type == AWSCognitoRecordValueTypeDeleted){
+    if ([aRecord isDeleted]) {
         return sizeOfKey;
     }
     
@@ -306,7 +293,7 @@
  * 1. Do a list records, overlay changes
  * 2. Resolve conflicts
  */
--(BFTask *)syncPull:(int)remainingAttempts {
+- (BFTask *)syncPull:(uint32_t)remainingAttempts {
     
     //list records that have changed since last sync
     AWSCognitoSyncServiceListRecordsRequest *request = [AWSCognitoSyncServiceListRecordsRequest new];
@@ -379,7 +366,12 @@
                     
                     //overlay local with remote if local isn't dirty
                     AWSCognitoRecord * existing = [self.sqliteManager getRecordById:record.key datasetName:self.name error:&error];
-                    AWSCognitoRecord * newRecord = [[AWSCognitoRecord alloc] initWithId:record.key data:[[AWSCognitoRecordValue alloc]initWithString:record.value]];
+                    
+                    AWSCognitoRecordValueType recordType = AWSCognitoRecordValueTypeString;
+                    if (record.value == nil) {
+                        recordType = AWSCognitoRecordValueTypeDeleted;
+                    }
+                    AWSCognitoRecord * newRecord = [[AWSCognitoRecord alloc] initWithId:record.key data:[[AWSCognitoRecordValue alloc]initWithString:record.value type:recordType]];
                     newRecord.syncCount = [record.syncCount longLongValue];
                     newRecord.lastModifiedBy = record.lastModifiedBy;
                     newRecord.lastModified = record.lastModifiedDate;
@@ -450,7 +442,7 @@
  * 1. Write any changes to remote
  * 2. Restart sync if errors occur
  */
--(BFTask *)syncPush:(int)remainingAttempts {
+- (BFTask *)syncPush:(uint32_t)remainingAttempts {
     
     //if there are no pending conflicts
     NSMutableArray *patches = [NSMutableArray new];
@@ -463,7 +455,7 @@
         patch.key = record.recordId;
         patch.syncCount = [NSNumber numberWithLongLong: record.syncCount];
         patch.value = record.data.string;
-        patch.op = (record.data.type == AWSCognitoRecordValueTypeDeleted)?AWSCognitoSyncServiceOperationRemove : AWSCognitoSyncServiceOperationReplace;
+        patch.op = [record isDeleted]?AWSCognitoSyncServiceOperationRemove : AWSCognitoSyncServiceOperationReplace;
         [patches addObject:patch];
     }
     
@@ -505,7 +497,11 @@
                     NSMutableArray *changedRecordsNames = [NSMutableArray new];
                     for (AWSCognitoSyncServiceRecord * record in response.records) {
                         [changedRecordsNames addObject:record.key];
-                        AWSCognitoRecord * newRecord = [[AWSCognitoRecord alloc] initWithId:record.key data:[[AWSCognitoRecordValue alloc]initWithString:record.value]];
+                        AWSCognitoRecordValueType recordType = AWSCognitoRecordValueTypeString;
+                        if (record.value == nil) {
+                            recordType = AWSCognitoRecordValueTypeDeleted;
+                        }
+                        AWSCognitoRecord * newRecord = [[AWSCognitoRecord alloc] initWithId:record.key data:[[AWSCognitoRecordValue alloc]initWithString:record.value type:recordType]];
                         
                         // Check to see if the sync count on the result is only one more than our current sync
                         // count. This means that we were the only update and we can safely fastforward
@@ -542,7 +538,20 @@
     return nil;
 }
 
--(BFTask *)synchronize {
+- (BFTask *)synchronize {
+    // uninstall notifier
+    if(self.reachability.reachableBlock != nil){
+        self.reachability.reachableBlock = nil;
+        [self.reachability stopNotifier];
+    }
+    
+    // ensure necessary network is available
+    if(self.synchronizeOnWiFiOnly && self.reachability.currentReachabilityStatus != ReachableViaWiFi){
+        NSError *error = [NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorWiFiNotAvailable userInfo:nil];
+        [self postDidFailToSynchronizeNotification:error];
+        return [BFTask taskWithError:error];
+    }
+    
     [self postDidStartSynchronizeNotification];
     
     [self checkForLocalMergedDatasets];
@@ -563,7 +572,7 @@
     }];
 }
 
--(BFTask *)synchronizeInternal:(int)remainingAttempts {
+- (BFTask *)synchronizeInternal:(uint32_t)remainingAttempts {
     if(remainingAttempts == 0){
         AZLogError(@"Conflict retries exhausted");
         NSError *error = [NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorConflictRetriesExhausted userInfo:nil];
@@ -598,6 +607,28 @@
     return [[self syncPull:remainingAttempts] continueWithSuccessBlock:^id(BFTask *task) {
         return [self syncPush:remainingAttempts];
     }];
+}
+
+- (BFTask *)synchronizeOnConnectivity {
+    //if no network, or network doesn't match requested network type queue request
+    if(self.reachability.currentReachabilityStatus == NotReachable
+       || (self.reachability.currentReachabilityStatus != ReachableViaWiFi && self.synchronizeOnWiFiOnly)){
+
+        //set notify on wifi only
+        self.reachability.reachableOnWWAN = !self.synchronizeOnWiFiOnly;
+        
+        //only configure reachable block once
+        if(self.reachability.reachableBlock == nil){
+            __weak AWSCognitoDataset* weakSelf = self;
+            self.reachability.reachableBlock = ^(Reachability * reachability){
+                [weakSelf synchronize];
+            };
+            [self.reachability startNotifier];
+        }
+        return [BFTask taskWithResult:nil];
+    }else{
+        return [self synchronize];
+    }
 }
 
 #pragma mark IdentityMerge

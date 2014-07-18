@@ -93,6 +93,21 @@ BOOL _failedReceived = NO;
     XCTAssertTrue([dataset.lastSyncCount intValue] == 1, @"sync count should have incremented");
 }
 
+- (void)testSynchronizeOnConnectivity {
+    AWSCognitoDataset* dataset = [[AWSCognito defaultCognito] openOrCreateDataset:@"testSyncOnConnect"];
+    [dataset setString:@"on" forKey:@"wifi"];
+    [[dataset synchronizeOnConnectivity] waitUntilFinished];
+    for(AWSCognitoRecord * record in [dataset getAllRecords]){
+        //ensure there are no dirty records after sync.
+        if(record.isDirty == YES){
+            XCTFail(@"Dirty record after sync: %@", record.recordId);
+        }
+    }
+    // check the sync count to make sure it incremented (go all the way back to the DB)
+    dataset = [[AWSCognito defaultCognito] openOrCreateDataset:@"testSyncOnConnect"];
+    XCTAssertTrue([dataset.lastSyncCount intValue] == 1, @"sync count should have incremented");
+}
+
 - (void)testGet {
     AWSCognitoDataset* dataset = [[AWSCognito defaultCognito] openOrCreateDataset:@"testget"];
     [dataset setString:@"on" forKey:@"wifi"];
