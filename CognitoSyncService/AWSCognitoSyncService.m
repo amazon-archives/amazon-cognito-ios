@@ -3,9 +3,8 @@
  */
 
 #import "AWSCognitoSyncService.h"
-
-#import "AZNetworking.h"
-#import "AZCategory.h"
+#import "AWSNetworking.h"
+#import "AWSCategory.h"
 #import "AWSNetworking.h"
 #import "AWSSignature.h"
 #import "AWSService.h"
@@ -13,7 +12,6 @@
 #import "AWSURLRequestSerialization.h"
 #import "AWSURLResponseSerialization.h"
 #import "AWSURLRequestRetryHandler.h"
-
 
 @interface AWSCognitoSyncServiceResponseSerializer : AWSJSONResponseSerializer
 
@@ -63,7 +61,7 @@ static NSDictionary *errorCodeDictionary = nil;
     if (!*error && [responseObject isKindOfClass:[NSDictionary class]]) {
         NSString *errorTypeStr = [[response allHeaderFields] objectForKey:@"x-amzn-ErrorType"];
         NSString *errorTypeHeader = [[errorTypeStr componentsSeparatedByString:@":"] firstObject];
-        
+
         if ([errorTypeStr length] > 0 && errorTypeHeader) {
             if (errorCodeDictionary[errorTypeHeader]) {
                 if (error) {
@@ -83,7 +81,7 @@ static NSDictionary *errorCodeDictionary = nil;
                 return responseObject;
             }
         }
-        
+
         if (self.outputClass) {
             responseObject = [MTLJSONAdapter modelOfClass:self.outputClass
                                        fromJSONDictionary:responseObject
@@ -102,22 +100,22 @@ static NSDictionary *errorCodeDictionary = nil;
 
 @implementation AWSCognitoSyncServiceRequestRetryHandler
 
-- (AZNetworkingRetryType)shouldRetry:(uint32_t)currentRetryCount
-                            response:(NSHTTPURLResponse *)response
-                                data:(NSData *)data
-                               error:(NSError *)error {
-    AZNetworkingRetryType retryType = [super shouldRetry:currentRetryCount
-                                                response:response
-                                                    data:data
-                                                   error:error];
-    if(retryType == AZNetworkingRetryTypeShouldNotRetry
+- (AWSNetworkingRetryType)shouldRetry:(uint32_t)currentRetryCount
+                             response:(NSHTTPURLResponse *)response
+                                 data:(NSData *)data
+                                error:(NSError *)error {
+    AWSNetworkingRetryType retryType = [super shouldRetry:currentRetryCount
+                                                 response:response
+                                                     data:data
+                                                    error:error];
+    if(retryType == AWSNetworkingRetryTypeShouldNotRetry
        && [error.domain isEqualToString:AWSCognitoSyncServiceErrorDomain]
        && currentRetryCount < self.maxRetryCount) {
         switch (error.code) {
             case AWSCognitoSyncServiceErrorIncompleteSignature:
             case AWSCognitoSyncServiceErrorInvalidClientTokenId:
             case AWSCognitoSyncServiceErrorMissingAuthenticationToken:
-                retryType = AZNetworkingRetryTypeShouldRefreshCredentialsAndRetry;
+                retryType = AWSNetworkingRetryTypeShouldRefreshCredentialsAndRetry;
                 break;
 
             default:
@@ -132,13 +130,13 @@ static NSDictionary *errorCodeDictionary = nil;
 
 @interface AWSRequest()
 
-@property (nonatomic, strong) AZNetworkingRequest *internalRequest;
+@property (nonatomic, strong) AWSNetworkingRequest *internalRequest;
 
 @end
 
 @interface AWSCognitoSyncService()
 
-@property (nonatomic, strong) AZNetworking *networking;
+@property (nonatomic, strong) AWSNetworking *networking;
 @property (nonatomic, strong) AWSServiceConfiguration *configuration;
 @property (nonatomic, strong) AWSEndpoint *endpoint;
 
@@ -177,14 +175,14 @@ static NSDictionary *errorCodeDictionary = nil;
         _configuration.headers = @{@"Host" : _endpoint.hostName,
                                    @"Content-Type" : @"application/x-amz-json-1.1"};
 
-        _networking = [AZNetworking networking:_configuration];
+        _networking = [AWSNetworking networking:_configuration];
     }
 
     return self;
 }
 
 - (BFTask *)invokeRequest:(AWSRequest *)request
-               HTTPMethod:(AZHTTPMethod)HTTPMethod
+               HTTPMethod:(AWSHTTPMethod)HTTPMethod
                 URLString:(NSString *) URLString
              targetPrefix:(NSString *)targetPrefix
             operationName:(NSString *)operationName
@@ -193,9 +191,9 @@ static NSDictionary *errorCodeDictionary = nil;
         request = [AWSRequest new];
     }
 
-    AZNetworkingRequest *networkingRequest = request.internalRequest;
+    AWSNetworkingRequest *networkingRequest = request.internalRequest;
     if (request) {
-        networkingRequest.parameters = [[MTLJSONAdapter JSONDictionaryFromModel:request] az_removeNullValues];
+        networkingRequest.parameters = [[MTLJSONAdapter JSONDictionaryFromModel:request] aws_removeNullValues];
     } else {
         networkingRequest.parameters = @{};
     }
@@ -228,7 +226,7 @@ static NSDictionary *errorCodeDictionary = nil;
 
 - (BFTask *)deleteDataset:(AWSCognitoSyncServiceDeleteDatasetRequest *)request {
     return [self invokeRequest:request
-                    HTTPMethod:AZHTTPMethodDELETE
+                    HTTPMethod:AWSHTTPMethodDELETE
                      URLString:@"/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}"
                   targetPrefix:@"AWSCognitoSyncService"
                  operationName:@"DeleteDataset"
@@ -237,7 +235,7 @@ static NSDictionary *errorCodeDictionary = nil;
 
 - (BFTask *)describeDataset:(AWSCognitoSyncServiceDescribeDatasetRequest *)request {
     return [self invokeRequest:request
-                    HTTPMethod:AZHTTPMethodGET
+                    HTTPMethod:AWSHTTPMethodGET
                      URLString:@"/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}"
                   targetPrefix:@"AWSCognitoSyncService"
                  operationName:@"DescribeDataset"
@@ -246,7 +244,7 @@ static NSDictionary *errorCodeDictionary = nil;
 
 - (BFTask *)describeIdentityPoolUsage:(AWSCognitoSyncServiceDescribeIdentityPoolUsageRequest *)request {
     return [self invokeRequest:request
-                    HTTPMethod:AZHTTPMethodGET
+                    HTTPMethod:AWSHTTPMethodGET
                      URLString:@"/identitypools/{IdentityPoolId}"
                   targetPrefix:@"AWSCognitoSyncService"
                  operationName:@"DescribeIdentityPoolUsage"
@@ -255,7 +253,7 @@ static NSDictionary *errorCodeDictionary = nil;
 
 - (BFTask *)describeIdentityUsage:(AWSCognitoSyncServiceDescribeIdentityUsageRequest *)request {
     return [self invokeRequest:request
-                    HTTPMethod:AZHTTPMethodGET
+                    HTTPMethod:AWSHTTPMethodGET
                      URLString:@"/identitypools/{IdentityPoolId}/identities/{IdentityId}"
                   targetPrefix:@"AWSCognitoSyncService"
                  operationName:@"DescribeIdentityUsage"
@@ -264,7 +262,7 @@ static NSDictionary *errorCodeDictionary = nil;
 
 - (BFTask *)listDatasets:(AWSCognitoSyncServiceListDatasetsRequest *)request {
     return [self invokeRequest:request
-                    HTTPMethod:AZHTTPMethodGET
+                    HTTPMethod:AWSHTTPMethodGET
                      URLString:@"/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets"
                   targetPrefix:@"AWSCognitoSyncService"
                  operationName:@"ListDatasets"
@@ -273,7 +271,7 @@ static NSDictionary *errorCodeDictionary = nil;
 
 - (BFTask *)listIdentityPoolUsage:(AWSCognitoSyncServiceListIdentityPoolUsageRequest *)request {
     return [self invokeRequest:request
-                    HTTPMethod:AZHTTPMethodGET
+                    HTTPMethod:AWSHTTPMethodGET
                      URLString:@"/identitypools"
                   targetPrefix:@"AWSCognitoSyncService"
                  operationName:@"ListIdentityPoolUsage"
@@ -282,7 +280,7 @@ static NSDictionary *errorCodeDictionary = nil;
 
 - (BFTask *)listRecords:(AWSCognitoSyncServiceListRecordsRequest *)request {
     return [self invokeRequest:request
-                    HTTPMethod:AZHTTPMethodGET
+                    HTTPMethod:AWSHTTPMethodGET
                      URLString:@"/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}/records"
                   targetPrefix:@"AWSCognitoSyncService"
                  operationName:@"ListRecords"
@@ -291,7 +289,7 @@ static NSDictionary *errorCodeDictionary = nil;
 
 - (BFTask *)updateRecords:(AWSCognitoSyncServiceUpdateRecordsRequest *)request {
     return [self invokeRequest:request
-                    HTTPMethod:AZHTTPMethodPOST
+                    HTTPMethod:AWSHTTPMethodPOST
                      URLString:@"/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}"
                   targetPrefix:@"AWSCognitoSyncService"
                  operationName:@"UpdateRecords"

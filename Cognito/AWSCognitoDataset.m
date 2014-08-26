@@ -9,7 +9,7 @@
 #import "AWSCognitoRecord_Internal.h"
 #import "AWSCognitoSQLiteManager.h"
 #import "AWSCognitoConflict_Internal.h"
-#import "AZLogging.h"
+#import "AWSLogging.h"
 #import "AWSCognitoRecord.h"
 #import "CognitoSyncService.h"
 #import "Reachability.h"
@@ -80,7 +80,7 @@
     AWSCognitoRecord *record = [self getRecordById:aKey error:&error];
     if(error || (!record.data.string))
     {
-        AZLogDebug(@"Error: %@", error);
+        AWSLogDebug(@"Error: %@", error);
     }
     
     if (record != nil && ![record isDeleted]) {
@@ -103,23 +103,23 @@
     
     //do some limit checks
     if([self sizeForRecord:record] > AWSCognitoMaxDatasetSize){
-        AZLogDebug(@"Error: Record would exceed max dataset size");
+        AWSLogDebug(@"Error: Record would exceed max dataset size");
         return;
     }
     
     if([self sizeForString:aKey] > AWSCognitoMaxKeySize){
-        AZLogDebug(@"Error: Key size too large, max is %d bytes", AWSCognitoMaxKeySize);
+        AWSLogDebug(@"Error: Key size too large, max is %d bytes", AWSCognitoMaxKeySize);
         return;
     }
     
     if([self sizeForString:aKey] < AWSCognitoMinKeySize){
-        AZLogDebug(@"Error: Key size too small, min is %d byte", AWSCognitoMinKeySize);
+        AWSLogDebug(@"Error: Key size too small, min is %d byte", AWSCognitoMinKeySize);
         return;
     }
 
     
     if([self sizeForString:aString] > AWSCognitoMaxDatasetSize){
-        AZLogDebug(@"Error: Value size too large, max is %d bytes", AWSCognitoMaxRecordValueSize);
+        AWSLogDebug(@"Error: Value size too large, max is %d bytes", AWSCognitoMaxRecordValueSize);
         return;
     }
     
@@ -127,14 +127,14 @@
     
     //if you have the max # of records and you aren't replacing an existing one
     if(numRecords == AWSCognitoMaxNumRecords && !([self recordForKey:aKey] == nil)){
-        AZLogDebug(@"Error: Too many records, max is %d", AWSCognitoMaxNumRecords);
+        AWSLogDebug(@"Error: Too many records, max is %d", AWSCognitoMaxNumRecords);
         return;
     }
    
     NSError *error = nil;
     if(![self putRecord:record error:&error])
     {
-        AZLogDebug(@"Error: %@", error);
+        AWSLogDebug(@"Error: %@", error);
     }
 }
 
@@ -159,7 +159,7 @@
     AWSCognitoRecord * result = [self getRecordById:aKey error:&error];
     if(!result)
     {
-        AZLogDebug(@"Error: %@", error);
+        AWSLogDebug(@"Error: %@", error);
     }
     return result;
 }
@@ -228,7 +228,7 @@
     NSError *error = nil;
     if(![self removeRecordById:aKey error:&error])
     {
-        AZLogDebug(@"Error: %@", error);
+        AWSLogDebug(@"Error: %@", error);
     }
 }
 
@@ -237,7 +237,7 @@
     NSError *error = nil;
     if(![self.sqliteManager deleteDataset:self.name error:&error])
     {
-        AZLogDebug(@"Error: %@", error);
+        AWSLogDebug(@"Error: %@", error);
     }
     else {
         self.lastSyncCount = [NSNumber numberWithInt:-1];
@@ -311,7 +311,7 @@
             [self postDidFailToSynchronizeNotification:error];
             return [BFTask taskWithError:error];
         }else if(task.error){
-            AZLogError(@"Unable to list records: %@", task.error);
+            AWSLogError(@"Unable to list records: %@", task.error);
             return task;
         }else {
             NSError *error;
@@ -385,7 +385,7 @@
                     }
                     else{
                         //conflict resolution
-                        AZLogInfo(@"Record %@ is dirty with value: %@ and can't be overwritten, flagging for conflict resolution",existing.recordId,existing.data.string);
+                        AWSLogInfo(@"Record %@ is dirty with value: %@ and can't be overwritten, flagging for conflict resolution",existing.recordId,existing.data.string);
                         [conflicts addObject: [[AWSCognitoConflict alloc] initWithLocalRecord:existing remoteRecord:newRecord]];
                     }
                 }
@@ -483,11 +483,11 @@
                 return [BFTask taskWithError:error];
             }else if(task.error){
                 if(task.error.code == AWSCognitoSyncServiceErrorResourceConflict){
-                    AZLogInfo("Conflicts existed on update, restarting synchronize.");
+                    AWSLogInfo("Conflicts existed on update, restarting synchronize.");
                     return [self synchronizeInternal:remainingAttempts-1];
                 }
                 else {
-                    AZLogError(@"An error occured attempting to update records: %@",task.error);
+                    AWSLogError(@"An error occured attempting to update records: %@",task.error);
                 }
                 return task;
             }else{
@@ -574,7 +574,7 @@
 
 - (BFTask *)synchronizeInternal:(uint32_t)remainingAttempts {
     if(remainingAttempts == 0){
-        AZLogError(@"Conflict retries exhausted");
+        AWSLogError(@"Conflict retries exhausted");
         NSError *error = [NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorConflictRetriesExhausted userInfo:nil];
         [self postDidFailToSynchronizeNotification:error];
         return [BFTask taskWithError:error];
@@ -595,7 +595,7 @@
                 [self postDidFailToSynchronizeNotification:error];
                 return [BFTask taskWithError:error];
             } else if(task.error && task.error.code != AWSCognitoSyncServiceErrorResourceNotFound){
-                AZLogError(@"Unable to delete dataset: %@", task.error);
+                AWSLogError(@"Unable to delete dataset: %@", task.error);
                 return task;
             } else {
                 [self.sqliteManager deleteMetadata:self.name error:nil];
@@ -634,7 +634,7 @@
 #pragma mark IdentityMerge
 
 - (void)identityChanged:(NSNotification *)notification {
-    AZLogDebug(@"IdentityChanged");
+    AWSLogDebug(@"IdentityChanged");
     
     // by the point we are called, all datasets will have been reparented
     [self checkForLocalMergedDatasets];

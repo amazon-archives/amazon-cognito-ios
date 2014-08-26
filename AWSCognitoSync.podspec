@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'AWSCognitoSync'
-  s.version      = '1.0.1'
+  s.version      = '1.0.2'
   s.summary      = 'Amazon Cognito SDK for iOS'
 
   s.description  = 'Amazon Cognito offers multi device data synchronization with offline access'

@@ -9,12 +9,11 @@
 @class BFTask;
 
 /**
- *
+ * 
  */
 @interface AWSCognitoSyncService : AWSService
 
 @property (nonatomic, strong, readonly) AWSServiceConfiguration *configuration;
-@property (nonatomic, strong, readonly) AWSEndpoint *endpoint;
 
 + (instancetype)defaultCognitoSyncService;
 

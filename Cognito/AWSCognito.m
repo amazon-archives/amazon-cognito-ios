@@ -11,7 +11,7 @@
 #import "AWSCognitoUtil.h"
 #import "CognitoSyncService.h"
 #import "AWSCognitoDataset_Internal.h"
-#import "AZLogging.h"
+#import "AWSLogging.h"
 #import "AWSClientContext.h"
 #import "AWSCognitoHandlers.h"
 #import "AWSCognitoConflict_Internal.h"
@@ -120,7 +120,7 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
         if(task.isCancelled){
             return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil]];
         }else if(task.error){
-            AZLogError(@"Unable to list datasets: %@", task.error);
+            AWSLogError(@"Unable to list datasets: %@", task.error);
             return task;
         }else {
             AWSCognitoSyncServiceListDatasetsResponse* response = task.result;
@@ -140,7 +140,7 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
 }
 
 - (void)identityChanged:(NSNotification *)notification {
-    AZLogDebug(@"IdentityChanged");
+    AWSLogDebug(@"IdentityChanged");
     NSString *oldId = [notification.userInfo objectForKey:AWSCognitoNotificationPreviousId];
     NSString *newId = [notification.userInfo objectForKey:AWSCognitoNotificationNewId];
     
@@ -164,7 +164,7 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
 
 + (AWSCognitoRecordConflictHandler) defaultConflictHandler {
     return ^AWSCognitoResolvedConflict* (NSString *datasetName, AWSCognitoConflict *conflict) {
-        AZLogDebug(@"Last writer wins conflict resolution for dataset %@", datasetName);
+        AWSLogDebug(@"Last writer wins conflict resolution for dataset %@", datasetName);
         if (conflict.remoteRecord == nil || [conflict.localRecord.lastModified compare:conflict.remoteRecord.lastModified] == NSOrderedDescending)
         {
             return [[AWSCognitoResolvedConflict alloc] initWithLocalRecord: conflict];

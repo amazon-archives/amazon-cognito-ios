@@ -19,7 +19,6 @@ AWSCognitoSyncService *_client;
 @implementation AWSCognitoSyncServiceTests
 
 + (void)setUp {
-    //[AZLogger defaultLogger].logLevel = AZLogLevelVerbose;
     [CognitoTestUtils createIdentityPool];
     
     AWSCognitoCredentialsProvider *provider = [AWSCognitoCredentialsProvider credentialsWithRegionType:AWSRegionUSEast1
@@ -74,10 +73,6 @@ AWSCognitoSyncService *_client;
 }
 
 - (void)testSyncSessionToken {
-    AWSStaticCredentialsProvider *provider = [AWSStaticCredentialsProvider credentialsWithCredentialsFilename:@"credentials"];
-    AWSServiceConfiguration * configuration = [AWSServiceConfiguration configurationWithRegion:AWSRegionUSEast1 credentialsProvider:provider];
-    AWSCognitoSyncService *client = [[AWSCognitoSyncService alloc] initWithConfiguration:configuration];
-    
     // Do any initial list to get a token
     AWSCognitoSyncServiceListRecordsRequest *listRequest = [AWSCognitoSyncServiceListRecordsRequest new];
     listRequest.datasetName = @"tokentest";
@@ -86,7 +81,8 @@ AWSCognitoSyncService *_client;
     listRequest.lastSyncCount = @"0";
     
     __block NSString *_sessionToken = nil;
-    [[[client listRecords:listRequest] continueWithBlock:^id(BFTask *task) {
+    [[[_client listRecords:listRequest] continueWithBlock:^id(BFTask *task) {
+        XCTAssertNil(task.error, @"Error: [%@].", task.error);
         AWSCognitoSyncServiceListRecordsResponse *result = task.result;
         _sessionToken = result.syncSessionToken;
         return nil;
@@ -97,7 +93,7 @@ AWSCognitoSyncService *_client;
     // Retry the list with the token
     listRequest.syncSessionToken = _sessionToken;
     
-    [[[client listRecords:listRequest] continueWithBlock:^id(BFTask *task) {
+    [[[_client listRecords:listRequest] continueWithBlock:^id(BFTask *task) {
         XCTAssertNil(task.error, @"Error from list w/session token: %@", task.error);
         return nil;
     }] waitUntilFinished];
@@ -116,13 +112,13 @@ AWSCognitoSyncService *_client;
     updateRequest.syncSessionToken = _sessionToken;
     updateRequest.recordPatches = [NSArray arrayWithObject:patch];
     
-    [[[client updateRecords:updateRequest] continueWithBlock:^id(BFTask *task) {
+    [[[_client updateRecords:updateRequest] continueWithBlock:^id(BFTask *task) {
         XCTAssertNil(task.error, @"Error from update w/session token: %@", task.error);
         return nil;
     }] waitUntilFinished];
     
     // Now that the token was used to push, listing again should fail
-    [[[client listRecords:listRequest] continueWithBlock:^id(BFTask *task) {
+    [[[_client listRecords:listRequest] continueWithBlock:^id(BFTask *task) {
         XCTAssertNotNil(task.error, @"Should have gotten error");
         return nil;
     }] waitUntilFinished];

@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AWSNetworking.h"
-#import "AZModel.h"
+#import "AWSModel.h"
 
 FOUNDATION_EXPORT NSString *const AWSCognitoSyncServiceErrorDomain;
 
@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 @class AWSCognitoSyncServiceUpdateRecordsRequest;
 @class AWSCognitoSyncServiceUpdateRecordsResponse;
 
-@interface AWSCognitoSyncServiceDataset : AZModel
+@interface AWSCognitoSyncServiceDataset : AWSModel
 
 @property (nonatomic, strong) NSDate *creationDate;
 @property (nonatomic, strong) NSNumber *dataStorage;
@@ -70,7 +70,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceDeleteDatasetResponse : AZModel
+@interface AWSCognitoSyncServiceDeleteDatasetResponse : AWSModel
 
 @property (nonatomic, strong) AWSCognitoSyncServiceDataset *dataset;
 
@@ -84,7 +84,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceDescribeDatasetResponse : AZModel
+@interface AWSCognitoSyncServiceDescribeDatasetResponse : AWSModel
 
 @property (nonatomic, strong) AWSCognitoSyncServiceDataset *dataset;
 
@@ -96,7 +96,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceDescribeIdentityPoolUsageResponse : AZModel
+@interface AWSCognitoSyncServiceDescribeIdentityPoolUsageResponse : AWSModel
 
 @property (nonatomic, strong) AWSCognitoSyncServiceIdentityPoolUsage *identityPoolUsage;
 
@@ -109,13 +109,13 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceDescribeIdentityUsageResponse : AZModel
+@interface AWSCognitoSyncServiceDescribeIdentityUsageResponse : AWSModel
 
 @property (nonatomic, strong) AWSCognitoSyncServiceIdentityUsage *identityUsage;
 
 @end
 
-@interface AWSCognitoSyncServiceIdentityPoolUsage : AZModel
+@interface AWSCognitoSyncServiceIdentityPoolUsage : AWSModel
 
 @property (nonatomic, strong) NSNumber *dataStorage;
 @property (nonatomic, strong) NSString *identityPoolId;
@@ -124,7 +124,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceIdentityUsage : AZModel
+@interface AWSCognitoSyncServiceIdentityUsage : AWSModel
 
 @property (nonatomic, strong) NSNumber *dataStorage;
 @property (nonatomic, strong) NSNumber *datasetCount;
@@ -143,7 +143,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceListDatasetsResponse : AZModel
+@interface AWSCognitoSyncServiceListDatasetsResponse : AWSModel
 
 @property (nonatomic, strong) NSNumber *count;
 @property (nonatomic, strong) NSArray *datasets;
@@ -158,7 +158,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceListIdentityPoolUsageResponse : AZModel
+@interface AWSCognitoSyncServiceListIdentityPoolUsageResponse : AWSModel
 
 @property (nonatomic, strong) NSNumber *count;
 @property (nonatomic, strong) NSArray *identityPoolUsages;
@@ -179,7 +179,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceListRecordsResponse : AZModel
+@interface AWSCognitoSyncServiceListRecordsResponse : AWSModel
 
 @property (nonatomic, strong) NSNumber *count;
 @property (nonatomic, strong) NSNumber *datasetDeletedAfterRequestedSyncCount;
@@ -193,7 +193,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceRecord : AZModel
+@interface AWSCognitoSyncServiceRecord : AWSModel
 
 @property (nonatomic, strong) NSDate *deviceLastModifiedDate;
 @property (nonatomic, strong) NSString *key;
@@ -204,7 +204,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceRecordPatch : AZModel
+@interface AWSCognitoSyncServiceRecordPatch : AWSModel
 
 @property (nonatomic, strong) NSDate *deviceLastModifiedDate;
 @property (nonatomic, strong) NSString *key;
@@ -225,9 +225,8 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceUpdateRecordsResponse : AZModel
+@interface AWSCognitoSyncServiceUpdateRecordsResponse : AWSModel
 
 @property (nonatomic, strong) NSArray *records;
 
 @end
-

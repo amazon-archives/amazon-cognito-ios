@@ -28,7 +28,6 @@ NSString *const DatasetName = @"testDataset";
 
 - (void)setUp {
     [super setUp];
-    [AZLogger defaultLogger].logLevel = AZLogLevelVerbose;
     self.manager = [[AWSCognitoSQLiteManager alloc] initWithIdentityId:TestId1 deviceId:DeviceId];
     [self.manager initializeDatasetTables:DatasetName];
 }
@@ -84,21 +83,21 @@ NSString *const DatasetName = @"testDataset";
 
 - (void)testDeleteAll {
     NSError * error;
-    
+
     // populate some data
     AWSCognitoRecordValue* on = [[AWSCognitoRecordValue alloc] initWithString:@"on"];
     AWSCognitoRecord* record = [[AWSCognitoRecord alloc] initWithId:@"wifi" data:on];
     [self.manager putRecord:record datasetName:DatasetName error:&error];
     [self.manager updateLastSyncCount:DatasetName syncCount:[NSNumber numberWithInt:1] lastModifiedBy:@"me"];
-    
+
     // check data
     NSArray *datasets = [self.manager getDatasets:&error];
     XCTAssertTrue([datasets count] != 0, @"No datasets found");
     NSArray *records = [self.manager allRecords:DatasetName];
     XCTAssertTrue([records count] != 0, @"No records found");
-    
+
     [self.manager deleteAllData];
-    
+
     // check that data is gone
     datasets = [self.manager getDatasets:&error];
     XCTAssertTrue([datasets count] == 0, @"Datasets left behind");
@@ -108,25 +107,25 @@ NSString *const DatasetName = @"testDataset";
 
 - (void)testDelete {
     NSError * error;
-    
+
     // populate some data
     AWSCognitoRecordValue* on = [[AWSCognitoRecordValue alloc] initWithString:@"on"];
     AWSCognitoRecord* record = [[AWSCognitoRecord alloc] initWithId:@"wifi" data:on];
     [self.manager putRecord:record datasetName:DatasetName error:&error];
     [self.manager updateLastSyncCount:DatasetName syncCount:[NSNumber numberWithInt:1] lastModifiedBy:@"me"];
-    
+
     // check data
     NSArray *datasets = [self.manager getDatasets:&error];
     XCTAssertTrue([datasets count] != 0, @"No datasets found");
     NSArray *records = [self.manager allRecords:DatasetName];
     XCTAssertTrue([records count] != 0, @"No records found");
     NSUInteger curCount = [records count];
-    
+
     [self.manager deleteDataset:DatasetName error:&error];
     XCTAssertNil(error, @"Error on deleteDataset [%@]", error);
     [self.manager deleteMetadata:DatasetName error:&error];
     XCTAssertNil(error, @"Error on deleteMetadata [%@]", error);
-    
+
     // check that data is gone
     datasets = [self.manager getDatasets:&error];
     XCTAssertTrue([datasets count] == curCount-1, @"Metadata left behind");
@@ -136,26 +135,26 @@ NSString *const DatasetName = @"testDataset";
 
 - (void)testReparent {
     NSError * error;
-    
+
     // simulate an identity provider that is not initialized
     AWSCognitoSQLiteManager *managerForOther = [[AWSCognitoSQLiteManager alloc] initWithIdentityId:TestId2 deviceId:DeviceId];
     [managerForOther initializeDatasetTables:DatasetName];
-    
+
     // populate some data
     AWSCognitoRecordValue* on = [[AWSCognitoRecordValue alloc] initWithString:@"on"];
     AWSCognitoRecord* record = [[AWSCognitoRecord alloc] initWithId:@"wifi" data:on];
     [managerForOther putRecord:record datasetName:DatasetName error:&error];
-    
+
     // reparent it
     [managerForOther reparentDatasets:TestId2 withNewId:TestId1 error:&error];
     XCTAssertNil(error, @"Error on reparent [%@]", error);
-    
+
     // check that the old id can't see them
     NSArray *datasets = [managerForOther getDatasets:&error];
     XCTAssertTrue([datasets count] == 0, @"Datasets left behind");
     NSArray *records = [managerForOther allRecords:DatasetName];
     XCTAssertTrue([records count] == 0, @"Records left behind");
-    
+
     // check that the new id can see them
     datasets = [self.manager getDatasets:&error];
     XCTAssertTrue([datasets count] != 0, @"No datasets found");
@@ -166,26 +165,26 @@ NSString *const DatasetName = @"testDataset";
 - (void)testReparentFromUnknown {
     NSError * error;
     NSString *myDatasetName = @"reparentfromunknown";
-    
+
     // simulate an identity provider that is not initialized
     AWSCognitoSQLiteManager *managerForUnknown = [[AWSCognitoSQLiteManager alloc] initWithIdentityId:nil deviceId:DeviceId];
     [managerForUnknown initializeDatasetTables:myDatasetName];
-    
+
     // populate some data
     AWSCognitoRecordValue* on = [[AWSCognitoRecordValue alloc] initWithString:@"on"];
     AWSCognitoRecord* record = [[AWSCognitoRecord alloc] initWithId:@"wifi" data:on];
     [managerForUnknown putRecord:record datasetName:myDatasetName error:&error];
-    
+
     // reparent it
     [managerForUnknown reparentDatasets:nil withNewId:TestId1 error:&error];
     XCTAssertNil(error, @"Error on reparent [%@]", error);
-    
+
     // check that the old id can't see them
     NSArray *datasets = [managerForUnknown getDatasets:&error];
     XCTAssertTrue([datasets count] == 0, @"Datasets left behind");
     NSArray *records = [managerForUnknown allRecords:myDatasetName];
     XCTAssertTrue([records count] == 0, @"Records left behind");
-    
+
     // check that the new id can see them
     datasets = [self.manager getDatasets:&error];
     XCTAssertTrue([datasets count] != 0, @"No datasets found");
@@ -195,7 +194,7 @@ NSString *const DatasetName = @"testDataset";
 
 - (void)testReset {
     NSError * error;
-    
+
     // populate some data
     NSMutableArray *records = [NSMutableArray arrayWithCapacity:2];
     AWSCognitoRecordValue* on = [[AWSCognitoRecordValue alloc] initWithString:@"on"];
@@ -207,15 +206,15 @@ NSString *const DatasetName = @"testDataset";
     [records addObject:[[AWSCognitoRecordTuple alloc] initWithLocalRecord:record remoteRecord:nil]];
     [self.manager updateLocalRecordMetadata:DatasetName records:records error:&error];
     [self.manager updateLastSyncCount:DatasetName syncCount:[NSNumber numberWithInt:2] lastModifiedBy:@"me"];
-    
-    
+
+
     // reset the sync counts
     XCTAssertTrue([self.manager resetSyncCount:DatasetName error:&error], @"reset returned false");
     XCTAssertNil(error, @"Got an error on reset");
-    
+
     NSNumber *lastSyncCount = [self.manager lastSyncCount:DatasetName];
     XCTAssertTrue([lastSyncCount intValue] == 0, @"Last sync count not reset");
-    
+
     NSArray *resetRecords = [self.manager allRecords:DatasetName];
     for (AWSCognitoRecord* reset in resetRecords) {
         XCTAssertTrue(reset.dirty, @"record should be dirty");

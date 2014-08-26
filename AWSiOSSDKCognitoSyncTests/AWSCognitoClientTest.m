@@ -23,9 +23,7 @@ BOOL _localChangeReceived = NO;
 BOOL _failedReceived = NO;
 
 @implementation AWSCognitoClientTest
-+ (void)setUp {
-    [AZLogger defaultLogger].logLevel = AZLogLevelVerbose;
-    
++ (void)setUp {    
     [CognitoTestUtils createFBAccount];
     [CognitoTestUtils createIdentityPool];
     
