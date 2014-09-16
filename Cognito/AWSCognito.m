@@ -9,7 +9,7 @@
 #import "AWSCognitoDataset.h"
 #import "AWSCognitoConstants.h"
 #import "AWSCognitoUtil.h"
-#import "CognitoSyncService.h"
+#import "CognitoSync.h"
 #import "AWSCognitoDataset_Internal.h"
 #import "AWSLogging.h"
 #import "AWSClientContext.h"
@@ -30,7 +30,7 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
 }
 
 @property (nonatomic, strong) AWSCognitoSQLiteManager *sqliteManager;
-@property (nonatomic, strong) AWSCognitoSyncService *cognitoService;
+@property (nonatomic, strong) AWSCognitoSync *cognitoService;
 @property (nonatomic, strong) AWSCognitoCredentialsProvider *cognitoCredentialsProvider;
 
 @end
@@ -75,7 +75,7 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
         
         _conflictHandler = [AWSCognito defaultConflictHandler];
         _sqliteManager = [[AWSCognitoSQLiteManager alloc] initWithIdentityId:_cognitoCredentialsProvider.identityId deviceId:_deviceId];
-        _cognitoService = [[AWSCognitoSyncService alloc] initWithConfiguration:configuration];
+        _cognitoService = [[AWSCognitoSync alloc] initWithConfiguration:configuration];
         
         // register to know when the identity on our provider changes
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(identityChanged:) name:AWSCognitoIdentityIdChangedNotification object:_configuration.credentialsProvider];
@@ -89,7 +89,9 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
 }
 
 - (AWSCognitoDataset *)openOrCreateDataset:(NSString * ) datasetName{
-    AWSCognitoDataset *dataset = [[AWSCognitoDataset alloc] initWithDatasetName:datasetName sqliteManager:self.sqliteManager cognitoService:self.cognitoService];
+    AWSCognitoDataset *dataset = [[AWSCognitoDataset alloc] initWithDatasetName:datasetName
+                                                                  sqliteManager:self.sqliteManager
+                                                                 cognitoService:self.cognitoService];
     dataset.conflictHandler = self.conflictHandler;
     dataset.datasetDeletedHandler = self.datasetDeletedHandler;
     dataset.datasetMergedHandler = self.datasetMergedHandler;
@@ -112,7 +114,7 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
         if (task.error) {
             return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoAuthenticationFailed userInfo:nil]];
         }
-        AWSCognitoSyncServiceListDatasetsRequest *request = [AWSCognitoSyncServiceListDatasetsRequest new];
+        AWSCognitoSyncListDatasetsRequest *request = [AWSCognitoSyncListDatasetsRequest new];
         request.identityPoolId = self.cognitoCredentialsProvider.identityPoolId;
         request.identityId = self.cognitoCredentialsProvider.identityId;
         return [self.cognitoService listDatasets:request];
@@ -123,7 +125,7 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
             AWSLogError(@"Unable to list datasets: %@", task.error);
             return task;
         }else {
-            AWSCognitoSyncServiceListDatasetsResponse* response = task.result;
+            AWSCognitoSyncListDatasetsResponse* response = task.result;
             [self.sqliteManager putDatasetMetadata: response.datasets error:nil];
             return [BFTask taskWithResult:response.datasets];
         }

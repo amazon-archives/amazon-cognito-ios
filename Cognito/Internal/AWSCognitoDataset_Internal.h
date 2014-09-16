@@ -4,7 +4,7 @@
 
 #import "AWSCognitoDataset.h"
 
-@class AWSCognitoSyncService;
+@class AWSCognitoSync;
 
 @interface AWSCognitoDatasetMetadata()
 
@@ -25,6 +25,6 @@
  */
 - (instancetype)initWithDatasetName:(NSString *)datasetName
                       sqliteManager:(AWSCognitoSQLiteManager *)sqliteManager
-                     cognitoService:(AWSCognitoSyncService *)cognitoService;
+                     cognitoService:(AWSCognitoSync *)cognitoService;
 
 @end

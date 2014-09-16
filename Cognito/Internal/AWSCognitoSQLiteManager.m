@@ -13,7 +13,7 @@
 #import "AWSLogging.h"
 #import "AWSCredentialsProvider.h"
 #import "AWSCognitoConflict_Internal.h"
-#import "AWSCognitoSyncServiceModel.h"
+#import "AWSCognitoSync.h"
 
 @interface AWSCognitoSQLiteManager()
 {
@@ -336,7 +336,7 @@
         
         if(sqlite3_prepare_v2(self.sqlite, [sqlString UTF8String], -1, &statement, NULL) == SQLITE_OK)
         {
-            for (AWSCognitoSyncServiceDataset *dataset in datasets) {
+            for (AWSCognitoSyncDataset *dataset in datasets) {
                 int64_t lastModified = [AWSCognitoUtil getTimeMillisForDate:dataset.lastModifiedDate];
                 int64_t createDate = [AWSCognitoUtil getTimeMillisForDate:dataset.lastModifiedDate];
                 sqlite3_bind_text(statement, 1, [[self identityId] UTF8String], -1, SQLITE_TRANSIENT);

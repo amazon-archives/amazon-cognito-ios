@@ -48,22 +48,22 @@ BOOL _failedReceived = NO;
 
 - (void)forceUpdate:(NSString *)datasetName withKey:(NSString *)key {
     // generate a remote update
-    AWSCognitoSyncService *client = [AWSCognitoSyncService defaultCognitoSyncService];
+    AWSCognitoSync *client = [AWSCognitoSync defaultCognitoSync];
     
-    AWSCognitoSyncServiceListRecordsRequest *list = [AWSCognitoSyncServiceListRecordsRequest new];
+    AWSCognitoSyncListRecordsRequest *list = [AWSCognitoSyncListRecordsRequest new];
     list.datasetName = datasetName;
     list.identityId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityId;
     list.identityPoolId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityPoolId;
     [[[[client listRecords:list] continueWithBlock:^id(BFTask *task) {
-        AWSCognitoSyncServiceListRecordsResponse *listResponse = task.result;
+        AWSCognitoSyncListRecordsResponse *listResponse = task.result;
         
-        AWSCognitoSyncServiceRecordPatch *patch = [AWSCognitoSyncServiceRecordPatch new];
+        AWSCognitoSyncRecordPatch *patch = [AWSCognitoSyncRecordPatch new];
         patch.key = key;
         patch.syncCount = listResponse.datasetSyncCount;
         patch.value = @"forced";
-        patch.op = AWSCognitoSyncServiceOperationReplace;
+        patch.op = AWSCognitoSyncOperationReplace;
         
-        AWSCognitoSyncServiceUpdateRecordsRequest *update = [AWSCognitoSyncServiceUpdateRecordsRequest new];
+        AWSCognitoSyncUpdateRecordsRequest *update = [AWSCognitoSyncUpdateRecordsRequest new];
         update.identityId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityId;
         update.identityPoolId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityPoolId;
         update.datasetName = datasetName;
@@ -184,7 +184,7 @@ BOOL _failedReceived = NO;
     [[[[AWSCognito defaultCognito] refreshDatasetMetadata] continueWithBlock:^id(BFTask *task) {
         XCTAssertNil(task.error, @"Error in listDatasets [%@]", task.error);
         NSArray *datasets = task.result;
-        for(AWSCognitoSyncServiceDataset * dataset in datasets){
+        for(AWSCognitoSyncDataset * dataset in datasets){
             NSLog(@"Dataset: %@",[dataset datasetName]);
         }
         count = datasets.count;
@@ -199,7 +199,7 @@ BOOL _failedReceived = NO;
     [[[[AWSCognito defaultCognito] refreshDatasetMetadata] continueWithBlock:^id(BFTask *task) {
         XCTAssertNil(task.error, @"Error in listDatasets [%@]", task.error);
         NSArray *datasets = task.result;
-        for(AWSCognitoSyncServiceDataset * dataset in datasets){
+        for(AWSCognitoSyncDataset * dataset in datasets){
             NSLog(@"Dataset: %@",[dataset datasetName]);
         }
         XCTAssertTrue(count + 1 == datasets.count, @"number of datasets should have increased");
@@ -311,8 +311,8 @@ BOOL _failedReceived = NO;
     
     
     // delete the dataset with the low level client
-    AWSCognitoSyncService *client = [AWSCognitoSyncService defaultCognitoSyncService];
-    AWSCognitoSyncServiceDeleteDatasetRequest *deleteDataset = [AWSCognitoSyncServiceDeleteDatasetRequest new];
+    AWSCognitoSync *client = [AWSCognitoSync defaultCognitoSync];
+    AWSCognitoSyncDeleteDatasetRequest *deleteDataset = [AWSCognitoSyncDeleteDatasetRequest new];
     deleteDataset.datasetName = myDatasetName;
     deleteDataset.identityId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityId;
     deleteDataset.identityPoolId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityPoolId;
@@ -369,8 +369,8 @@ BOOL _failedReceived = NO;
     [[dataset synchronize] waitUntilFinished];
     
     // delete the dataset with the low level client
-    AWSCognitoSyncService *client = [AWSCognitoSyncService defaultCognitoSyncService];
-    AWSCognitoSyncServiceDeleteDatasetRequest *deleteDataset = [AWSCognitoSyncServiceDeleteDatasetRequest new];
+    AWSCognitoSync *client = [AWSCognitoSync defaultCognitoSync];
+    AWSCognitoSyncDeleteDatasetRequest *deleteDataset = [AWSCognitoSyncDeleteDatasetRequest new];
     deleteDataset.datasetName = myDatasetName;
     deleteDataset.identityId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityId;
     deleteDataset.identityPoolId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityPoolId;
@@ -416,7 +416,7 @@ BOOL _failedReceived = NO;
 }
 
 -(void)testDatasetMergedHandlerLocal {
-    //[[((AWSCognitoCredentialsProvider *)[AWSCognito defaultCognito].configuration.credentialsProvider) getIdentityId] waitUntilFinished];
+    [[((AWSCognitoCredentialsProvider *)[AWSCognito defaultCognito].configuration.credentialsProvider) getIdentityId] waitUntilFinished];
     __block NSString *myDatasetName = @"testmerge";
     
     // Create a sqlitemanager with a different ID

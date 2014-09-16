@@ -6,51 +6,51 @@
 #import "AWSNetworking.h"
 #import "AWSModel.h"
 
-FOUNDATION_EXPORT NSString *const AWSCognitoSyncServiceErrorDomain;
+FOUNDATION_EXPORT NSString *const AWSCognitoSyncErrorDomain;
 
-typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceErrorType) {
-    AWSCognitoSyncServiceErrorUnknown,
-    AWSCognitoSyncServiceErrorIncompleteSignature,
-    AWSCognitoSyncServiceErrorInvalidClientTokenId,
-    AWSCognitoSyncServiceErrorMissingAuthenticationToken,
-    AWSCognitoSyncServiceErrorInternalError,
-    AWSCognitoSyncServiceErrorInvalidParameter,
-    AWSCognitoSyncServiceErrorLimitExceeded,
-    AWSCognitoSyncServiceErrorNotAuthorized,
-    AWSCognitoSyncServiceErrorResourceConflict,
-    AWSCognitoSyncServiceErrorResourceNotFound,
-    AWSCognitoSyncServiceErrorTooManyRequests,
+typedef NS_ENUM(NSInteger, AWSCognitoSyncErrorType) {
+    AWSCognitoSyncErrorUnknown,
+    AWSCognitoSyncErrorIncompleteSignature,
+    AWSCognitoSyncErrorInvalidClientTokenId,
+    AWSCognitoSyncErrorMissingAuthenticationToken,
+    AWSCognitoSyncErrorInternalError,
+    AWSCognitoSyncErrorInvalidParameter,
+    AWSCognitoSyncErrorLimitExceeded,
+    AWSCognitoSyncErrorNotAuthorized,
+    AWSCognitoSyncErrorResourceConflict,
+    AWSCognitoSyncErrorResourceNotFound,
+    AWSCognitoSyncErrorTooManyRequests,
 };
 
-typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
-    AWSCognitoSyncServiceOperationUnknown,
-    AWSCognitoSyncServiceOperationReplace,
-    AWSCognitoSyncServiceOperationRemove,
+typedef NS_ENUM(NSInteger, AWSCognitoSyncOperation) {
+    AWSCognitoSyncOperationUnknown,
+    AWSCognitoSyncOperationReplace,
+    AWSCognitoSyncOperationRemove,
 };
 
-@class AWSCognitoSyncServiceDataset;
-@class AWSCognitoSyncServiceDeleteDatasetRequest;
-@class AWSCognitoSyncServiceDeleteDatasetResponse;
-@class AWSCognitoSyncServiceDescribeDatasetRequest;
-@class AWSCognitoSyncServiceDescribeDatasetResponse;
-@class AWSCognitoSyncServiceDescribeIdentityPoolUsageRequest;
-@class AWSCognitoSyncServiceDescribeIdentityPoolUsageResponse;
-@class AWSCognitoSyncServiceDescribeIdentityUsageRequest;
-@class AWSCognitoSyncServiceDescribeIdentityUsageResponse;
-@class AWSCognitoSyncServiceIdentityPoolUsage;
-@class AWSCognitoSyncServiceIdentityUsage;
-@class AWSCognitoSyncServiceListDatasetsRequest;
-@class AWSCognitoSyncServiceListDatasetsResponse;
-@class AWSCognitoSyncServiceListIdentityPoolUsageRequest;
-@class AWSCognitoSyncServiceListIdentityPoolUsageResponse;
-@class AWSCognitoSyncServiceListRecordsRequest;
-@class AWSCognitoSyncServiceListRecordsResponse;
-@class AWSCognitoSyncServiceRecord;
-@class AWSCognitoSyncServiceRecordPatch;
-@class AWSCognitoSyncServiceUpdateRecordsRequest;
-@class AWSCognitoSyncServiceUpdateRecordsResponse;
+@class AWSCognitoSyncDataset;
+@class AWSCognitoSyncDeleteDatasetRequest;
+@class AWSCognitoSyncDeleteDatasetResponse;
+@class AWSCognitoSyncDescribeDatasetRequest;
+@class AWSCognitoSyncDescribeDatasetResponse;
+@class AWSCognitoSyncDescribeIdentityPoolUsageRequest;
+@class AWSCognitoSyncDescribeIdentityPoolUsageResponse;
+@class AWSCognitoSyncDescribeIdentityUsageRequest;
+@class AWSCognitoSyncDescribeIdentityUsageResponse;
+@class AWSCognitoSyncIdentityPoolUsage;
+@class AWSCognitoSyncIdentityUsage;
+@class AWSCognitoSyncListDatasetsRequest;
+@class AWSCognitoSyncListDatasetsResponse;
+@class AWSCognitoSyncListIdentityPoolUsageRequest;
+@class AWSCognitoSyncListIdentityPoolUsageResponse;
+@class AWSCognitoSyncListRecordsRequest;
+@class AWSCognitoSyncListRecordsResponse;
+@class AWSCognitoSyncRecord;
+@class AWSCognitoSyncRecordPatch;
+@class AWSCognitoSyncUpdateRecordsRequest;
+@class AWSCognitoSyncUpdateRecordsResponse;
 
-@interface AWSCognitoSyncServiceDataset : AWSModel
+@interface AWSCognitoSyncDataset : AWSModel
 
 @property (nonatomic, strong) NSDate *creationDate;
 @property (nonatomic, strong) NSNumber *dataStorage;
@@ -62,7 +62,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceDeleteDatasetRequest : AWSRequest
+@interface AWSCognitoSyncDeleteDatasetRequest : AWSRequest
 
 @property (nonatomic, strong) NSString *datasetName;
 @property (nonatomic, strong) NSString *identityId;
@@ -70,13 +70,13 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceDeleteDatasetResponse : AWSModel
+@interface AWSCognitoSyncDeleteDatasetResponse : AWSModel
 
-@property (nonatomic, strong) AWSCognitoSyncServiceDataset *dataset;
+@property (nonatomic, strong) AWSCognitoSyncDataset *dataset;
 
 @end
 
-@interface AWSCognitoSyncServiceDescribeDatasetRequest : AWSRequest
+@interface AWSCognitoSyncDescribeDatasetRequest : AWSRequest
 
 @property (nonatomic, strong) NSString *datasetName;
 @property (nonatomic, strong) NSString *identityId;
@@ -84,38 +84,38 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceDescribeDatasetResponse : AWSModel
+@interface AWSCognitoSyncDescribeDatasetResponse : AWSModel
 
-@property (nonatomic, strong) AWSCognitoSyncServiceDataset *dataset;
+@property (nonatomic, strong) AWSCognitoSyncDataset *dataset;
 
 @end
 
-@interface AWSCognitoSyncServiceDescribeIdentityPoolUsageRequest : AWSRequest
+@interface AWSCognitoSyncDescribeIdentityPoolUsageRequest : AWSRequest
 
 @property (nonatomic, strong) NSString *identityPoolId;
 
 @end
 
-@interface AWSCognitoSyncServiceDescribeIdentityPoolUsageResponse : AWSModel
+@interface AWSCognitoSyncDescribeIdentityPoolUsageResponse : AWSModel
 
-@property (nonatomic, strong) AWSCognitoSyncServiceIdentityPoolUsage *identityPoolUsage;
+@property (nonatomic, strong) AWSCognitoSyncIdentityPoolUsage *identityPoolUsage;
 
 @end
 
-@interface AWSCognitoSyncServiceDescribeIdentityUsageRequest : AWSRequest
+@interface AWSCognitoSyncDescribeIdentityUsageRequest : AWSRequest
 
 @property (nonatomic, strong) NSString *identityId;
 @property (nonatomic, strong) NSString *identityPoolId;
 
 @end
 
-@interface AWSCognitoSyncServiceDescribeIdentityUsageResponse : AWSModel
+@interface AWSCognitoSyncDescribeIdentityUsageResponse : AWSModel
 
-@property (nonatomic, strong) AWSCognitoSyncServiceIdentityUsage *identityUsage;
+@property (nonatomic, strong) AWSCognitoSyncIdentityUsage *identityUsage;
 
 @end
 
-@interface AWSCognitoSyncServiceIdentityPoolUsage : AWSModel
+@interface AWSCognitoSyncIdentityPoolUsage : AWSModel
 
 @property (nonatomic, strong) NSNumber *dataStorage;
 @property (nonatomic, strong) NSString *identityPoolId;
@@ -124,7 +124,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceIdentityUsage : AWSModel
+@interface AWSCognitoSyncIdentityUsage : AWSModel
 
 @property (nonatomic, strong) NSNumber *dataStorage;
 @property (nonatomic, strong) NSNumber *datasetCount;
@@ -134,7 +134,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceListDatasetsRequest : AWSRequest
+@interface AWSCognitoSyncListDatasetsRequest : AWSRequest
 
 @property (nonatomic, strong) NSString *identityId;
 @property (nonatomic, strong) NSString *identityPoolId;
@@ -143,7 +143,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceListDatasetsResponse : AWSModel
+@interface AWSCognitoSyncListDatasetsResponse : AWSModel
 
 @property (nonatomic, strong) NSNumber *count;
 @property (nonatomic, strong) NSArray *datasets;
@@ -151,14 +151,14 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceListIdentityPoolUsageRequest : AWSRequest
+@interface AWSCognitoSyncListIdentityPoolUsageRequest : AWSRequest
 
 @property (nonatomic, strong) NSString *maxResults;
 @property (nonatomic, strong) NSString *nextToken;
 
 @end
 
-@interface AWSCognitoSyncServiceListIdentityPoolUsageResponse : AWSModel
+@interface AWSCognitoSyncListIdentityPoolUsageResponse : AWSModel
 
 @property (nonatomic, strong) NSNumber *count;
 @property (nonatomic, strong) NSArray *identityPoolUsages;
@@ -167,7 +167,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceListRecordsRequest : AWSRequest
+@interface AWSCognitoSyncListRecordsRequest : AWSRequest
 
 @property (nonatomic, strong) NSString *datasetName;
 @property (nonatomic, strong) NSString *identityId;
@@ -179,7 +179,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceListRecordsResponse : AWSModel
+@interface AWSCognitoSyncListRecordsResponse : AWSModel
 
 @property (nonatomic, strong) NSNumber *count;
 @property (nonatomic, strong) NSNumber *datasetDeletedAfterRequestedSyncCount;
@@ -193,7 +193,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceRecord : AWSModel
+@interface AWSCognitoSyncRecord : AWSModel
 
 @property (nonatomic, strong) NSDate *deviceLastModifiedDate;
 @property (nonatomic, strong) NSString *key;
@@ -204,17 +204,17 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceRecordPatch : AWSModel
+@interface AWSCognitoSyncRecordPatch : AWSModel
 
 @property (nonatomic, strong) NSDate *deviceLastModifiedDate;
 @property (nonatomic, strong) NSString *key;
-@property (nonatomic, assign) AWSCognitoSyncServiceOperation op;
+@property (nonatomic, assign) AWSCognitoSyncOperation op;
 @property (nonatomic, strong) NSNumber *syncCount;
 @property (nonatomic, strong) NSString *value;
 
 @end
 
-@interface AWSCognitoSyncServiceUpdateRecordsRequest : AWSRequest
+@interface AWSCognitoSyncUpdateRecordsRequest : AWSRequest
 
 @property (nonatomic, strong) NSString *clientContext;
 @property (nonatomic, strong) NSString *datasetName;
@@ -225,7 +225,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncServiceOperation) {
 
 @end
 
-@interface AWSCognitoSyncServiceUpdateRecordsResponse : AWSModel
+@interface AWSCognitoSyncUpdateRecordsResponse : AWSModel
 
 @property (nonatomic, strong) NSArray *records;
 

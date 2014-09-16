@@ -2,12 +2,12 @@
  * Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  */
 
-#import "AWSCognitoSyncServiceModel.h"
+#import "AWSCognitoSyncModel.h"
 #import "AWSCategory.h"
 
-NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyncServiceErrorDomain";
+NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorDomain";
 
-@implementation AWSCognitoSyncServiceDataset
+@implementation AWSCognitoSyncDataset
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -39,7 +39,7 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 
 @end
 
-@implementation AWSCognitoSyncServiceDeleteDatasetRequest
+@implementation AWSCognitoSyncDeleteDatasetRequest
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -51,7 +51,7 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 
 @end
 
-@implementation AWSCognitoSyncServiceDeleteDatasetResponse
+@implementation AWSCognitoSyncDeleteDatasetResponse
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -60,12 +60,12 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 }
 
 + (NSValueTransformer *)datasetJSONTransformer {
-	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncServiceDataset class]];
+	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncDataset class]];
 }
 
 @end
 
-@implementation AWSCognitoSyncServiceDescribeDatasetRequest
+@implementation AWSCognitoSyncDescribeDatasetRequest
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -77,7 +77,7 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 
 @end
 
-@implementation AWSCognitoSyncServiceDescribeDatasetResponse
+@implementation AWSCognitoSyncDescribeDatasetResponse
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -86,12 +86,12 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 }
 
 + (NSValueTransformer *)datasetJSONTransformer {
-	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncServiceDataset class]];
+	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncDataset class]];
 }
 
 @end
 
-@implementation AWSCognitoSyncServiceDescribeIdentityPoolUsageRequest
+@implementation AWSCognitoSyncDescribeIdentityPoolUsageRequest
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -101,7 +101,7 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 
 @end
 
-@implementation AWSCognitoSyncServiceDescribeIdentityPoolUsageResponse
+@implementation AWSCognitoSyncDescribeIdentityPoolUsageResponse
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -110,12 +110,12 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 }
 
 + (NSValueTransformer *)identityPoolUsageJSONTransformer {
-	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncServiceIdentityPoolUsage class]];
+	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncIdentityPoolUsage class]];
 }
 
 @end
 
-@implementation AWSCognitoSyncServiceDescribeIdentityUsageRequest
+@implementation AWSCognitoSyncDescribeIdentityUsageRequest
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -126,7 +126,7 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 
 @end
 
-@implementation AWSCognitoSyncServiceDescribeIdentityUsageResponse
+@implementation AWSCognitoSyncDescribeIdentityUsageResponse
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -135,12 +135,12 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 }
 
 + (NSValueTransformer *)identityUsageJSONTransformer {
-	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncServiceIdentityUsage class]];
+	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncIdentityUsage class]];
 }
 
 @end
 
-@implementation AWSCognitoSyncServiceIdentityPoolUsage
+@implementation AWSCognitoSyncIdentityPoolUsage
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -161,7 +161,7 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 
 @end
 
-@implementation AWSCognitoSyncServiceIdentityUsage
+@implementation AWSCognitoSyncIdentityUsage
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -183,7 +183,7 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 
 @end
 
-@implementation AWSCognitoSyncServiceListDatasetsRequest
+@implementation AWSCognitoSyncListDatasetsRequest
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -196,7 +196,7 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 
 @end
 
-@implementation AWSCognitoSyncServiceListDatasetsResponse
+@implementation AWSCognitoSyncListDatasetsResponse
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -207,12 +207,12 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 }
 
 + (NSValueTransformer *)datasetsJSONTransformer {
-	return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncServiceDataset class]];
+	return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncDataset class]];
 }
 
 @end
 
-@implementation AWSCognitoSyncServiceListIdentityPoolUsageRequest
+@implementation AWSCognitoSyncListIdentityPoolUsageRequest
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -223,7 +223,7 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 
 @end
 
-@implementation AWSCognitoSyncServiceListIdentityPoolUsageResponse
+@implementation AWSCognitoSyncListIdentityPoolUsageResponse
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -235,12 +235,12 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 }
 
 + (NSValueTransformer *)identityPoolUsagesJSONTransformer {
-	return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncServiceIdentityPoolUsage class]];
+	return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncIdentityPoolUsage class]];
 }
 
 @end
 
-@implementation AWSCognitoSyncServiceListRecordsRequest
+@implementation AWSCognitoSyncListRecordsRequest
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -256,7 +256,7 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 
 @end
 
-@implementation AWSCognitoSyncServiceListRecordsResponse
+@implementation AWSCognitoSyncListRecordsResponse
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -273,12 +273,12 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 }
 
 + (NSValueTransformer *)recordsJSONTransformer {
-	return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncServiceRecord class]];
+	return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncRecord class]];
 }
 
 @end
 
-@implementation AWSCognitoSyncServiceRecord
+@implementation AWSCognitoSyncRecord
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -309,7 +309,7 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 
 @end
 
-@implementation AWSCognitoSyncServiceRecordPatch
+@implementation AWSCognitoSyncRecordPatch
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -332,19 +332,19 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 + (NSValueTransformer *)opJSONTransformer {
     return [MTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
         if ([value isEqualToString:@"replace"]) {
-            return @(AWSCognitoSyncServiceOperationReplace);
+            return @(AWSCognitoSyncOperationReplace);
         }
         if ([value isEqualToString:@"remove"]) {
-            return @(AWSCognitoSyncServiceOperationRemove);
+            return @(AWSCognitoSyncOperationRemove);
         }
-        return @(AWSCognitoSyncServiceOperationUnknown);
+        return @(AWSCognitoSyncOperationUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
-            case AWSCognitoSyncServiceOperationReplace:
+            case AWSCognitoSyncOperationReplace:
                 return @"replace";
-            case AWSCognitoSyncServiceOperationRemove:
+            case AWSCognitoSyncOperationRemove:
                 return @"remove";
-            case AWSCognitoSyncServiceOperationUnknown:
+            case AWSCognitoSyncOperationUnknown:
             default:
                 return nil;
         }
@@ -353,7 +353,7 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 
 @end
 
-@implementation AWSCognitoSyncServiceUpdateRecordsRequest
+@implementation AWSCognitoSyncUpdateRecordsRequest
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -367,12 +367,12 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 }
 
 + (NSValueTransformer *)recordPatchesJSONTransformer {
-	return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncServiceRecordPatch class]];
+	return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncRecordPatch class]];
 }
 
 @end
 
-@implementation AWSCognitoSyncServiceUpdateRecordsResponse
+@implementation AWSCognitoSyncUpdateRecordsResponse
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -381,7 +381,7 @@ NSString *const AWSCognitoSyncServiceErrorDomain = @"com.amazonaws.AWSCognitoSyn
 }
 
 + (NSValueTransformer *)recordsJSONTransformer {
-	return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncServiceRecord class]];
+	return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncRecord class]];
 }
 
 @end

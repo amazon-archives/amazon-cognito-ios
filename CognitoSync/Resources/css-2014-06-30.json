@@ -3,10 +3,10 @@
     "apiVersion":"2014-06-30",
     "endpointPrefix":"css",
     "jsonVersion":"1.1",
-    "serviceFullName":"Amazon Cognito Service",
+    "serviceFullName":"Amazon Cognito Sync Service",
     "signatureVersion":"v4",
     "targetPrefix":"AWSCognitoSyncService",
-    "type":"json"
+    "protocol":"json"
   },
   "operations":{
     "DeleteDataset":{
@@ -21,23 +21,39 @@
       "errors":[
         {
           "shape":"NotAuthorizedException",
-          "error":{"httpStatusCode":403},
+          "error":{
+            "code":"NotAuthorizedError",
+            "httpStatusCode":403,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"InvalidParameterException",
-          "error":{"httpStatusCode":400},
+          "error":{
+            "code":"InvalidParameter",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"ResourceNotFoundException",
-          "error":{"httpStatusCode":404},
+          "error":{
+            "code":"ResourceNotFound",
+            "httpStatusCode":404,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"InternalErrorException",
-          "error":{"httpStatusCode":500},
-          "exception":true
+          "error":{
+            "code":"InternalError",
+            "httpStatusCode":500
+          },
+          "exception":true,
+          "fault":true
         }
       ]
     },
@@ -53,119 +69,135 @@
       "errors":[
         {
           "shape":"NotAuthorizedException",
-          "error":{"httpStatusCode":403},
+          "error":{
+            "code":"NotAuthorizedError",
+            "httpStatusCode":403,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"InvalidParameterException",
-          "error":{"httpStatusCode":400},
+          "error":{
+            "code":"InvalidParameter",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"ResourceNotFoundException",
-          "error":{"httpStatusCode":404},
+          "error":{
+            "code":"ResourceNotFound",
+            "httpStatusCode":404,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"InternalErrorException",
-          "error":{"httpStatusCode":500},
-          "exception":true
+          "error":{
+            "code":"InternalError",
+            "httpStatusCode":500
+          },
+          "exception":true,
+          "fault":true
         }
       ]
     },
-    "DescribeIdentity":{
-      "name":"DescribeIdentity",
-      "http":{
-        "method":"GET",
-        "requestUri":"/identitypools/{IdentityPoolId}/identities/{IdentityId}",
-        "responseCode":200
-      },
-      "input":{"shape":"DescribeIdentityRequest"},
-      "output":{"shape":"DescribeIdentityResponse"},
-      "errors":[
-        {
-          "shape":"NotAuthorizedException",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        },
-        {
-          "shape":"InvalidParameterException",
-          "error":{"httpStatusCode":400},
-          "exception":true
-        },
-        {
-          "shape":"ResourceNotFoundException",
-          "error":{"httpStatusCode":404},
-          "exception":true
-        },
-        {
-          "shape":"InternalErrorException",
-          "error":{"httpStatusCode":500},
-          "exception":true
-        }
-      ]
-    },
-    "DescribeIdentityPool":{
-      "name":"DescribeIdentityPool",
+    "DescribeIdentityPoolUsage":{
+      "name":"DescribeIdentityPoolUsage",
       "http":{
         "method":"GET",
         "requestUri":"/identitypools/{IdentityPoolId}",
         "responseCode":200
       },
-      "input":{"shape":"DescribeIdentityPoolRequest"},
-      "output":{"shape":"DescribeIdentityPoolResponse"},
+      "input":{"shape":"DescribeIdentityPoolUsageRequest"},
+      "output":{"shape":"DescribeIdentityPoolUsageResponse"},
       "errors":[
         {
           "shape":"NotAuthorizedException",
-          "error":{"httpStatusCode":403},
+          "error":{
+            "code":"NotAuthorizedError",
+            "httpStatusCode":403,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"InvalidParameterException",
-          "error":{"httpStatusCode":400},
+          "error":{
+            "code":"InvalidParameter",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"ResourceNotFoundException",
-          "error":{"httpStatusCode":404},
+          "error":{
+            "code":"ResourceNotFound",
+            "httpStatusCode":404,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"InternalErrorException",
-          "error":{"httpStatusCode":500},
-          "exception":true
+          "error":{
+            "code":"InternalError",
+            "httpStatusCode":500
+          },
+          "exception":true,
+          "fault":true
         }
       ]
     },
-    "GetIdentityPoolAnalytics":{
-      "name":"GetIdentityPoolAnalytics",
+    "DescribeIdentityUsage":{
+      "name":"DescribeIdentityUsage",
       "http":{
         "method":"GET",
-        "requestUri":"/identitypools/{IdentityPoolId}/monthlyAnalytics",
+        "requestUri":"/identitypools/{IdentityPoolId}/identities/{IdentityId}",
         "responseCode":200
       },
-      "input":{"shape":"GetIdentityPoolAnalyticsRequest"},
-      "output":{"shape":"GetIdentityPoolAnalyticsResponse"},
+      "input":{"shape":"DescribeIdentityUsageRequest"},
+      "output":{"shape":"DescribeIdentityUsageResponse"},
       "errors":[
         {
           "shape":"NotAuthorizedException",
-          "error":{"httpStatusCode":403},
+          "error":{
+            "code":"NotAuthorizedError",
+            "httpStatusCode":403,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"InvalidParameterException",
-          "error":{"httpStatusCode":400},
+          "error":{
+            "code":"InvalidParameter",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"ResourceNotFoundException",
-          "error":{"httpStatusCode":404},
+          "error":{
+            "code":"ResourceNotFound",
+            "httpStatusCode":404,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"InternalErrorException",
-          "error":{"httpStatusCode":500},
-          "exception":true
+          "error":{
+            "code":"InternalError",
+            "httpStatusCode":500
+          },
+          "exception":true,
+          "fault":true
         }
       ]
     },
@@ -181,45 +213,69 @@
       "errors":[
         {
           "shape":"NotAuthorizedException",
-          "error":{"httpStatusCode":403},
+          "error":{
+            "code":"NotAuthorizedError",
+            "httpStatusCode":403,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"InvalidParameterException",
-          "error":{"httpStatusCode":400},
+          "error":{
+            "code":"InvalidParameter",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"InternalErrorException",
-          "error":{"httpStatusCode":500},
-          "exception":true
+          "error":{
+            "code":"InternalError",
+            "httpStatusCode":500
+          },
+          "exception":true,
+          "fault":true
         }
       ]
     },
-    "ListIdentityPools":{
-      "name":"ListIdentityPools",
+    "ListIdentityPoolUsage":{
+      "name":"ListIdentityPoolUsage",
       "http":{
         "method":"GET",
         "requestUri":"/identitypools",
         "responseCode":200
       },
-      "input":{"shape":"ListIdentityPoolsRequest"},
-      "output":{"shape":"ListIdentityPoolsResponse"},
+      "input":{"shape":"ListIdentityPoolUsageRequest"},
+      "output":{"shape":"ListIdentityPoolUsageResponse"},
       "errors":[
         {
           "shape":"NotAuthorizedException",
-          "error":{"httpStatusCode":403},
+          "error":{
+            "code":"NotAuthorizedError",
+            "httpStatusCode":403,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"InvalidParameterException",
-          "error":{"httpStatusCode":400},
+          "error":{
+            "code":"InvalidParameter",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"InternalErrorException",
-          "error":{"httpStatusCode":500},
-          "exception":true
+          "error":{
+            "code":"InternalError",
+            "httpStatusCode":500
+          },
+          "exception":true,
+          "fault":true
         }
       ]
     },
@@ -235,35 +291,46 @@
       "errors":[
         {
           "shape":"InvalidParameterException",
-          "error":{"httpStatusCode":400},
+          "error":{
+            "code":"InvalidParameter",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"NotAuthorizedException",
-          "error":{"httpStatusCode":403},
-          "exception":true
-        },
-        {
-          "shape":"DatasetNotFoundException",
-          "error":{"httpStatusCode":404},
+          "error":{
+            "code":"NotAuthorizedError",
+            "httpStatusCode":403,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"TooManyRequestsException",
-          "error":{"httpStatusCode":429},
+          "error":{
+            "code":"TooManyRequests",
+            "httpStatusCode":429,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"InternalErrorException",
-          "error":{"httpStatusCode":500},
-          "exception":true
+          "error":{
+            "code":"InternalError",
+            "httpStatusCode":500
+          },
+          "exception":true,
+          "fault":true
         }
       ]
     },
     "UpdateRecords":{
       "name":"UpdateRecords",
       "http":{
-        "method":"PATCH",
+        "method":"POST",
         "requestUri":"/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}",
         "responseCode":200
       },
@@ -272,55 +339,83 @@
       "errors":[
         {
           "shape":"InvalidParameterException",
-          "error":{"httpStatusCode":400},
+          "error":{
+            "code":"InvalidParameter",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"LimitExceededException",
-          "error":{"httpStatusCode":400},
+          "error":{
+            "code":"LimitExceeded",
+            "httpStatusCode":400,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"NotAuthorizedException",
-          "error":{"httpStatusCode":403},
+          "error":{
+            "code":"NotAuthorizedError",
+            "httpStatusCode":403,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"ResourceNotFoundException",
-          "error":{"httpStatusCode":404},
+          "error":{
+            "code":"ResourceNotFound",
+            "httpStatusCode":404,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"ResourceConflictException",
-          "error":{"httpStatusCode":409},
+          "error":{
+            "code":"ResourceConflict",
+            "httpStatusCode":409,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"TooManyRequestsException",
-          "error":{"httpStatusCode":429},
+          "error":{
+            "code":"TooManyRequests",
+            "httpStatusCode":429,
+            "senderFault":true
+          },
           "exception":true
         },
         {
           "shape":"InternalErrorException",
-          "error":{"httpStatusCode":500},
-          "exception":true
+          "error":{
+            "code":"InternalError",
+            "httpStatusCode":500
+          },
+          "exception":true,
+          "fault":true
         }
       ]
     }
   },
   "shapes":{
+    "Boolean":{"type":"boolean"},
+    "ClientContext":{"type":"string"},
     "Dataset":{
       "type":"structure",
       "members":{
         "IdentityId":{"shape":"IdentityId"},
         "DatasetName":{"shape":"DatasetName"},
-        "SyncCount":{"shape":"Long"},
         "CreationDate":{"shape":"Date"},
         "LastModifiedDate":{"shape":"Date"},
         "LastModifiedBy":{"shape":"String"},
-        "Size":{"shape":"Long"},
-        "NumRecords":{"shape":"Long"},
-        "DatasetStatus":{"shape":"DatasetStatus"}
+        "DataStorage":{"shape":"Long"},
+        "NumRecords":{"shape":"Long"}
       }
     },
     "DatasetList":{
@@ -331,24 +426,7 @@
       "type":"string",
       "min":1,
       "max":128,
-      "pattern":"[a-zA-Z0-9_.-]+"
-    },
-    "DatasetNotFoundException":{
-      "type":"structure",
-      "required":["message"],
-      "members":{
-        "message":{"shape":"ExceptionMessage"},
-        "SyncSessionToken":{"shape":"SyncSessionToken"}
-      },
-      "error":{"httpStatusCode":404},
-      "exception":true
-    },
-    "DatasetStatus":{
-      "type":"string",
-      "enum":[
-        "ACTIVE",
-        "DELETED"
-      ]
+      "pattern":"[a-zA-Z0-9_.:-]+"
     },
     "Date":{"type":"timestamp"},
     "DeleteDatasetRequest":{
@@ -413,7 +491,7 @@
         "Dataset":{"shape":"Dataset"}
       }
     },
-    "DescribeIdentityPoolRequest":{
+    "DescribeIdentityPoolUsageRequest":{
       "type":"structure",
       "required":["IdentityPoolId"],
       "members":{
@@ -424,13 +502,13 @@
         }
       }
     },
-    "DescribeIdentityPoolResponse":{
+    "DescribeIdentityPoolUsageResponse":{
       "type":"structure",
       "members":{
-        "IdentityPool":{"shape":"IdentityPool"}
+        "IdentityPoolUsage":{"shape":"IdentityPoolUsage"}
       }
     },
-    "DescribeIdentityRequest":{
+    "DescribeIdentityUsageRequest":{
       "type":"structure",
       "required":[
         "IdentityPoolId",
@@ -449,72 +527,18 @@
         }
       }
     },
-    "DescribeIdentityResponse":{
+    "DescribeIdentityUsageResponse":{
       "type":"structure",
       "members":{
-        "Identity":{"shape":"Identity"}
+        "IdentityUsage":{"shape":"IdentityUsage"}
       }
     },
     "ExceptionMessage":{"type":"string"},
-    "GetIdentityPoolAnalyticsRequest":{
-      "type":"structure",
-      "required":[
-        "IdentityPoolId",
-        "StartMonth"
-      ],
-      "members":{
-        "IdentityPoolId":{
-          "shape":"IdentityPoolId",
-          "location":"uri",
-          "locationName":"IdentityPoolId"
-        },
-        "StartMonth":{
-          "shape":"MonthString",
-          "location":"querystring",
-          "locationName":"startMonth"
-        },
-        "Limit":{
-          "shape":"Limit",
-          "location":"querystring",
-          "locationName":"limit"
-        }
-      }
-    },
-    "GetIdentityPoolAnalyticsResponse":{
-      "type":"structure",
-      "members":{
-        "IdentityPoolId":{"shape":"IdentityPoolId"},
-        "DataStorage":{"shape":"Long"},
-        "TotalSyncSessions":{"shape":"Long"},
-        "MonthlyAnalyticsList":{"shape":"MonthlyAnalyticsList"}
-      }
-    },
-    "Identity":{
-      "type":"structure",
-      "members":{
-        "IdentityId":{"shape":"IdentityId"},
-        "IdentityPoolId":{"shape":"IdentityPoolId"},
-        "CreationDate":{"shape":"Date"},
-        "DatasetCount":{"shape":"Integer"},
-        "DataStorage":{"shape":"Long"}
-      }
-    },
     "IdentityId":{
       "type":"string",
       "min":1,
       "max":50,
       "pattern":"[\\w-]+:[0-9a-f-]+"
-    },
-    "IdentityPool":{
-      "type":"structure",
-      "members":{
-        "IdentityPoolId":{"shape":"IdentityPoolId"},
-        "IdentityPoolStatus":{"shape":"IdentityPoolStatus"},
-        "SyncSessionsCount":{"shape":"Long"},
-        "DataStorage":{"shape":"Long"},
-        "CreationDate":{"shape":"Date"},
-        "LastModifiedDate":{"shape":"Date"}
-      }
     },
     "IdentityPoolId":{
       "type":"string",
@@ -522,17 +546,28 @@
       "max":50,
       "pattern":"[\\w-]+:[0-9a-f-]+"
     },
-    "IdentityPoolList":{
-      "type":"list",
-      "member":{"shape":"IdentityPool"}
+    "IdentityPoolUsage":{
+      "type":"structure",
+      "members":{
+        "IdentityPoolId":{"shape":"IdentityPoolId"},
+        "SyncSessionsCount":{"shape":"Long"},
+        "DataStorage":{"shape":"Long"},
+        "LastModifiedDate":{"shape":"Date"}
+      }
     },
-    "IdentityPoolStatus":{
-      "type":"string",
-      "enum":[
-        "UPDATING",
-        "DELETING",
-        "ACTIVE"
-      ]
+    "IdentityPoolUsageList":{
+      "type":"list",
+      "member":{"shape":"IdentityPoolUsage"}
+    },
+    "IdentityUsage":{
+      "type":"structure",
+      "members":{
+        "IdentityId":{"shape":"IdentityId"},
+        "IdentityPoolId":{"shape":"IdentityPoolId"},
+        "LastModifiedDate":{"shape":"Date"},
+        "DatasetCount":{"shape":"Integer"},
+        "DataStorage":{"shape":"Long"}
+      }
     },
     "Integer":{"type":"integer"},
     "IntegerString":{
@@ -546,8 +581,12 @@
       "members":{
         "message":{"shape":"ExceptionMessage"}
       },
-      "error":{"httpStatusCode":500},
-      "exception":true
+      "error":{
+        "code":"InternalError",
+        "httpStatusCode":500
+      },
+      "exception":true,
+      "fault":true
     },
     "InvalidParameterException":{
       "type":"structure",
@@ -555,14 +594,12 @@
       "members":{
         "message":{"shape":"ExceptionMessage"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "code":"InvalidParameter",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
-    },
-    "Limit":{
-      "type":"string",
-      "min":1,
-      "max":2,
-      "pattern":"^([1-9]|[1-2][\\d])|(30)$"
     },
     "LimitExceededException":{
       "type":"structure",
@@ -570,7 +607,11 @@
       "members":{
         "message":{"shape":"ExceptionMessage"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "code":"LimitExceeded",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "ListDatasetsRequest":{
@@ -590,15 +631,15 @@
           "location":"uri",
           "locationName":"IdentityId"
         },
-        "Token":{
+        "NextToken":{
           "shape":"String",
           "location":"querystring",
-          "locationName":"token"
+          "locationName":"nextToken"
         },
-        "Limit":{
+        "MaxResults":{
           "shape":"IntegerString",
           "location":"querystring",
-          "locationName":"limit"
+          "locationName":"maxResults"
         }
       }
     },
@@ -610,26 +651,26 @@
         "NextToken":{"shape":"String"}
       }
     },
-    "ListIdentityPoolsRequest":{
+    "ListIdentityPoolUsageRequest":{
       "type":"structure",
       "members":{
-        "Token":{
+        "NextToken":{
           "shape":"String",
           "location":"querystring",
-          "locationName":"token"
+          "locationName":"nextToken"
         },
-        "Limit":{
+        "MaxResults":{
           "shape":"IntegerString",
           "location":"querystring",
-          "locationName":"limit"
+          "locationName":"maxResults"
         }
       }
     },
-    "ListIdentityPoolsResponse":{
+    "ListIdentityPoolUsageResponse":{
       "type":"structure",
       "members":{
-        "IdentityPools":{"shape":"IdentityPoolList"},
-        "Limit":{"shape":"Integer"},
+        "IdentityPoolUsages":{"shape":"IdentityPoolUsageList"},
+        "MaxResults":{"shape":"Integer"},
         "Count":{"shape":"Integer"},
         "NextToken":{"shape":"String"}
       }
@@ -662,15 +703,15 @@
           "location":"querystring",
           "locationName":"lastSyncCount"
         },
-        "Token":{
+        "NextToken":{
           "shape":"String",
           "location":"querystring",
-          "locationName":"token"
+          "locationName":"nextToken"
         },
-        "Limit":{
+        "MaxResults":{
           "shape":"IntegerString",
           "location":"querystring",
-          "locationName":"limit"
+          "locationName":"maxResults"
         },
         "SyncSessionToken":{
           "shape":"SyncSessionToken",
@@ -686,7 +727,10 @@
         "NextToken":{"shape":"String"},
         "Count":{"shape":"Integer"},
         "DatasetSyncCount":{"shape":"Long"},
+        "LastModifiedBy":{"shape":"String"},
         "MergedDatasetNames":{"shape":"MergedDatasetNameList"},
+        "DatasetExists":{"shape":"Boolean"},
+        "DatasetDeletedAfterRequestedSyncCount":{"shape":"Boolean"},
         "SyncSessionToken":{"shape":"String"}
       }
     },
@@ -695,30 +739,17 @@
       "type":"list",
       "member":{"shape":"String"}
     },
-    "MonthString":{
-      "type":"string",
-      "min":7,
-      "max":7,
-      "pattern":"^(201)([4-9]|(20)[2-9][\\d])[-](0[1-9]|1[012])$"
-    },
-    "MonthlyAnalytics":{
-      "type":"structure",
-      "members":{
-        "Date":{"shape":"MonthString"},
-        "SyncSessionsCount":{"shape":"Long"}
-      }
-    },
-    "MonthlyAnalyticsList":{
-      "type":"list",
-      "member":{"shape":"MonthlyAnalytics"}
-    },
     "NotAuthorizedException":{
       "type":"structure",
       "required":["message"],
       "members":{
         "message":{"shape":"ExceptionMessage"}
       },
-      "error":{"httpStatusCode":403},
+      "error":{
+        "code":"NotAuthorizedError",
+        "httpStatusCode":403,
+        "senderFault":true
+      },
       "exception":true
     },
     "Operation":{
@@ -777,7 +808,11 @@
       "members":{
         "message":{"shape":"ExceptionMessage"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "code":"ResourceConflict",
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "ResourceNotFoundException":{
@@ -786,7 +821,11 @@
       "members":{
         "message":{"shape":"ExceptionMessage"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "code":"ResourceNotFound",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "String":{"type":"string"},
@@ -797,7 +836,11 @@
       "members":{
         "message":{"shape":"ExceptionMessage"}
       },
-      "error":{"httpStatusCode":429},
+      "error":{
+        "code":"TooManyRequests",
+        "httpStatusCode":429,
+        "senderFault":true
+      },
       "exception":true
     },
     "UpdateRecordsRequest":{
@@ -805,7 +848,8 @@
       "required":[
         "IdentityPoolId",
         "IdentityId",
-        "DatasetName"
+        "DatasetName",
+        "SyncSessionToken"
       ],
       "members":{
         "IdentityPoolId":{
@@ -824,7 +868,12 @@
           "locationName":"DatasetName"
         },
         "RecordPatches":{"shape":"RecordPatchList"},
-        "SyncSessionToken":{"shape":"SyncSessionToken"}
+        "SyncSessionToken":{"shape":"SyncSessionToken"},
+        "ClientContext":{
+          "shape":"ClientContext",
+          "location":"header",
+          "locationName":"x-amz-Client-Context"
+        }
       }
     },
     "UpdateRecordsResponse":{

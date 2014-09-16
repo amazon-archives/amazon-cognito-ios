@@ -2,7 +2,7 @@
  * Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  */
 
-#import "CognitoSyncService.h"
+#import "CognitoSync.h"
 
 #import "AWSCognito.h"
 #import "AWSCognitoDataset.h"

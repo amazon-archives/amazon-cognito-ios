@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		38A185C4195B380600EC1973 /* credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 38A185C3195B380600EC1973 /* credentials.json */; };
 		38AF636F195D533F00B60C52 /* CognitoTestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AF636E195D533F00B60C52 /* CognitoTestUtils.m */; };
+		81961CBB7855415DB16C6F2E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9626AFDEA643329CF01FC4 /* libPods.a */; };
 		CE3C44B219AD11C300B47B97 /* cib-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = CE3C44AF19AD11C300B47B97 /* cib-2014-06-30.json */; };
 		CE3C44B319AD11C300B47B97 /* mobileanalytics-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = CE3C44B019AD11C300B47B97 /* mobileanalytics-2014-06-30.json */; };
 		CE3C44B419AD11C300B47B97 /* sts-2011-06-15.json in Resources */ = {isa = PBXBuildFile; fileRef = CE3C44B119AD11C300B47B97 /* sts-2011-06-15.json */; };
-		CE6459DC19959E49009BC7E3 /* css-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = CE6B654B1959093A00A79407 /* css-2014-06-30.json */; };
 		CE6B64FA195907FD00A79407 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B64F9195907FD00A79407 /* Foundation.framework */; };
 		CE6B6508195907FD00A79407 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B6507195907FD00A79407 /* XCTest.framework */; };
 		CE6B6509195907FD00A79407 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B64F9195907FD00A79407 /* Foundation.framework */; };
@@ -25,8 +25,6 @@
 		CE6B65541959093A00A79407 /* AWSCognitoConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6B65351959093A00A79407 /* AWSCognitoConstants.m */; };
 		CE6B65561959093A00A79407 /* AWSCognitoSQLiteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6B653E1959093A00A79407 /* AWSCognitoSQLiteManager.m */; };
 		CE6B65571959093A00A79407 /* AWSCognitoUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6B65401959093A00A79407 /* AWSCognitoUtil.m */; };
-		CE6B65591959093A00A79407 /* AWSCognitoSyncService.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6B65461959093A00A79407 /* AWSCognitoSyncService.m */; };
-		CE6B655A1959093A00A79407 /* AWSCognitoSyncServiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6B65481959093A00A79407 /* AWSCognitoSyncServiceModel.m */; };
 		CE6B655E19590AE300A79407 /* AmazonCognitoSqliteManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6B655B19590AE300A79407 /* AmazonCognitoSqliteManagerTests.m */; };
 		CE6B655F19590AE300A79407 /* AWSCognitoClientTest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6B655C19590AE300A79407 /* AWSCognitoClientTest.m */; };
 		CE6B656019590AE300A79407 /* AWSCognitoSyncServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6B655D19590AE300A79407 /* AWSCognitoSyncServiceTests.m */; };
@@ -34,6 +32,9 @@
 		CE6B656A19590EFF00A79407 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B656919590EFF00A79407 /* SystemConfiguration.framework */; };
 		CE6B656C19590F0600A79407 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B656B19590F0600A79407 /* libz.dylib */; };
 		CE6B656E19590F0A00A79407 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B656D19590F0A00A79407 /* libsqlite3.dylib */; };
+		CE7635D019BFAF27005FD5D0 /* css-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = CE7635CF19BFAF21005FD5D0 /* css-2014-06-30.json */; };
+		CEB7176419BFB2E2005D64F4 /* AWSCognitoSync.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7635CB19BFAF21005FD5D0 /* AWSCognitoSync.m */; };
+		CEB7176519BFB2E2005D64F4 /* AWSCognitoSyncModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7635CD19BFAF21005FD5D0 /* AWSCognitoSyncModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,26 +88,26 @@
 		CE6B65331959093A00A79407 /* AWSCognitoConflict_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoConflict_Internal.h; sourceTree = "<group>"; };
 		CE6B65341959093A00A79407 /* AWSCognitoConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoConstants.h; sourceTree = "<group>"; };
 		CE6B65351959093A00A79407 /* AWSCognitoConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoConstants.m; sourceTree = "<group>"; };
-		CE6B65361959093A00A79407 /* AWSCognitoDataset_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoDataset_Internal.h; sourceTree = "<group>"; };
+		CE6B65361959093A00A79407 /* AWSCognitoDataset_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AWSCognitoDataset_Internal.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CE6B65391959093A00A79407 /* AWSCognitoRecord_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoRecord_Internal.h; sourceTree = "<group>"; };
 		CE6B653D1959093A00A79407 /* AWSCognitoSQLiteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSQLiteManager.h; sourceTree = "<group>"; };
 		CE6B653E1959093A00A79407 /* AWSCognitoSQLiteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSQLiteManager.m; sourceTree = "<group>"; };
 		CE6B653F1959093A00A79407 /* AWSCognitoUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoUtil.h; sourceTree = "<group>"; };
 		CE6B65401959093A00A79407 /* AWSCognitoUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoUtil.m; sourceTree = "<group>"; };
-		CE6B65451959093A00A79407 /* AWSCognitoSyncService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSyncService.h; sourceTree = "<group>"; };
-		CE6B65461959093A00A79407 /* AWSCognitoSyncService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSyncService.m; sourceTree = "<group>"; };
-		CE6B65471959093A00A79407 /* AWSCognitoSyncServiceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSyncServiceModel.h; sourceTree = "<group>"; };
-		CE6B65481959093A00A79407 /* AWSCognitoSyncServiceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSyncServiceModel.m; sourceTree = "<group>"; };
-		CE6B65491959093A00A79407 /* CognitoSyncService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CognitoSyncService.h; sourceTree = "<group>"; };
-		CE6B654B1959093A00A79407 /* css-2014-06-30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "css-2014-06-30.json"; sourceTree = "<group>"; };
 		CE6B655B19590AE300A79407 /* AmazonCognitoSqliteManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazonCognitoSqliteManagerTests.m; sourceTree = "<group>"; };
-		CE6B655C19590AE300A79407 /* AWSCognitoClientTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoClientTest.m; sourceTree = "<group>"; };
-		CE6B655D19590AE300A79407 /* AWSCognitoSyncServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSyncServiceTests.m; sourceTree = "<group>"; };
+		CE6B655C19590AE300A79407 /* AWSCognitoClientTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AWSCognitoClientTest.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		CE6B655D19590AE300A79407 /* AWSCognitoSyncServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AWSCognitoSyncServiceTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CE6B656219590BB600A79407 /* AWSiOSSDKCognitoSyncTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWSiOSSDKCognitoSyncTests-Prefix.pch"; sourceTree = "<group>"; };
 		CE6B656519590D6E00A79407 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CE6B656919590EFF00A79407 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		CE6B656B19590F0600A79407 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		CE6B656D19590F0A00A79407 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		CE7635CA19BFAF21005FD5D0 /* AWSCognitoSync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSync.h; sourceTree = "<group>"; };
+		CE7635CB19BFAF21005FD5D0 /* AWSCognitoSync.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AWSCognitoSync.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		CE7635CC19BFAF21005FD5D0 /* AWSCognitoSyncModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSyncModel.h; sourceTree = "<group>"; };
+		CE7635CD19BFAF21005FD5D0 /* AWSCognitoSyncModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSyncModel.m; sourceTree = "<group>"; };
+		CE7635CF19BFAF21005FD5D0 /* css-2014-06-30.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; lineEnding = 0; path = "css-2014-06-30.json"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.javascript; };
+		CE7635D119BFAF8E005FD5D0 /* CognitoSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CognitoSync.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +116,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE6B64FA195907FD00A79407 /* Foundation.framework in Frameworks */,
+				81961CBB7855415DB16C6F2E /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,7 +151,6 @@
 			isa = PBXGroup;
 			children = (
 				CE6B651F1959093A00A79407 /* Cognito */,
-				CE6B65441959093A00A79407 /* CognitoSyncService */,
 				CE6B64FC195907FD00A79407 /* Supporting Files */,
 				CE6B650F195907FD00A79407 /* AWSiOSSDKCognitoSyncTests */,
 				CE6B64F8195907FD00A79407 /* Frameworks */,
@@ -228,6 +229,7 @@
 				38A185C5195B65E400EC1973 /* AWSCognitoHandlers.h */,
 				CE6B65291959093A00A79407 /* AWSCognitoRecord.h */,
 				CE6B652A1959093A00A79407 /* AWSCognitoRecord.m */,
+				CE7635C919BFAF21005FD5D0 /* CognitoSync */,
 				CE6B65321959093A00A79407 /* Internal */,
 			);
 			path = Cognito;
@@ -249,45 +251,28 @@
 			path = Internal;
 			sourceTree = "<group>";
 		};
-		CE6B65441959093A00A79407 /* CognitoSyncService */ = {
+		CE7635C919BFAF21005FD5D0 /* CognitoSync */ = {
 			isa = PBXGroup;
 			children = (
-				CE6B65451959093A00A79407 /* AWSCognitoSyncService.h */,
-				CE6B65461959093A00A79407 /* AWSCognitoSyncService.m */,
-				CE6B65471959093A00A79407 /* AWSCognitoSyncServiceModel.h */,
-				CE6B65481959093A00A79407 /* AWSCognitoSyncServiceModel.m */,
-				CE6B65491959093A00A79407 /* CognitoSyncService.h */,
-				CE6B654A1959093A00A79407 /* Resources */,
+				CE7635D119BFAF8E005FD5D0 /* CognitoSync.h */,
+				CE7635CA19BFAF21005FD5D0 /* AWSCognitoSync.h */,
+				CE7635CB19BFAF21005FD5D0 /* AWSCognitoSync.m */,
+				CE7635CC19BFAF21005FD5D0 /* AWSCognitoSyncModel.h */,
+				CE7635CD19BFAF21005FD5D0 /* AWSCognitoSyncModel.m */,
+				CE7635CE19BFAF21005FD5D0 /* Resources */,
 			);
-			path = CognitoSyncService;
-			sourceTree = "<group>";
+			path = CognitoSync;
+			sourceTree = SOURCE_ROOT;
 		};
-		CE6B654A1959093A00A79407 /* Resources */ = {
+		CE7635CE19BFAF21005FD5D0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CE6B654B1959093A00A79407 /* css-2014-06-30.json */,
+				CE7635CF19BFAF21005FD5D0 /* css-2014-06-30.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
-
-/* Begin PBXLegacyTarget section */
-		CE7318EF19AD252600676C82 /* framework */ = {
-			isa = PBXLegacyTarget;
-			buildArgumentsString = "$(ACTION)";
-			buildConfigurationList = CE7318F019AD252700676C82 /* Build configuration list for PBXLegacyTarget "framework" */;
-			buildPhases = (
-			);
-			buildToolPath = Scripts/Package.sh;
-			buildWorkingDirectory = "";
-			dependencies = (
-			);
-			name = framework;
-			passBuildSettingsInEnvironment = 1;
-			productName = framework;
-		};
-/* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
 		CE6B64F5195907FD00A79407 /* AWSiOSSDKCognitoSync */ = {
@@ -355,7 +340,6 @@
 			targets = (
 				CE6B64F5195907FD00A79407 /* AWSiOSSDKCognitoSync */,
 				CE6B6505195907FD00A79407 /* AWSiOSSDKCognitoSyncTests */,
-				CE7318EF19AD252600676C82 /* framework */,
 			);
 		};
 /* End PBXProject section */
@@ -370,7 +354,7 @@
 				CE3C44B319AD11C300B47B97 /* mobileanalytics-2014-06-30.json in Resources */,
 				38A185C4195B380600EC1973 /* credentials.json in Resources */,
 				CE6B6514195907FD00A79407 /* InfoPlist.strings in Resources */,
-				CE6459DC19959E49009BC7E3 /* css-2014-06-30.json in Resources */,
+				CE7635D019BFAF27005FD5D0 /* css-2014-06-30.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,14 +398,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEB7176419BFB2E2005D64F4 /* AWSCognitoSync.m in Sources */,
+				CEB7176519BFB2E2005D64F4 /* AWSCognitoSyncModel.m in Sources */,
 				CE6B65561959093A00A79407 /* AWSCognitoSQLiteManager.m in Sources */,
 				CE6B65501959093A00A79407 /* AWSCognitoRecord.m in Sources */,
 				CE6B65541959093A00A79407 /* AWSCognitoConstants.m in Sources */,
 				CE6B654E1959093A00A79407 /* AWSCognitoConflict.m in Sources */,
-				CE6B65591959093A00A79407 /* AWSCognitoSyncService.m in Sources */,
 				CE6B654F1959093A00A79407 /* AWSCognitoDataset.m in Sources */,
 				CE6B654C1959093A00A79407 /* AWSCognito.m in Sources */,
-				CE6B655A1959093A00A79407 /* AWSCognitoSyncServiceModel.m in Sources */,
 				CE6B65571959093A00A79407 /* AWSCognitoUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -463,7 +447,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -501,7 +484,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -536,7 +518,7 @@
 				DSTROOT = /tmp/AWSiOSSDKCognitoSync.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AWSiOSSDKCognitoSync/AWSiOSSDKCognitoSync-Prefix.pch";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -549,7 +531,7 @@
 				DSTROOT = /tmp/AWSiOSSDKCognitoSync.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AWSiOSSDKCognitoSync/AWSiOSSDKCognitoSync-Prefix.pch";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -621,232 +603,6 @@
 			};
 			name = Release;
 		};
-		CE7318E919AD247700676C82 /* Debug64 */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-			};
-			name = Debug64;
-		};
-		CE7318EA19AD247700676C82 /* Debug64 */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0FEEC0373BB943BB865DCF59 /* Pods.xcconfig */;
-			buildSettings = {
-				DSTROOT = /tmp/AWSiOSSDKCognitoSync.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AWSiOSSDKCognitoSync/AWSiOSSDKCognitoSync-Prefix.pch";
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug64;
-		};
-		CE7318EB19AD247700676C82 /* Debug64 */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AWSiOSSDKCognitoSyncTests/AWSiOSSDKCognitoSyncTests-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"${SRCROOT}/Pods/Headers/**",
-				);
-				INFOPLIST_FILE = "AWSiOSSDKCognitoSyncTests/AWSiOSSDKCognitoSyncTests-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					XCTest,
-					"-ObjC",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug64;
-		};
-		CE7318EC19AD247900676C82 /* Release64 */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				SDKROOT = iphoneos;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release64;
-		};
-		CE7318ED19AD247900676C82 /* Release64 */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0FEEC0373BB943BB865DCF59 /* Pods.xcconfig */;
-			buildSettings = {
-				DSTROOT = /tmp/AWSiOSSDKCognitoSync.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AWSiOSSDKCognitoSync/AWSiOSSDKCognitoSync-Prefix.pch";
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Release64;
-		};
-		CE7318EE19AD247900676C82 /* Release64 */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AWSiOSSDKCognitoSyncTests/AWSiOSSDKCognitoSyncTests-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"${SRCROOT}/Pods/Headers/**",
-				);
-				INFOPLIST_FILE = "AWSiOSSDKCognitoSyncTests/AWSiOSSDKCognitoSyncTests-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					XCTest,
-					"-ObjC",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release64;
-		};
-		CE7318F119AD252700676C82 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEBUGGING_SYMBOLS = YES;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-			};
-			name = Debug;
-		};
-		CE7318F219AD252700676C82 /* Debug64 */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEBUGGING_SYMBOLS = YES;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-			};
-			name = Debug64;
-		};
-		CE7318F319AD252700676C82 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-			};
-			name = Release;
-		};
-		CE7318F419AD252700676C82 /* Release64 */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-			};
-			name = Release64;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -854,9 +610,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE6B6517195907FD00A79407 /* Debug */,
-				CE7318E919AD247700676C82 /* Debug64 */,
 				CE6B6518195907FD00A79407 /* Release */,
-				CE7318EC19AD247900676C82 /* Release64 */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -865,9 +619,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE6B651A195907FD00A79407 /* Debug */,
-				CE7318EA19AD247700676C82 /* Debug64 */,
 				CE6B651B195907FD00A79407 /* Release */,
-				CE7318ED19AD247900676C82 /* Release64 */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -876,22 +628,10 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE6B651D195907FD00A79407 /* Debug */,
-				CE7318EB19AD247700676C82 /* Debug64 */,
 				CE6B651E195907FD00A79407 /* Release */,
-				CE7318EE19AD247900676C82 /* Release64 */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
-		};
-		CE7318F019AD252700676C82 /* Build configuration list for PBXLegacyTarget "framework" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CE7318F119AD252700676C82 /* Debug */,
-				CE7318F219AD252700676C82 /* Debug64 */,
-				CE7318F319AD252700676C82 /* Release */,
-				CE7318F419AD252700676C82 /* Release64 */,
-			);
-			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

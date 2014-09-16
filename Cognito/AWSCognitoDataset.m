@@ -11,7 +11,7 @@
 #import "AWSCognitoConflict_Internal.h"
 #import "AWSLogging.h"
 #import "AWSCognitoRecord.h"
-#import "CognitoSyncService.h"
+#import "CognitoSync.h"
 #import "Reachability.h"
 
 @interface AWSCognitoDatasetMetadata()
@@ -47,7 +47,7 @@
 @property (nonatomic, strong) NSString *syncSessionToken;
 @property (nonatomic, strong) AWSCognitoSQLiteManager *sqliteManager;
 
-@property (nonatomic, strong) AWSCognitoSyncService *cognitoService;
+@property (nonatomic, strong) AWSCognitoSync *cognitoService;
 
 @property (nonatomic, strong) Reachability *reachability;
 
@@ -57,7 +57,9 @@
 
 @implementation AWSCognitoDataset
 
--(id)initWithDatasetName:(NSString *) datasetName sqliteManager:(AWSCognitoSQLiteManager *)sqliteManager cognitoService:(AWSCognitoSyncService *)cognitoService {
+-(id)initWithDatasetName:(NSString *) datasetName
+           sqliteManager:(AWSCognitoSQLiteManager *)sqliteManager
+          cognitoService:(AWSCognitoSync *)cognitoService {
     if(self = [super initWithDatasetName:datasetName dataSource:sqliteManager]) {
         _sqliteManager = sqliteManager;
         _cognitoService = cognitoService;
@@ -296,7 +298,7 @@
 - (BFTask *)syncPull:(uint32_t)remainingAttempts {
     
     //list records that have changed since last sync
-    AWSCognitoSyncServiceListRecordsRequest *request = [AWSCognitoSyncServiceListRecordsRequest new];
+    AWSCognitoSyncListRecordsRequest *request = [AWSCognitoSyncListRecordsRequest new];
     request.identityPoolId = ((AWSCognitoCredentialsProvider *)self.cognitoService.configuration.credentialsProvider).identityPoolId;
     request.identityId = ((AWSCognitoCredentialsProvider *)self.cognitoService.configuration.credentialsProvider).identityId;
     request.datasetName = self.name;
@@ -321,7 +323,7 @@
             NSMutableArray *existingRecords = [NSMutableArray new];
             // keep track of record names for notificaiton
             NSMutableArray *changedRecordNames = [NSMutableArray new];
-            AWSCognitoSyncServiceListRecordsResponse *response = task.result;
+            AWSCognitoSyncListRecordsResponse *response = task.result;
             self.syncSessionToken = response.syncSessionToken;
             
             // check the response if dataset is present. If not and we have
@@ -360,7 +362,7 @@
             if(response.records){
                 // get the dataset sync count for updating the last sync count
                 self.lastSyncCount = response.datasetSyncCount;
-                for(AWSCognitoSyncServiceRecord *record in response.records){
+                for(AWSCognitoSyncRecord *record in response.records){
                     [existingRecords addObject:record.key];
                     [changedRecordNames addObject:record.key];
                     
@@ -451,11 +453,11 @@
     
     //collect local changes
     for(AWSCognitoRecord *record in self.records.allValues){
-        AWSCognitoSyncServiceRecordPatch *patch = [AWSCognitoSyncServiceRecordPatch new];
+        AWSCognitoSyncRecordPatch *patch = [AWSCognitoSyncRecordPatch new];
         patch.key = record.recordId;
         patch.syncCount = [NSNumber numberWithLongLong: record.syncCount];
         patch.value = record.data.string;
-        patch.op = [record isDeleted]?AWSCognitoSyncServiceOperationRemove : AWSCognitoSyncServiceOperationReplace;
+        patch.op = [record isDeleted]?AWSCognitoSyncOperationRemove : AWSCognitoSyncOperationReplace;
         [patches addObject:patch];
     }
     
@@ -468,7 +470,7 @@
             return [BFTask taskWithError:error];
         }
 
-        AWSCognitoSyncServiceUpdateRecordsRequest *request = [AWSCognitoSyncServiceUpdateRecordsRequest new];
+        AWSCognitoSyncUpdateRecordsRequest *request = [AWSCognitoSyncUpdateRecordsRequest new];
         request.identityId = ((AWSCognitoCredentialsProvider *)self.cognitoService.configuration.credentialsProvider).identityId;
         request.identityPoolId = ((AWSCognitoCredentialsProvider *)self.cognitoService.configuration.credentialsProvider).identityPoolId;
         request.datasetName = self.name;
@@ -482,7 +484,7 @@
                 [self postDidFailToSynchronizeNotification:error];
                 return [BFTask taskWithError:error];
             }else if(task.error){
-                if(task.error.code == AWSCognitoSyncServiceErrorResourceConflict){
+                if(task.error.code == AWSCognitoSyncErrorResourceConflict){
                     AWSLogInfo("Conflicts existed on update, restarting synchronize.");
                     return [self synchronizeInternal:remainingAttempts-1];
                 }
@@ -491,11 +493,11 @@
                 }
                 return task;
             }else{
-                AWSCognitoSyncServiceUpdateRecordsResponse * response = task.result;
+                AWSCognitoSyncUpdateRecordsResponse * response = task.result;
                 if(response.records) {
                     NSMutableArray *changedRecords = [NSMutableArray new];
                     NSMutableArray *changedRecordsNames = [NSMutableArray new];
-                    for (AWSCognitoSyncServiceRecord * record in response.records) {
+                    for (AWSCognitoSyncRecord * record in response.records) {
                         [changedRecordsNames addObject:record.key];
                         AWSCognitoRecordValueType recordType = AWSCognitoRecordValueTypeString;
                         if (record.value == nil) {
@@ -585,7 +587,7 @@
     
     //delete the dataset if it no longer exists
     if([self.currentSyncCount intValue] == -1){
-        AWSCognitoSyncServiceDeleteDatasetRequest *request = [AWSCognitoSyncServiceDeleteDatasetRequest new];
+        AWSCognitoSyncDeleteDatasetRequest *request = [AWSCognitoSyncDeleteDatasetRequest new];
         request.identityPoolId = ((AWSCognitoCredentialsProvider *)self.cognitoService.configuration.credentialsProvider).identityPoolId;
         request.identityId = ((AWSCognitoCredentialsProvider *)self.cognitoService.configuration.credentialsProvider).identityId;
         request.datasetName = self.name;
@@ -594,7 +596,7 @@
                 NSError *error = [NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil];
                 [self postDidFailToSynchronizeNotification:error];
                 return [BFTask taskWithError:error];
-            } else if(task.error && task.error.code != AWSCognitoSyncServiceErrorResourceNotFound){
+            } else if(task.error && task.error.code != AWSCognitoSyncErrorResourceNotFound){
                 AWSLogError(@"Unable to delete dataset: %@", task.error);
                 return task;
             } else {

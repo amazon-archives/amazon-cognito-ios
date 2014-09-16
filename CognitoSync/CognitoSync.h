@@ -3,4 +3,5 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "AWSCognitoSyncService.h"
+#import "AWSCore.h"
+#import "AWSCognitoSync.h"

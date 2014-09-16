@@ -97,15 +97,15 @@ NSString *_facebookId = nil;
     AWSStaticCredentialsProvider *credentialsProvider = [AWSStaticCredentialsProvider credentialsWithCredentialsFilename:@"credentials"];
     AWSServiceConfiguration *configuration = [AWSServiceConfiguration  configurationWithRegion:AWSRegionUSEast1
                                                                            credentialsProvider:credentialsProvider];
-    AWSCognitoIdentityService *cib = [[AWSCognitoIdentityService alloc] initWithConfiguration:configuration];
+    AWSCognitoIdentity *cib = [[AWSCognitoIdentity alloc] initWithConfiguration:configuration];
     
-    AWSCognitoIdentityServiceCreateIdentityPoolInput *createPoolForAuthProvider = [AWSCognitoIdentityServiceCreateIdentityPoolInput new];
+    AWSCognitoIdentityCreateIdentityPoolInput *createPoolForAuthProvider = [AWSCognitoIdentityCreateIdentityPoolInput new];
     createPoolForAuthProvider.identityPoolName = @"CognitoSynciOSTests";
     createPoolForAuthProvider.allowUnauthenticatedIdentities = @YES;
     createPoolForAuthProvider.supportedLoginProviders = @{@"graph.facebook.com" : AWSCognitoClientTestsFacebookAppID};
     
     [[[cib createIdentityPool:createPoolForAuthProvider] continueWithSuccessBlock:^id(BFTask *task) {
-        AWSCognitoIdentityServiceIdentityPool *identityPool = task.result;
+        AWSCognitoIdentityIdentityPool *identityPool = task.result;
         _identityPoolId = identityPool.identityPoolId;
         
         return nil;
@@ -117,9 +117,9 @@ NSString *_facebookId = nil;
     AWSStaticCredentialsProvider *credentialsProvider = [AWSStaticCredentialsProvider credentialsWithCredentialsFilename:@"credentials"];
     AWSServiceConfiguration *configuration = [AWSServiceConfiguration  configurationWithRegion:AWSRegionUSEast1
                                                                            credentialsProvider:credentialsProvider];
-    AWSCognitoIdentityService *cib = [[AWSCognitoIdentityService alloc] initWithConfiguration:configuration];
+    AWSCognitoIdentity *cib = [[AWSCognitoIdentity alloc] initWithConfiguration:configuration];
     
-    AWSCognitoIdentityServiceDeleteIdentityPoolInput *deletePoolForAuth = [AWSCognitoIdentityServiceDeleteIdentityPoolInput new];
+    AWSCognitoIdentityDeleteIdentityPoolInput *deletePoolForAuth = [AWSCognitoIdentityDeleteIdentityPoolInput new];
     deletePoolForAuth.identityPoolId = _identityPoolId;
     [[cib deleteIdentityPool:deletePoolForAuth] waitUntilFinished];
     
