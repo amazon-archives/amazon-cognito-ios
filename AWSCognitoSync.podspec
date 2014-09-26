@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'AWSCognitoSync'
-  s.version      = '1.0.3'
+  s.version      = '1.0.4'
   s.summary      = 'Amazon Cognito SDK for iOS'
 
   s.description  = 'Amazon Cognito offers multi device data synchronization with offline access'
@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'CognitoSyncClient' do |cognito|
-    cognito.dependency 'AWSCognitoSync/CognitoSyncService'
+    cognito.dependency 'AWSCognitoSync/CognitoSync'
     cognito.source_files = 'Cognito/**/*.{h,m}'
     cognito.public_header_files = "Cognito/*.h"
   end

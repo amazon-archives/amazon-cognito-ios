@@ -23,6 +23,9 @@ NSString *const AWSCognitoDidChangeRemoteValueNotification = @"com.amazon.cognit
 NSString *const AWSCognitoDidFailToSynchronizeNotification = @"com.amazon.cognito.AWSCognitoDidFailToSynchronizeNotification";
 NSString *const AWSCognitoUnknownDataTypeNotification = @"com.amazon.cognito.AWSCognitoUnknownDataTypeNotification";
 
+// For the cognito client to communicate to open datasets
+NSString *const AWSCognitoIdentityIdChangedInternalNotification = @"com.amazonaws.services.cognitoidentity.AWSCognitoIdentityIdChangedInternalNotification";
+
 NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDomain";
 
 @interface AWSCognito()
@@ -78,7 +81,7 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
         _cognitoService = [[AWSCognitoSync alloc] initWithConfiguration:configuration];
         
         // register to know when the identity on our provider changes
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(identityChanged:) name:AWSCognitoIdentityIdChangedNotification object:_configuration.credentialsProvider];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(identityChanged:) name:AWSCognitoIdentityIdChangedNotification object:_cognitoCredentialsProvider.identityProvider];
     }
     
     return self;
@@ -99,7 +102,7 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
     dataset.synchronizeOnWiFiOnly = self.synchronizeOnWiFiOnly;
     
     // register the dataset to receive notifications from this instance when the identity changes
-    [[NSNotificationCenter defaultCenter] addObserver:dataset selector:@selector(identityChanged:) name:AWSCognitoIdentityIdChangedNotification object:self];
+    [[NSNotificationCenter defaultCenter] addObserver:dataset selector:@selector(identityChanged:) name:AWSCognitoIdentityIdChangedInternalNotification object:self];
     
     return dataset;
 }
@@ -154,7 +157,7 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
         
         // Now that we've udpated the data, notify open datasets
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:AWSCognitoIdentityIdChangedNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:AWSCognitoIdentityIdChangedInternalNotification
                                                                 object:self
                                                               userInfo:notification.userInfo];
         });
