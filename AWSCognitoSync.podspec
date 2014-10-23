@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'AWSCognitoSync'
-  s.version      = '1.0.4'
+  s.version      = '1.0.5'
   s.summary      = 'Amazon Cognito SDK for iOS'
 
   s.description  = 'Amazon Cognito offers multi device data synchronization with offline access'
@@ -12,19 +12,12 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '7.0'
   s.source       = { :git => 'https://github.com/aws/amazon-cognito-ios.git',
                      :tag => s.version}
-  s.library      = 'sqlite3'
-
   s.dependency 'AWSiOSSDKv2'
-
   s.requires_arc = true
 
-  s.subspec 'CognitoSync' do |cognitosync|
-    cognitosync.source_files = 'CognitoSync/*.{h,m}'
-  end
-
-  s.subspec 'CognitoSyncClient' do |cognito|
-    cognito.dependency 'AWSCognitoSync/CognitoSync'
-    cognito.source_files = 'Cognito/**/*.{h,m}'
-    cognito.public_header_files = "Cognito/*.h"
+  s.subspec 'Cognito' do |cognito|
+    cognito.source_files = 'Cognito/*.{h,m}', 'Cognito/**/*.{h,m}', 'CognitoSync/*.{h,m}', 'CognitoSync/**/*.{h,m}'
+    cognito.public_header_files = 'Cognito/*.h, 'CognitoSync/*.h'
+    cognito.resources = ['CognitoSync/Resources/*.json']
   end
 end
