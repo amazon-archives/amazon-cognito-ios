@@ -32,17 +32,18 @@ NSString *const AWSCognitoSyncDefinitionFileName = @"css-2014-06-30";
 static NSDictionary *errorCodeDictionary = nil;
 + (void)initialize {
     errorCodeDictionary = @{
-                            @"IncompleteSignature" : @(AWSCognitoSyncErrorIncompleteSignature),
-                            @"InvalidClientTokenId" : @(AWSCognitoSyncErrorInvalidClientTokenId),
-                            @"MissingAuthenticationToken" : @(AWSCognitoSyncErrorMissingAuthenticationToken),
-                            @"InternalErrorException" : @(AWSCognitoSyncErrorInternalError),
-                            @"InvalidParameterException" : @(AWSCognitoSyncErrorInvalidParameter),
-                            @"LimitExceededException" : @(AWSCognitoSyncErrorLimitExceeded),
-                            @"NotAuthorizedException" : @(AWSCognitoSyncErrorNotAuthorized),
-                            @"ResourceConflictException" : @(AWSCognitoSyncErrorResourceConflict),
-                            @"ResourceNotFoundException" : @(AWSCognitoSyncErrorResourceNotFound),
-                            @"TooManyRequestsException" : @(AWSCognitoSyncErrorTooManyRequests),
-                            };
+                             @"IncompleteSignature" : @(AWSCognitoSyncErrorIncompleteSignature),
+                             @"InvalidClientTokenId" : @(AWSCognitoSyncErrorInvalidClientTokenId),
+                             @"MissingAuthenticationToken" : @(AWSCognitoSyncErrorMissingAuthenticationToken),
+                             @"InternalErrorException" : @(AWSCognitoSyncErrorInternalError),
+                             @"InvalidConfigurationException" : @(AWSCognitoSyncErrorInvalidConfiguration),
+                             @"InvalidParameterException" : @(AWSCognitoSyncErrorInvalidParameter),
+                             @"LimitExceededException" : @(AWSCognitoSyncErrorLimitExceeded),
+                             @"NotAuthorizedException" : @(AWSCognitoSyncErrorNotAuthorized),
+                             @"ResourceConflictException" : @(AWSCognitoSyncErrorResourceConflict),
+                             @"ResourceNotFoundException" : @(AWSCognitoSyncErrorResourceNotFound),
+                             @"TooManyRequestsException" : @(AWSCognitoSyncErrorTooManyRequests),
+                             };
 }
 
 + (instancetype)serializerWithOutputClass:(Class)outputClass
@@ -239,7 +240,7 @@ static NSDictionary *errorCodeDictionary = nil;
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodDELETE
                      URLString:@"/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}"
-                  targetPrefix:@"AWSCognitoSyncService"
+                  targetPrefix:@""
                  operationName:@"DeleteDataset"
                    outputClass:[AWSCognitoSyncDeleteDatasetResponse class]];
 }
@@ -248,7 +249,7 @@ static NSDictionary *errorCodeDictionary = nil;
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodGET
                      URLString:@"/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}"
-                  targetPrefix:@"AWSCognitoSyncService"
+                  targetPrefix:@""
                  operationName:@"DescribeDataset"
                    outputClass:[AWSCognitoSyncDescribeDatasetResponse class]];
 }
@@ -257,7 +258,7 @@ static NSDictionary *errorCodeDictionary = nil;
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodGET
                      URLString:@"/identitypools/{IdentityPoolId}"
-                  targetPrefix:@"AWSCognitoSyncService"
+                  targetPrefix:@""
                  operationName:@"DescribeIdentityPoolUsage"
                    outputClass:[AWSCognitoSyncDescribeIdentityPoolUsageResponse class]];
 }
@@ -266,16 +267,25 @@ static NSDictionary *errorCodeDictionary = nil;
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodGET
                      URLString:@"/identitypools/{IdentityPoolId}/identities/{IdentityId}"
-                  targetPrefix:@"AWSCognitoSyncService"
+                  targetPrefix:@""
                  operationName:@"DescribeIdentityUsage"
                    outputClass:[AWSCognitoSyncDescribeIdentityUsageResponse class]];
+}
+
+- (BFTask *)getIdentityPoolConfiguration:(AWSCognitoSyncGetIdentityPoolConfigurationRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodGET
+                     URLString:@"/identitypools/{IdentityPoolId}/configuration"
+                  targetPrefix:@""
+                 operationName:@"GetIdentityPoolConfiguration"
+                   outputClass:[AWSCognitoSyncGetIdentityPoolConfigurationResponse class]];
 }
 
 - (BFTask *)listDatasets:(AWSCognitoSyncListDatasetsRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodGET
                      URLString:@"/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets"
-                  targetPrefix:@"AWSCognitoSyncService"
+                  targetPrefix:@""
                  operationName:@"ListDatasets"
                    outputClass:[AWSCognitoSyncListDatasetsResponse class]];
 }
@@ -284,7 +294,7 @@ static NSDictionary *errorCodeDictionary = nil;
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodGET
                      URLString:@"/identitypools"
-                  targetPrefix:@"AWSCognitoSyncService"
+                  targetPrefix:@""
                  operationName:@"ListIdentityPoolUsage"
                    outputClass:[AWSCognitoSyncListIdentityPoolUsageResponse class]];
 }
@@ -293,16 +303,52 @@ static NSDictionary *errorCodeDictionary = nil;
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodGET
                      URLString:@"/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}/records"
-                  targetPrefix:@"AWSCognitoSyncService"
+                  targetPrefix:@""
                  operationName:@"ListRecords"
                    outputClass:[AWSCognitoSyncListRecordsResponse class]];
+}
+
+- (BFTask *)registerDevice:(AWSCognitoSyncRegisterDeviceRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/identitypools/{IdentityPoolId}/identity/{IdentityId}/device"
+                  targetPrefix:@""
+                 operationName:@"RegisterDevice"
+                   outputClass:[AWSCognitoSyncRegisterDeviceResponse class]];
+}
+
+- (BFTask *)setIdentityPoolConfiguration:(AWSCognitoSyncSetIdentityPoolConfigurationRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/identitypools/{IdentityPoolId}/configuration"
+                  targetPrefix:@""
+                 operationName:@"SetIdentityPoolConfiguration"
+                   outputClass:[AWSCognitoSyncSetIdentityPoolConfigurationResponse class]];
+}
+
+- (BFTask *)subscribeToDataset:(AWSCognitoSyncSubscribeToDatasetRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}/subscriptions/{DeviceId}"
+                  targetPrefix:@""
+                 operationName:@"SubscribeToDataset"
+                   outputClass:[AWSCognitoSyncSubscribeToDatasetResponse class]];
+}
+
+- (BFTask *)unsubscribeFromDataset:(AWSCognitoSyncUnsubscribeFromDatasetRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodDELETE
+                     URLString:@"/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}/subscriptions/{DeviceId}"
+                  targetPrefix:@""
+                 operationName:@"UnsubscribeFromDataset"
+                   outputClass:[AWSCognitoSyncUnsubscribeFromDatasetResponse class]];
 }
 
 - (BFTask *)updateRecords:(AWSCognitoSyncUpdateRecordsRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodPOST
                      URLString:@"/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}"
-                  targetPrefix:@"AWSCognitoSyncService"
+                  targetPrefix:@""
                  operationName:@"UpdateRecords"
                    outputClass:[AWSCognitoSyncUpdateRecordsResponse class]];
 }

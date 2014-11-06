@@ -34,6 +34,8 @@ FOUNDATION_EXPORT uint32_t const AWSCognitoMaxKeySize;
 FOUNDATION_EXPORT uint32_t const AWSCognitoMaxRecordValueSize;
 FOUNDATION_EXPORT uint32_t const AWSCognitoMaxNumRecords;
 
+FOUNDATION_EXPORT NSString *const AWSCognitoSyncPushApns;
+FOUNDATION_EXPORT NSString *const AWSCognitoSyncPushApnsSandbox;
 
 #pragma mark - Standard error messages
 

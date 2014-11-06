@@ -140,6 +140,31 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 
 @end
 
+@implementation AWSCognitoSyncGetIdentityPoolConfigurationRequest
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"identityPoolId" : @"IdentityPoolId",
+             };
+}
+
+@end
+
+@implementation AWSCognitoSyncGetIdentityPoolConfigurationResponse
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"identityPoolId" : @"IdentityPoolId",
+             @"pushSync" : @"PushSync",
+             };
+}
+
++ (NSValueTransformer *)pushSyncJSONTransformer {
+	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncPushSync class]];
+}
+
+@end
+
 @implementation AWSCognitoSyncIdentityPoolUsage
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
@@ -278,6 +303,17 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 
 @end
 
+@implementation AWSCognitoSyncPushSync
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"applicationArns" : @"ApplicationArns",
+             @"roleArn" : @"RoleArn",
+             };
+}
+
+@end
+
 @implementation AWSCognitoSyncRecord
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
@@ -353,12 +389,132 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 
 @end
 
+@implementation AWSCognitoSyncRegisterDeviceRequest
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"identityId" : @"IdentityId",
+             @"identityPoolId" : @"IdentityPoolId",
+             @"platform" : @"Platform",
+             @"token" : @"Token",
+             };
+}
+
++ (NSValueTransformer *)platformJSONTransformer {
+    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value isEqualToString:@"APNS"]) {
+            return @(AWSCognitoSyncPlatformApns);
+        }
+        if ([value isEqualToString:@"APNS_SANDBOX"]) {
+            return @(AWSCognitoSyncPlatformApnsSandbox);
+        }
+        if ([value isEqualToString:@"GCM"]) {
+            return @(AWSCognitoSyncPlatformGcm);
+        }
+        if ([value isEqualToString:@"ADM"]) {
+            return @(AWSCognitoSyncPlatformAdm);
+        }
+        return @(AWSCognitoSyncPlatformUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSCognitoSyncPlatformApns:
+                return @"APNS";
+            case AWSCognitoSyncPlatformApnsSandbox:
+                return @"APNS_SANDBOX";
+            case AWSCognitoSyncPlatformGcm:
+                return @"GCM";
+            case AWSCognitoSyncPlatformAdm:
+                return @"ADM";
+            case AWSCognitoSyncPlatformUnknown:
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
+@implementation AWSCognitoSyncRegisterDeviceResponse
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"deviceId" : @"DeviceId",
+             };
+}
+
+@end
+
+@implementation AWSCognitoSyncSetIdentityPoolConfigurationRequest
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"identityPoolId" : @"IdentityPoolId",
+             @"pushSync" : @"PushSync",
+             };
+}
+
++ (NSValueTransformer *)pushSyncJSONTransformer {
+	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncPushSync class]];
+}
+
+@end
+
+@implementation AWSCognitoSyncSetIdentityPoolConfigurationResponse
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"identityPoolId" : @"IdentityPoolId",
+             @"pushSync" : @"PushSync",
+             };
+}
+
++ (NSValueTransformer *)pushSyncJSONTransformer {
+	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncPushSync class]];
+}
+
+@end
+
+@implementation AWSCognitoSyncSubscribeToDatasetRequest
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"datasetName" : @"DatasetName",
+             @"deviceId" : @"DeviceId",
+             @"identityId" : @"IdentityId",
+             @"identityPoolId" : @"IdentityPoolId",
+             };
+}
+
+@end
+
+@implementation AWSCognitoSyncSubscribeToDatasetResponse
+
+@end
+
+@implementation AWSCognitoSyncUnsubscribeFromDatasetRequest
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"datasetName" : @"DatasetName",
+             @"deviceId" : @"DeviceId",
+             @"identityId" : @"IdentityId",
+             @"identityPoolId" : @"IdentityPoolId",
+             };
+}
+
+@end
+
+@implementation AWSCognitoSyncUnsubscribeFromDatasetResponse
+
+@end
+
 @implementation AWSCognitoSyncUpdateRecordsRequest
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"clientContext" : @"ClientContext",
              @"datasetName" : @"DatasetName",
+             @"deviceId" : @"DeviceId",
              @"identityId" : @"IdentityId",
              @"identityPoolId" : @"IdentityPoolId",
              @"recordPatches" : @"RecordPatches",

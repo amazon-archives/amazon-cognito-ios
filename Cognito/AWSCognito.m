@@ -15,6 +15,7 @@
 #import "AWSClientContext.h"
 #import "AWSCognitoHandlers.h"
 #import "AWSCognitoConflict_Internal.h"
+#import "UICKeyChainStore.h"
 
 NSString *const AWSCognitoDidStartSynchronizeNotification = @"com.amazon.cognito.AWSCognitoDidStartSynchronizeNotification";
 NSString *const AWSCognitoDidEndSynchronizeNotification = @"com.amazon.cognito.AWSCognitoDidEndSynchronizeNotification";
@@ -28,6 +29,8 @@ NSString *const AWSCognitoIdentityIdChangedInternalNotification = @"com.amazonaw
 
 NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDomain";
 
+static UICKeyChainStore *keychain = nil;
+
 @interface AWSCognito()
 {
 }
@@ -35,12 +38,18 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
 @property (nonatomic, strong) AWSCognitoSQLiteManager *sqliteManager;
 @property (nonatomic, strong) AWSCognitoSync *cognitoService;
 @property (nonatomic, strong) AWSCognitoCredentialsProvider *cognitoCredentialsProvider;
+@property (nonatomic, strong) UICKeyChainStore *keychain;
+
 
 @end
 
 @implementation AWSCognito
 
 #pragma mark - Setups
+
++ (void) initialize {
+    keychain = [UICKeyChainStore keyChainStoreWithService:[NSString stringWithFormat:@"%@.%@", [NSBundle mainBundle].bundleIdentifier, [AWSCognito class]]];
+}
 
 + (instancetype)defaultCognito {
     if (![AWSServiceManager defaultServiceManager].defaultServiceConfiguration) {
@@ -71,8 +80,10 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
     if (self = [super init]) {
         _configuration = [configuration copy];
         _cognitoCredentialsProvider = _configuration.credentialsProvider;
+
         // set other default values
-        _deviceId = @"LOCAL";
+        NSString * serviceDeviceId = [AWSCognito cognitoDeviceId];
+        _deviceId = (serviceDeviceId) == nil ? @"LOCAL" : serviceDeviceId;
         _synchronizeRetries = AWSCognitoMaxSyncRetries;
         _synchronizeOnWiFiOnly = AWSCognitoSynchronizeOnWiFiOnly;
         
@@ -82,6 +93,8 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
         
         // register to know when the identity on our provider changes
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(identityChanged:) name:AWSCognitoIdentityIdChangedNotification object:_cognitoCredentialsProvider.identityProvider];
+        
+
     }
     
     return self;
@@ -165,6 +178,75 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
     else {
         // TODO: How do we surface this error?
     }
+}
+
++(NSString *) cognitoDeviceId {
+    return keychain[[AWSCognitoUtil deviceIdKey]];
+}
+
+-(BFTask *)registerDevice:(NSData *) deviceToken {
+    const unsigned char* bytes = (const unsigned char*)[deviceToken bytes];
+    NSMutableString * devTokenHex = [[NSMutableString alloc] initWithCapacity:2*deviceToken.length];
+    for(int i=0; i<deviceToken.length; i++){
+        [devTokenHex appendFormat:@"%02X",bytes[i]];
+    }
+    return [self registerDeviceInternal:devTokenHex];
+}
+
+-(BFTask *)registerDeviceInternal:(NSString *) deviceToken {
+    NSString *currentDeviceId = [AWSCognito cognitoDeviceId];
+    
+    if(currentDeviceId){
+        return [BFTask taskWithResult:currentDeviceId];
+    }
+    return [[[self.cognitoCredentialsProvider getIdentityId] continueWithBlock:^id(BFTask *task) {
+        if (task.error) {
+            return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoAuthenticationFailed userInfo:nil]];
+        }
+        AWSCognitoSyncRegisterDeviceRequest* request = [AWSCognitoSyncRegisterDeviceRequest new];
+        request.platform = [AWSCognitoUtil pushPlatform];
+        request.token = deviceToken;
+        request.identityPoolId = self.cognitoCredentialsProvider.identityPoolId;
+        request.identityId = self.cognitoCredentialsProvider.identityId;
+        return [self.cognitoService registerDevice:request];
+    }] continueWithBlock:^id(BFTask *task) {
+        if(task.isCancelled){
+            return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil]];
+        }else if(task.error){
+            AWSLogError(@"Unable to register device: %@", task.error);
+            return task;
+        }else {
+            AWSCognitoSyncRegisterDeviceResponse* response = task.result;
+            keychain[[AWSCognitoUtil deviceIdKey]] = response.deviceId;
+            [keychain synchronize];
+            [self setDeviceId:response.deviceId];
+            return [BFTask taskWithResult:response.deviceId];
+        }
+    }];
+}
+
+-(BFTask *)subscribe:(NSArray *) datasetNames {
+    NSMutableArray *tasks = [NSMutableArray new];
+    for (NSString * datasetName in datasetNames) {
+        [tasks addObject:[[self openOrCreateDataset:datasetName] subscribe]];
+    }
+    return [BFTask taskForCompletionOfAllTasks:tasks];
+}
+
+-(BFTask *)subscribeAll {
+    return [self subscribe:[self listDatasets]];
+}
+
+-(BFTask *)unsubscribe:(NSArray *) datasetNames {
+    NSMutableArray *tasks = [NSMutableArray new];
+    for (NSString * datasetName in datasetNames) {
+        [tasks addObject:[[self openOrCreateDataset:datasetName] unsubscribe]];
+    }
+    return [BFTask taskForCompletionOfAllTasks:tasks];
+}
+
+-(BFTask *)unsubscribeAll {
+    return [self unsubscribe:[self listDatasets]];
 }
 
 + (AWSCognitoRecordConflictHandler) defaultConflictHandler {

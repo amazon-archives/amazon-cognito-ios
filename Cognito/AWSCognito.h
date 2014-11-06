@@ -76,6 +76,7 @@ extern NSString *const AWSCognitoDidFailToSynchronizeNotification;
  * <li>AWSCognitoErrorConflictRetriesExhausted - The number of attempts to resolve a conflict 
  * has exceeded the max number of retries.</li>
  * <li>AWSCognitoErrorWiFiNotAvailable - WiFi is required and not currently available.</li>
+ * <li>AWSCognitoErrorDeviceNotRegistered - The device has not been registered yet.</li>
  * </ul>
  */
 FOUNDATION_EXPORT NSString *const AWSCognitoErrorDomain;
@@ -89,7 +90,8 @@ typedef NS_ENUM(NSInteger, AWSCognitoErrorType) {
     AWSCognitoAuthenticationFailed = -4000,
     AWSCognitoErrorTaskCanceled = -5000,
     AWSCognitoErrorConflictRetriesExhausted = -6000,
-    AWSCognitoErrorWiFiNotAvailable = -7000
+    AWSCognitoErrorWiFiNotAvailable = -7000,
+    AWSCognitoErrorDeviceNotRegistered = -8000,
 };
 
 @property (nonatomic, strong, readonly) AWSServiceConfiguration *configuration;
@@ -181,4 +183,45 @@ typedef NS_ENUM(NSInteger, AWSCognitoErrorType) {
  */
 + (AWSCognitoRecordConflictHandler) defaultConflictHandler;
 
+/**
+ * Register this device for push notifications.  You will not receive any notifications until you actually subscribe the
+ * dataset you want to receive push notifications for.  If your build targets Release, this will register the device
+ * with APNS, if your build targets Debug this will register the device with APNS_SANDBOX. Returns a BFTask. 
+ * The result of this task will be a AWSCognitoSyncRegisterDeviceResponse.
+ */
+-(BFTask *)registerDevice: (NSData *) deviceToken;
+
+/**
+ * Get the device id Cognito Sync gave this device. nil if device has never been registered
+ */
++(NSString *) cognitoDeviceId;
+
+
+/**
+ * Subscribe to a list of datasets.  Make sure you have called synchronize on each of the datasets in the list
+ * at least once prior to calling this. Returns a BFTask.  The result of this task will be a NSArray of
+ * AWSCognitoSyncSubscribeToDatasetResponse
+ */
+-(BFTask *) subscribe:(NSArray *) datasetNames;
+
+/**
+ * Subscribe to all datasets you have locally.  Make sure you have called synchronize on all of your local datasets
+ * at least once prior to calling this. Returns a BFTask.  The result of this task will be a NSArray of 
+ * AWSCognitoSyncSubscribeToDatasetResponse
+ * 
+ */
+-(BFTask *) subscribeAll;
+
+/**
+ * Unsubscribe to a list of datasets. Returns a BFTask.  The result of this task will be a NSArray of
+ * AWSCognitoSyncUnsubscribeToDatasetResponse
+ */
+-(BFTask *)unsubscribe:(NSArray *) datasetNames;
+
+/**
+ * Unsubscribe to all datasets you have locally.  Make sure you have called synchronize on all of your local datasets
+ * at least once prior to calling this. Returns a BFTask.  The result of this task will be a NSArray of
+ * AWSCognitoSyncUnsubscribeToDatasetResponse
+ */
+-(BFTask *) unsubscribeAll;
 @end

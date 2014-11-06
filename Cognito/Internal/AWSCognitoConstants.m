@@ -26,6 +26,9 @@ int64_t const AWSCognitoNotSyncedDeletedRecordDirty = -1;
 NSString* const AWSCognitoDeletedRecord = @"\0";
 NSString *const AWSCognitoUserDefaultsUserAgentPrefix = @"CognitoV1.0";
 
+NSString *const AWSCognitoSyncPushApns = @"APNS";
+NSString *const AWSCognitoSyncPushApnsSandbox = @"APNS_SANDBOX";
+
 uint32_t const AWSCognitoMaxSyncRetries = 5;
 BOOL const AWSCognitoSynchronizeOnWiFiOnly = NO;
 

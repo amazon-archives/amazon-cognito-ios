@@ -302,7 +302,7 @@
     request.identityPoolId = ((AWSCognitoCredentialsProvider *)self.cognitoService.configuration.credentialsProvider).identityPoolId;
     request.identityId = ((AWSCognitoCredentialsProvider *)self.cognitoService.configuration.credentialsProvider).identityId;
     request.datasetName = self.name;
-    request.lastSyncCount = [NSString stringWithFormat:@"%lld", [self.currentSyncCount longLongValue]];
+    request.lastSyncCount = self.currentSyncCount;
     request.syncSessionToken = self.syncSessionToken;
     
     self.lastSyncCount = self.currentSyncCount;
@@ -476,6 +476,7 @@
         request.datasetName = self.name;
         request.recordPatches = patches;
         request.syncSessionToken = self.syncSessionToken;
+        request.deviceId = [AWSCognito cognitoDeviceId];
         return [[self.cognitoService updateRecords:request] continueWithBlock:^id(BFTask *task) {
             NSNumber * currentSyncCount = self.lastSyncCount;
             BOOL okToUpdateSyncCount = YES;
@@ -631,6 +632,54 @@
     }else{
         return [self synchronize];
     }
+}
+
+-(BFTask *)subscribe {
+    NSString *currentDeviceId = [AWSCognito cognitoDeviceId];
+    
+    if(!currentDeviceId){
+        return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorDeviceNotRegistered userInfo:nil]];
+    }
+
+    AWSCognitoSyncSubscribeToDatasetRequest* request = [AWSCognitoSyncSubscribeToDatasetRequest new];
+    request.identityPoolId = ((AWSCognitoCredentialsProvider *)self.cognitoService.configuration.credentialsProvider).identityPoolId;
+    request.identityId = ((AWSCognitoCredentialsProvider *)self.cognitoService.configuration.credentialsProvider).identityId;
+    request.datasetName = self.name;
+    request.deviceId = currentDeviceId;
+    return [[self.cognitoService subscribeToDataset:request] continueWithBlock:^id(BFTask *task) {
+        if(task.isCancelled){
+            return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil]];
+        }else if(task.error){
+            AWSLogError(@"Unable to subscribe dataset: %@", task.error);
+            return task;
+        }else {
+            return [BFTask taskWithResult:task.result];
+        }
+    }];
+}
+
+-(BFTask *)unsubscribe {
+    NSString *currentDeviceId = [AWSCognito cognitoDeviceId];
+    
+    if(!currentDeviceId){
+        return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorDeviceNotRegistered userInfo:nil]];
+    }
+    
+    AWSCognitoSyncUnsubscribeFromDatasetRequest* request = [AWSCognitoSyncUnsubscribeFromDatasetRequest new];
+    request.identityPoolId = ((AWSCognitoCredentialsProvider *)self.cognitoService.configuration.credentialsProvider).identityPoolId;
+    request.identityId = ((AWSCognitoCredentialsProvider *)self.cognitoService.configuration.credentialsProvider).identityId;
+    request.datasetName = self.name;
+    request.deviceId = currentDeviceId;
+    return [[self.cognitoService unsubscribeFromDataset:request] continueWithBlock:^id(BFTask *task) {
+        if(task.isCancelled){
+            return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil]];
+        }else if(task.error){
+            AWSLogError(@"Unable to unsubscribe dataset: %@", task.error);
+            return task;
+        }else {
+            return [BFTask taskWithResult:task.result];
+        }
+    }];
 }
 
 #pragma mark IdentityMerge

@@ -115,6 +115,16 @@
  */
 - (BFTask *)synchronizeOnConnectivity;
 
+/**
+ * Subscribes this dataset to push notifications
+ */
+- (BFTask *)subscribe;
+
+/**
+ * Unsubscribes this dataset to push notifications
+ */
+- (BFTask *)unsubscribe;
+
 
 /**
  * Returns all of the records in the dataset. Will return deleted records.
@@ -150,6 +160,8 @@
  * Returns the size in bytes for the specified key.
  */
 - (long) sizeForKey:(NSString *) aKey;
+
+
 
 
 @end

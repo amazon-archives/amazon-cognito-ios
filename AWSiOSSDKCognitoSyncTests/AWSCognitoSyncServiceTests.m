@@ -78,7 +78,7 @@ AWSCognitoSync *_client;
     listRequest.datasetName = @"tokentest";
     listRequest.identityPoolId = [CognitoTestUtils identityPoolId];
     listRequest.identityId = _identityId;
-    listRequest.lastSyncCount = @"0";
+    listRequest.lastSyncCount = @0;
     
     __block NSString *_sessionToken = nil;
     [[[_client listRecords:listRequest] continueWithBlock:^id(BFTask *task) {

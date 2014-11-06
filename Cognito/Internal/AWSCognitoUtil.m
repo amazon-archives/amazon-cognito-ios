@@ -173,4 +173,26 @@
     return type >= AWSCognitoRecordValueTypeUnknown && type <= AWSCognitoRecordValueTypeDeleted;
 }
 
+
+#pragma mark Push notifications
++ (NSString *) pushPlatformString {
+    #ifdef DEBUG
+        return AWSCognitoSyncPushApnsSandbox;
+    #else
+        return AWSCognitoSyncPushApns;
+    #endif
+}
+
++ (AWSCognitoSyncPlatform) pushPlatform {
+    #ifdef DEBUG
+        return AWSCognitoSyncPlatformApnsSandbox;
+    #else
+        return AWSCognitoSyncPlatformApns;
+    #endif
+}
+
++ (NSString *) deviceIdKey {
+    return [NSString stringWithFormat:@"Cognito-%@-DeviceId", [AWSCognitoUtil pushPlatformString]];
+}
+
 @end

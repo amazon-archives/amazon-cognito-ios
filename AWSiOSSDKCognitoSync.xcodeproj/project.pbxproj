@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		38A185C4195B380600EC1973 /* credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 38A185C3195B380600EC1973 /* credentials.json */; };
 		38AF636F195D533F00B60C52 /* CognitoTestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AF636E195D533F00B60C52 /* CognitoTestUtils.m */; };
-		81961CBB7855415DB16C6F2E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9626AFDEA643329CF01FC4 /* libPods.a */; };
 		CE3C44B219AD11C300B47B97 /* cib-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = CE3C44AF19AD11C300B47B97 /* cib-2014-06-30.json */; };
 		CE3C44B319AD11C300B47B97 /* mobileanalytics-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = CE3C44B019AD11C300B47B97 /* mobileanalytics-2014-06-30.json */; };
 		CE3C44B419AD11C300B47B97 /* sts-2011-06-15.json in Resources */ = {isa = PBXBuildFile; fileRef = CE3C44B119AD11C300B47B97 /* sts-2011-06-15.json */; };
+		CE6A80251A0C2B6600F7D425 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6A80241A0C2B6600F7D425 /* libz.dylib */; };
+		CE6A80271A0C2B6C00F7D425 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6A80261A0C2B6C00F7D425 /* libsqlite3.dylib */; };
 		CE6B64FA195907FD00A79407 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B64F9195907FD00A79407 /* Foundation.framework */; };
 		CE6B6508195907FD00A79407 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B6507195907FD00A79407 /* XCTest.framework */; };
 		CE6B6509195907FD00A79407 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B64F9195907FD00A79407 /* Foundation.framework */; };
@@ -30,9 +31,8 @@
 		CE6B656019590AE300A79407 /* AWSCognitoSyncServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6B655D19590AE300A79407 /* AWSCognitoSyncServiceTests.m */; };
 		CE6B656619590D6E00A79407 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B656519590D6E00A79407 /* UIKit.framework */; };
 		CE6B656A19590EFF00A79407 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B656919590EFF00A79407 /* SystemConfiguration.framework */; };
-		CE6B656C19590F0600A79407 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B656B19590F0600A79407 /* libz.dylib */; };
-		CE6B656E19590F0A00A79407 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B656D19590F0A00A79407 /* libsqlite3.dylib */; };
 		CE7635D019BFAF27005FD5D0 /* css-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = CE7635CF19BFAF21005FD5D0 /* css-2014-06-30.json */; };
+		CEAE06311A0C153C00338961 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAE06301A0C153C00338961 /* Security.framework */; };
 		CEB7176419BFB2E2005D64F4 /* AWSCognitoSync.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7635CB19BFAF21005FD5D0 /* AWSCognitoSync.m */; };
 		CEB7176519BFB2E2005D64F4 /* AWSCognitoSyncModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7635CD19BFAF21005FD5D0 /* AWSCognitoSyncModel.m */; };
 /* End PBXBuildFile section */
@@ -60,15 +60,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0FEEC0373BB943BB865DCF59 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		38A185C3195B380600EC1973 /* credentials.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = credentials.json; sourceTree = "<group>"; };
 		38A185C5195B65E400EC1973 /* AWSCognitoHandlers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWSCognitoHandlers.h; sourceTree = "<group>"; };
 		38AF636D195D533F00B60C52 /* CognitoTestUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CognitoTestUtils.h; sourceTree = "<group>"; };
 		38AF636E195D533F00B60C52 /* CognitoTestUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CognitoTestUtils.m; sourceTree = "<group>"; };
-		9F9626AFDEA643329CF01FC4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AD32F920757FD1B6EB1CE95 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		BDBCADE00CC979EA54574528 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		CE3C44AF19AD11C300B47B97 /* cib-2014-06-30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cib-2014-06-30.json"; sourceTree = "<group>"; };
 		CE3C44B019AD11C300B47B97 /* mobileanalytics-2014-06-30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mobileanalytics-2014-06-30.json"; sourceTree = "<group>"; };
 		CE3C44B119AD11C300B47B97 /* sts-2011-06-15.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "sts-2011-06-15.json"; sourceTree = "<group>"; };
+		CE6A80221A0C2B6000F7D425 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		CE6A80241A0C2B6600F7D425 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		CE6A80261A0C2B6C00F7D425 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		CE6B64F6195907FD00A79407 /* libAWSiOSSDKCognitoSync.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAWSiOSSDKCognitoSync.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE6B64F9195907FD00A79407 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CE6B64FD195907FD00A79407 /* AWSiOSSDKCognitoSync-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWSiOSSDKCognitoSync-Prefix.pch"; sourceTree = "<group>"; };
@@ -100,14 +103,13 @@
 		CE6B656219590BB600A79407 /* AWSiOSSDKCognitoSyncTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWSiOSSDKCognitoSyncTests-Prefix.pch"; sourceTree = "<group>"; };
 		CE6B656519590D6E00A79407 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CE6B656919590EFF00A79407 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		CE6B656B19590F0600A79407 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		CE6B656D19590F0A00A79407 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		CE7635CA19BFAF21005FD5D0 /* AWSCognitoSync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSync.h; sourceTree = "<group>"; };
 		CE7635CB19BFAF21005FD5D0 /* AWSCognitoSync.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AWSCognitoSync.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CE7635CC19BFAF21005FD5D0 /* AWSCognitoSyncModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSyncModel.h; sourceTree = "<group>"; };
 		CE7635CD19BFAF21005FD5D0 /* AWSCognitoSyncModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSyncModel.m; sourceTree = "<group>"; };
-		CE7635CF19BFAF21005FD5D0 /* css-2014-06-30.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; lineEnding = 0; path = "css-2014-06-30.json"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.javascript; };
+		CE7635CF19BFAF21005FD5D0 /* css-2014-06-30.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; lineEnding = 0; path = "css-2014-06-30.json"; sourceTree = "<group>"; };
 		CE7635D119BFAF8E005FD5D0 /* CognitoSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CognitoSync.h; sourceTree = "<group>"; };
+		CEAE06301A0C153C00338961 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,8 +117,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE6A80271A0C2B6C00F7D425 /* libsqlite3.dylib in Frameworks */,
+				CE6A80251A0C2B6600F7D425 /* libz.dylib in Frameworks */,
 				CE6B64FA195907FD00A79407 /* Foundation.framework in Frameworks */,
-				81961CBB7855415DB16C6F2E /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,8 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE6B656E19590F0A00A79407 /* libsqlite3.dylib in Frameworks */,
-				CE6B656C19590F0600A79407 /* libz.dylib in Frameworks */,
+				CEAE06311A0C153C00338961 /* Security.framework in Frameworks */,
 				CE6B656A19590EFF00A79407 /* SystemConfiguration.framework in Frameworks */,
 				CE6B656619590D6E00A79407 /* UIKit.framework in Frameworks */,
 				CE6B6508195907FD00A79407 /* XCTest.framework in Frameworks */,
@@ -147,6 +149,15 @@
 			name = ResourcesFromPods;
 			sourceTree = "<group>";
 		};
+		9FAA7F8CB23438B6E27153D5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9AD32F920757FD1B6EB1CE95 /* Pods.debug.xcconfig */,
+				BDBCADE00CC979EA54574528 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		CE6B64ED195907FD00A79407 = {
 			isa = PBXGroup;
 			children = (
@@ -155,7 +166,7 @@
 				CE6B650F195907FD00A79407 /* AWSiOSSDKCognitoSyncTests */,
 				CE6B64F8195907FD00A79407 /* Frameworks */,
 				CE6B64F7195907FD00A79407 /* Products */,
-				0FEEC0373BB943BB865DCF59 /* Pods.xcconfig */,
+				9FAA7F8CB23438B6E27153D5 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -171,13 +182,14 @@
 		CE6B64F8195907FD00A79407 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CE6B656D19590F0A00A79407 /* libsqlite3.dylib */,
-				CE6B656B19590F0600A79407 /* libz.dylib */,
+				CE6A80261A0C2B6C00F7D425 /* libsqlite3.dylib */,
+				CE6A80241A0C2B6600F7D425 /* libz.dylib */,
+				CE6A80221A0C2B6000F7D425 /* libPods.a */,
+				CEAE06301A0C153C00338961 /* Security.framework */,
 				CE6B656919590EFF00A79407 /* SystemConfiguration.framework */,
 				CE6B656519590D6E00A79407 /* UIKit.framework */,
 				CE6B64F9195907FD00A79407 /* Foundation.framework */,
 				CE6B6507195907FD00A79407 /* XCTest.framework */,
-				9F9626AFDEA643329CF01FC4 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -373,7 +385,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C2937C921DC6452A8AF01BEE /* Check Pods Manifest.lock */ = {
@@ -515,12 +527,29 @@
 		};
 		CE6B651A195907FD00A79407 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0FEEC0373BB943BB865DCF59 /* Pods.xcconfig */;
+			baseConfigurationReference = 9AD32F920757FD1B6EB1CE95 /* Pods.debug.xcconfig */;
 			buildSettings = {
+				CLANG_MODULES_AUTOLINK = NO;
 				DSTROOT = /tmp/AWSiOSSDKCognitoSync.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AWSiOSSDKCognitoSync/AWSiOSSDKCognitoSync-Prefix.pch";
-				OTHER_LDFLAGS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-weak_framework",
+					"\"UIKit\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -528,12 +557,29 @@
 		};
 		CE6B651B195907FD00A79407 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0FEEC0373BB943BB865DCF59 /* Pods.xcconfig */;
+			baseConfigurationReference = BDBCADE00CC979EA54574528 /* Pods.release.xcconfig */;
 			buildSettings = {
+				CLANG_MODULES_AUTOLINK = NO;
 				DSTROOT = /tmp/AWSiOSSDKCognitoSync.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AWSiOSSDKCognitoSync/AWSiOSSDKCognitoSync-Prefix.pch";
-				OTHER_LDFLAGS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-weak_framework",
+					"\"UIKit\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -563,12 +609,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					XCTest,
-					"-ObjC",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -593,12 +633,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					XCTest,
-					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
