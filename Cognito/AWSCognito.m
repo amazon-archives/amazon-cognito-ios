@@ -12,7 +12,6 @@
 #import "CognitoSync.h"
 #import "AWSCognitoDataset_Internal.h"
 #import "AWSLogging.h"
-#import "AWSClientContext.h"
 #import "AWSCognitoHandlers.h"
 #import "AWSCognitoConflict_Internal.h"
 #import "UICKeyChainStore.h"
