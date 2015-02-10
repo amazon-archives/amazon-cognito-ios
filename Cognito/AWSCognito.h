@@ -4,10 +4,12 @@
 
 #import "AWSService.h"
 #import "AWSCognitoHandlers.h"
+#import "AWSCognitoSync.h"
 
 @class AWSCognitoDataset;
 @class AWSCognitoCredentialsProvider;
 @class BFTask;
+
 
 @interface AWSCognito : AWSService
 
@@ -196,6 +198,21 @@ typedef NS_ENUM(NSInteger, AWSCognitoErrorType) {
  */
 +(NSString *) cognitoDeviceId;
 
+/**
+ * Used to override the platform for push notifications. If you are not using the CocoaPods distribution,
+ * #ifdef DEBUG
+ *  [[AWSCognito defaultCognito] setPushPlatform:AWSCognitoSyncPlatformApnsSandbox];
+ * #endif
+ * will set push notifications to use the APNS_SANDBOX if your build targets Debug.  Otherwise it will
+ * always use APNS.
+ */
+
++(void)setPushPlatform:(AWSCognitoSyncPlatform) pushPlatform;
+
+/**
+ * The push platform for push notifications
+ */
++(AWSCognitoSyncPlatform)pushPlatform;
 
 /**
  * Subscribe to a list of datasets.  Make sure you have called synchronize on each of the datasets in the list

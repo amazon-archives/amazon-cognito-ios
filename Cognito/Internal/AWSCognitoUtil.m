@@ -175,24 +175,24 @@
 
 
 #pragma mark Push notifications
-+ (NSString *) pushPlatformString {
-    #ifdef DEBUG
-        return AWSCognitoSyncPushApnsSandbox;
-    #else
-        return AWSCognitoSyncPushApns;
-    #endif
++ (NSString *) pushPlatformString: (AWSCognitoSyncPlatform) pushPlatform {
+    return (AWSCognitoSyncPlatformApns == pushPlatform)? AWSCognitoSyncPushApns : AWSCognitoSyncPushApnsSandbox;
 }
 
 + (AWSCognitoSyncPlatform) pushPlatform {
-    #ifdef DEBUG
-        return AWSCognitoSyncPlatformApnsSandbox;
-    #else
-        return AWSCognitoSyncPlatformApns;
-    #endif
+ #ifdef DEBUG
+    return AWSCognitoSyncPlatformApnsSandbox;
+ #else
+    return AWSCognitoSyncPlatformApns;
+ #endif
 }
 
-+ (NSString *) deviceIdKey {
-    return [NSString stringWithFormat:@"Cognito-%@-DeviceId", [AWSCognitoUtil pushPlatformString]];
++ (NSString *) deviceIdKey:(AWSCognitoSyncPlatform) pushPlatform {
+    return [NSString stringWithFormat:@"Cognito-%@-DeviceId", [AWSCognitoUtil pushPlatformString:pushPlatform]];
+}
+
++ (NSString *) deviceIdentityKey:(AWSCognitoSyncPlatform) pushPlatform {
+    return [NSString stringWithFormat:@"Cognito-%@-DeviceIdentity", [AWSCognitoUtil pushPlatformString:pushPlatform]];
 }
 
 @end

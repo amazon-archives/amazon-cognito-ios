@@ -450,6 +450,7 @@
     NSMutableArray *patches = [NSMutableArray new];
     NSError *error;
     self.records = [self.sqliteManager recordsUpdatedAfterLastSync:self.name error:&error];
+    NSNumber* maxPatchSyncCount = [NSNumber numberWithLongLong:0L];
     
     //collect local changes
     for(AWSCognitoRecord *record in self.records.allValues){
@@ -459,6 +460,11 @@
         patch.value = record.data.string;
         patch.op = [record isDeleted]?AWSCognitoSyncOperationRemove : AWSCognitoSyncOperationReplace;
         [patches addObject:patch];
+        
+        //track the max sync count
+        if([patch.syncCount longLongValue] > [maxPatchSyncCount longLongValue]){
+            maxPatchSyncCount = patch.syncCount;
+        }
     }
     
     // if there were local changes
@@ -487,6 +493,11 @@
             }else if(task.error){
                 if(task.error.code == AWSCognitoSyncErrorResourceConflict){
                     AWSLogInfo("Conflicts existed on update, restarting synchronize.");
+                    if(currentSyncCount > maxPatchSyncCount) {
+                        //it's possible there is a local dirty record with a stale sync count
+                        //this will fix it
+                        [self.sqliteManager updateLastSyncCount:self.name syncCount:maxPatchSyncCount lastModifiedBy:nil];
+                    }
                     return [self synchronizeInternal:remainingAttempts-1];
                 }
                 else {

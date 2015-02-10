@@ -367,11 +367,9 @@
     return success;
 }
 
-
-- (AWSCognitoRecord *)getRecordById:(NSString *)recordId datasetName:(NSString *)datasetName error:(NSError **)error {
+- (AWSCognitoRecord *)getRecordById_internal:(NSString *)recordId datasetName:(NSString *)datasetName error:(NSError **)error sync:(BOOL) sync{
     __block AWSCognitoRecord *record = nil;
-
-    dispatch_sync(self.dispatchQueue, ^{
+    void (^getRecord)() = ^{
         NSString *query = [NSString stringWithFormat:@"SELECT %@, %@, %@, %@, %@, %@ FROM %@ WHERE %@ = ? AND %@ = ? AND %@ = ?",
                            AWSCognitoLastModifiedFieldName,
                            AWSCognitoModifiedByFieldName,
@@ -384,9 +382,9 @@
                            AWSCognitoTableIdentityKeyName,
                            AWSCognitoTableDatasetKeyName
                            ];
-
+        
         AWSLogDebug(@"query = '%@'", query);
-
+        
         sqlite3_stmt *statement;
         if(sqlite3_prepare_v2(self.sqlite, [query UTF8String], -1, &statement, NULL) == SQLITE_OK)
         {
@@ -396,7 +394,7 @@
             
             sqlite3_bind_text(statement, 2, [identityId UTF8String], -1, SQLITE_TRANSIENT);
             sqlite3_bind_text(statement, 3, [datasetName UTF8String], -1, SQLITE_TRANSIENT);
-
+            
             if (sqlite3_step(statement) == SQLITE_ROW)
             {
                 int64_t lastMod = sqlite3_column_int64(statement, 0);
@@ -405,12 +403,12 @@
                 int64_t type = sqlite3_column_int64(statement, 3);
                 int64_t syncCount = sqlite3_column_int64(statement, 4);
                 int64_t dirtyInt = sqlite3_column_int64(statement, 5);
-
+                
                 NSString *modBy = [[NSString alloc] initWithUTF8String:modByChars];
                 NSString *data = [[NSString alloc] initWithUTF8String:dataChars];
-
+                
                 record = [[AWSCognitoRecord alloc] initWithId:recordId
-                                               data:[[AWSCognitoRecordValue alloc]initWithJson:data type:(int)type]];
+                                                         data:[[AWSCognitoRecordValue alloc]initWithJson:data type:(int)type]];
                 record.lastModifiedBy = modBy;
                 record.lastModified = [AWSCognitoUtil millisSinceEpochToDate:[NSNumber numberWithLongLong:lastMod]];
                 record.dirtyCount = dirtyInt;
@@ -425,12 +423,21 @@
                 *error = [AWSCognitoUtil errorLocalDataStorageFailed:[NSString stringWithFormat:@"%s", sqlite3_errmsg(self.sqlite)]];
             }
         }
-
+        
         sqlite3_reset(statement);
         sqlite3_finalize(statement);
-    });
-
+    };
+    if(sync){
+        dispatch_sync(self.dispatchQueue, getRecord);
+    }else{
+        getRecord();
+    }
+    
     return record;
+}
+
+- (AWSCognitoRecord *)getRecordById:(NSString *)recordId datasetName:(NSString *)datasetName error:(NSError **)error {
+    return [self getRecordById_internal:recordId datasetName:datasetName error:error sync:YES];
 }
 
 - (NSString *) identityId {
@@ -740,21 +747,34 @@
             sqlite3_bind_text(statement, 14, datasetNameChars, -1, SQLITE_TRANSIENT);
             
             if(SQLITE_DONE != sqlite3_step(statement)) {
-                AWSLogInfo(@"Error while inserting data: %s", sqlite3_errmsg(self.sqlite));
+                AWSLogInfo(@"Error while updating data: %s", sqlite3_errmsg(self.sqlite));
                 if(error != nil) {
                     *error = [AWSCognitoUtil errorLocalDataStorageFailed:[NSString stringWithFormat:@"%s", sqlite3_errmsg(self.sqlite)]];
                 }
+                [self resetStatement:statement];
+                return NO;
+            }
+            int numRows = sqlite3_changes(self.sqlite);
+            
+            //if no updates were made error out
+            if(numRows <1){
+                NSString *errorMsg = @"local value changed";
+                AWSLogInfo(@"Error while updating data: %@",errorMsg);
+                if(error != nil) {
+                    *error = [AWSCognitoUtil errorLocalDataStorageFailed:errorMsg];
+                }
+                [self resetStatement:statement];
+                return NO;
             }
         }
         else {
-            AWSLogInfo(@"Error creating insert statement: %s", sqlite3_errmsg(self.sqlite));
+            AWSLogInfo(@"Error creating update statement: %s", sqlite3_errmsg(self.sqlite));
             if(error != nil) {
                 *error = [AWSCognitoUtil errorLocalDataStorageFailed:[NSString stringWithFormat:@"%s", sqlite3_errmsg(self.sqlite)]];
             }
+            [self resetStatement:statement];
+            return NO;
         }
-        
-        sqlite3_reset(statement);
-        sqlite3_finalize(statement);
     }
     else { // Inserts the new data from the remote.
         NSString *sqlString = [NSString stringWithFormat:
@@ -809,6 +829,7 @@
                 if(error != nil) {
                     *error = [AWSCognitoUtil errorLocalDataStorageFailed:[NSString stringWithFormat:@"%s", sqlite3_errmsg(self.sqlite)]];
                 }
+                [self resetStatement:statement];
                 return NO;
             }
         }
@@ -817,16 +838,22 @@
             if(error != nil) {
                 *error = [AWSCognitoUtil errorLocalDataStorageFailed:[NSString stringWithFormat:@"%s", sqlite3_errmsg(self.sqlite)]];
             }
+            [self resetStatement:statement];
             return NO;
         }
-        
-        sqlite3_reset(statement);
-        sqlite3_finalize(statement);
     }
     
+    [self resetStatement:statement];
     return YES;
 }
 
+/**
+ * Resets and finalizes a statement
+ **/
+- (void)resetStatement:(sqlite3_stmt *) statement {
+    sqlite3_reset(statement);
+    sqlite3_finalize(statement);
+}
 
 - (BOOL)conditionallyPutResolvedRecords:(NSArray *) resolvedRecords datasetName:(NSString*)datasetName error:(NSError **)error {
     sqlite3_stmt *statement = nil;
@@ -906,7 +933,9 @@
                 {
                     *error = [AWSCognitoUtil errorLocalDataStorageFailed:[NSString stringWithFormat:@"%s", sqlite3_errmsg(self.sqlite)]];
                 }
-                return NO;                }
+                [self resetStatement:statement];
+                return NO;
+            }
         }
         
         sqlite3_reset(statement);
@@ -1088,11 +1117,16 @@
         for (AWSCognitoRecordTuple *tuple in updatedRecords) {
             if (![self conditionallyPutRecord:tuple.remoteRecord datasetName:datasetName withCurrentState:tuple.localRecord error:error]) {
                 // if this failed, try just updating the sync count and let the next sync push
-                AWSCognitoRecord *existingRecord = [self getRecordById:tuple.remoteRecord.recordId datasetName:datasetName error:error];
+                AWSCognitoRecord *existingRecord = [self getRecordById_internal:tuple.localRecord.recordId datasetName:datasetName error:error sync:NO];
                 if (existingRecord != nil) {
                     AWSCognitoRecord *newRecord = [existingRecord copy];
                     newRecord.syncCount = tuple.remoteRecord.syncCount;
                     if ([self conditionallyPutRecord:newRecord datasetName:datasetName withCurrentState:existingRecord error:error]) {
+                        //clear the error we were able to recover
+                        if(error != nil)
+                        {
+                            *error = nil;
+                        }
                         continue;
                     }
                 }

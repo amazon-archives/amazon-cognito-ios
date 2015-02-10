@@ -30,6 +30,8 @@ NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDoma
 
 static UICKeyChainStore *keychain = nil;
 
+static AWSCognitoSyncPlatform _pushPlatform;
+
 @interface AWSCognito()
 {
 }
@@ -39,7 +41,6 @@ static UICKeyChainStore *keychain = nil;
 @property (nonatomic, strong) AWSCognitoCredentialsProvider *cognitoCredentialsProvider;
 @property (nonatomic, strong) UICKeyChainStore *keychain;
 
-
 @end
 
 @implementation AWSCognito
@@ -48,6 +49,7 @@ static UICKeyChainStore *keychain = nil;
 
 + (void) initialize {
     keychain = [UICKeyChainStore keyChainStoreWithService:[NSString stringWithFormat:@"%@.%@", [NSBundle mainBundle].bundleIdentifier, [AWSCognito class]]];
+    _pushPlatform = [AWSCognitoUtil pushPlatform];
 }
 
 + (instancetype)defaultCognito {
@@ -89,7 +91,6 @@ static UICKeyChainStore *keychain = nil;
         _conflictHandler = [AWSCognito defaultConflictHandler];
         _sqliteManager = [[AWSCognitoSQLiteManager alloc] initWithIdentityId:_cognitoCredentialsProvider.identityId deviceId:_deviceId];
         _cognitoService = [[AWSCognitoSync alloc] initWithConfiguration:configuration];
-        
         // register to know when the identity on our provider changes
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(identityChanged:) name:AWSCognitoIdentityIdChangedNotification object:_cognitoCredentialsProvider.identityProvider];
         
@@ -180,7 +181,11 @@ static UICKeyChainStore *keychain = nil;
 }
 
 +(NSString *) cognitoDeviceId {
-    return keychain[[AWSCognitoUtil deviceIdKey]];
+    return keychain[[AWSCognitoUtil deviceIdKey:_pushPlatform]];
+}
+
++(NSString *) cognitoDeviceIdentity {
+    return keychain[[AWSCognitoUtil deviceIdentityKey:_pushPlatform]];
 }
 
 -(BFTask *)registerDevice:(NSData *) deviceToken {
@@ -193,17 +198,18 @@ static UICKeyChainStore *keychain = nil;
 }
 
 -(BFTask *)registerDeviceInternal:(NSString *) deviceToken {
-    NSString *currentDeviceId = [AWSCognito cognitoDeviceId];
-    
-    if(currentDeviceId){
-        return [BFTask taskWithResult:currentDeviceId];
-    }
     return [[[self.cognitoCredentialsProvider getIdentityId] continueWithBlock:^id(BFTask *task) {
         if (task.error) {
             return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoAuthenticationFailed userInfo:nil]];
         }
+        
+        NSString *currentDeviceId = [AWSCognito cognitoDeviceId];
+        NSString *currentDeviceIdentity = [AWSCognito cognitoDeviceIdentity];
+        if(currentDeviceId && currentDeviceIdentity && [self.cognitoCredentialsProvider.identityId isEqualToString:currentDeviceIdentity]){
+            return [BFTask taskWithResult:currentDeviceId];
+        }
         AWSCognitoSyncRegisterDeviceRequest* request = [AWSCognitoSyncRegisterDeviceRequest new];
-        request.platform = [AWSCognitoUtil pushPlatform];
+        request.platform = _pushPlatform;
         request.token = deviceToken;
         request.identityPoolId = self.cognitoCredentialsProvider.identityPoolId;
         request.identityId = self.cognitoCredentialsProvider.identityId;
@@ -216,12 +222,21 @@ static UICKeyChainStore *keychain = nil;
             return task;
         }else {
             AWSCognitoSyncRegisterDeviceResponse* response = task.result;
-            keychain[[AWSCognitoUtil deviceIdKey]] = response.deviceId;
+            keychain[[AWSCognitoUtil deviceIdKey:_pushPlatform]] = response.deviceId;
+            keychain[[AWSCognitoUtil deviceIdentityKey:_pushPlatform]] = self.cognitoCredentialsProvider.identityId;
             [keychain synchronize];
             [self setDeviceId:response.deviceId];
             return [BFTask taskWithResult:response.deviceId];
         }
     }];
+}
+
++(void)setPushPlatform:(AWSCognitoSyncPlatform) pushPlatform {
+    _pushPlatform = pushPlatform;
+}
+
++(AWSCognitoSyncPlatform)pushPlatform {
+    return _pushPlatform;
 }
 
 -(BFTask *)subscribe:(NSArray *) datasetNames {

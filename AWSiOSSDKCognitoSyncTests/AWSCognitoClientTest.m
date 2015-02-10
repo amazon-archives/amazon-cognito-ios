@@ -14,13 +14,43 @@
 @end
 
 
+@import ObjectiveC.runtime;
+
 NSString *_notificationDataset = @"notifications";
-NSString *_notificationKey = @"notification";
+NSString *_notificationKey = @"notificationKey";
+NSString *_concurrentDataset = @"concurrent";
+NSString *_concurrentKey = @"concurrentKey";
 BOOL _startReceived = NO;
 BOOL _endReceived = NO;
 BOOL _remoteChangeReceived = NO;
 BOOL _localChangeReceived = NO;
 BOOL _failedReceived = NO;
+
+Method _originalMethod;
+Method _mockMethod;
+
+
+@implementation AWSCognitoSQLiteManager(FailureInjection)
+
+#pragma mark - Mock/Failure Injection
+
+
+-(NSDictionary *)swizzled_recordsUpdatedAfterLastSync:(NSString *) datasetName error:(NSError **)error {
+    
+    // call the original implementation (which has been swapped with this method)
+    NSDictionary *returnValue = [self swizzled_recordsUpdatedAfterLastSync:datasetName error:error];
+    
+    // modify a value
+    AWSCognitoDataset *dataset = [[AWSCognito defaultCognito] openOrCreateDataset:_concurrentDataset];
+    [dataset setString:@"forced" forKey:_concurrentKey];
+    
+    // return the original result
+    return returnValue;
+}
+
+
+@end
+
 
 @implementation AWSCognitoClientTest
 + (void)setUp {    
@@ -29,11 +59,8 @@ BOOL _failedReceived = NO;
     
     
     AWSCognitoCredentialsProvider *provider = [AWSCognitoCredentialsProvider credentialsWithRegionType:AWSRegionUSEast1
-                                                                                             accountId:[CognitoTestUtils accountId]
-                                                                                        identityPoolId:[CognitoTestUtils identityPoolId]
-                                                                                         unauthRoleArn:[CognitoTestUtils unauthRoleArn]
-                                                                                           authRoleArn:[CognitoTestUtils authRoleArn]];
-
+                                                                                        identityPoolId:[CognitoTestUtils identityPoolId]];
+                                               
     
     AWSServiceConfiguration *configuration = [AWSServiceConfiguration configurationWithRegion:AWSRegionUSEast1 credentialsProvider:provider];
     
@@ -75,6 +102,20 @@ BOOL _failedReceived = NO;
         return nil;
     }] waitUntilFinished];
 }
+
+- (void)fakeLocalDirty:(NSString *)datasetName withKey:(NSString *)key {
+    // generate a remote update
+    AWSCognitoSync *client = [AWSCognitoSync defaultCognitoSync];
+    
+    // Create a sqlitemanager with a different ID
+    AWSCognitoSQLiteManager *manager = [[AWSCognitoSQLiteManager alloc] initWithIdentityId:((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityId deviceId:@"tester"];
+    
+    AWSCognitoRecord* record = [manager getRecordById:key datasetName:datasetName error:nil];
+    record.syncCount--;
+    
+    [manager putRecord:record datasetName:datasetName error:nil];
+}
+
 
 - (void)testSynchronize {
     AWSCognitoDataset* dataset = [[AWSCognito defaultCognito] openOrCreateDataset:@"mydataset"];
@@ -205,6 +246,95 @@ BOOL _failedReceived = NO;
         XCTAssertTrue(count + 1 == datasets.count, @"number of datasets should have increased");
         return nil;
     }] waitUntilFinished];
+}
+
+- (void)testSyncWithOldDirtyLocal {
+    NSString *datasetName = @"conflicts";
+    NSString *keyName = @"conflicting";
+    
+    
+    // create a dataset
+    AWSCognitoDataset* dataset = [[AWSCognito defaultCognito] openOrCreateDataset:datasetName];
+    [dataset setString:@"old" forKey:keyName];
+    
+    // call a sync
+    [[dataset synchronize] waitUntilFinished];
+    
+    // Modify the remote 
+    [self forceUpdate:datasetName withKey:keyName];
+    [dataset setString:@"test" forKey:keyName];
+    
+    // this should succeed
+    [[[dataset synchronize] continueWithBlock:^id(BFTask *task) {
+        XCTAssertNil(task.error, @"Error in synchronize [%@]", task.error);
+        return nil;
+    }] waitUntilFinished];
+    
+    
+    AWSCognitoRecord *record = [dataset recordForKey:keyName];
+    XCTAssertFalse(record.dirty, @"Record is dirty");
+    
+    // forcefully change the sync count of a local record to an older count
+    [self fakeLocalDirty:datasetName withKey:keyName];
+    
+    // this should succeed
+    [[[dataset synchronize] continueWithBlock:^id(BFTask *task) {
+        XCTAssertNil(task.error, @"Error in synchronize [%@]", task.error);
+        return nil;
+    }] waitUntilFinished];
+    
+    record = [dataset recordForKey:keyName];
+    XCTAssertFalse(record.dirty, @"Record is dirty");
+    
+    // delete the dataset
+    [dataset clear];
+    [[dataset synchronize] waitUntilFinished];
+}
+
+- (void)testSyncWithConcurrentModification {
+    
+    // create a dataset
+    AWSCognitoDataset* dataset = [[AWSCognito defaultCognito] openOrCreateDataset:_concurrentDataset];
+    [dataset setString:@"old" forKey:_concurrentKey];
+    
+    // call a sync
+    [[dataset synchronize] waitUntilFinished];
+    
+    // modify the record again
+    [dataset setString:@"new" forKey:_concurrentKey];
+    
+    // switch out this method to wrap it and modify the record after getting the list
+    _originalMethod = class_getInstanceMethod([AWSCognitoSQLiteManager class], @selector(recordsUpdatedAfterLastSync:error:));
+    _mockMethod = class_getInstanceMethod([AWSCognitoSQLiteManager class], @selector(swizzled_recordsUpdatedAfterLastSync:error:));
+    method_exchangeImplementations(_originalMethod, _mockMethod);
+    
+    // this should succeed
+    [[[dataset synchronize] continueWithBlock:^id(BFTask *task) {
+        XCTAssertNil(task.error, @"Error in synchronize [%@]", task.error);
+        return nil;
+    }] waitUntilFinished];
+    
+    // Check the record, should still be dirty
+    AWSCognitoRecord *record = [dataset recordForKey:_concurrentKey];
+    XCTAssertTrue(record.dirty, @"Record is not dirty");
+    XCTAssertTrue([record.data.string isEqualToString:@"forced"], @"Record doesn't have latest value");
+    
+    // switch back the implementations
+    method_exchangeImplementations(_originalMethod, _mockMethod);
+    
+    // this should succeed
+    [[[dataset synchronize] continueWithBlock:^id(BFTask *task) {
+        XCTAssertNil(task.error, @"Error in synchronize [%@]", task.error);
+        return nil;
+    }] waitUntilFinished];
+    
+    // Check the record, should now be clean
+    record = [dataset recordForKey:_concurrentKey];
+    XCTAssertFalse(record.dirty, @"Record is dirty");
+    
+    // delete the dataset
+    [dataset clear];
+    [[dataset synchronize] waitUntilFinished];
 }
 
 - (void)testSyncNotifications {
@@ -475,6 +605,7 @@ BOOL _failedReceived = NO;
 }
 
 #pragma mark - Notifications
+
 
 -(void)syncStartNotification:(NSNotification *) notification {
     NSString *datasetName = [notification.userInfo objectForKey:@"dataset"];

@@ -94,6 +94,9 @@ NSString *_facebookId = nil;
 + (void)createIdentityPool {
     [CognitoTestUtils loadConfig];
     
+    [AWSLogger defaultLogger].logLevel = AWSLogLevelVerbose;
+    
+    
     AWSStaticCredentialsProvider *credentialsProvider = [AWSStaticCredentialsProvider credentialsWithCredentialsFilename:@"credentials"];
     AWSServiceConfiguration *configuration = [AWSServiceConfiguration  configurationWithRegion:AWSRegionUSEast1
                                                                            credentialsProvider:credentialsProvider];
@@ -108,9 +111,15 @@ NSString *_facebookId = nil;
         AWSCognitoIdentityIdentityPool *identityPool = task.result;
         _identityPoolId = identityPool.identityPoolId;
         
-        return nil;
+        AWSCognitoIdentitySetIdentityPoolRolesInput *setRoles = [AWSCognitoIdentitySetIdentityPoolRolesInput new];
+        setRoles.roles = @{ @"unauthenticated": AWSCognitoClientTestsUnauthRoleArn,
+                            @"authenticated": AWSCognitoClientTestsAuthRoleArn};
+        setRoles.identityPoolId = _identityPoolId;
+        
+        return [cib setIdentityPoolRoles:setRoles];
     }] waitUntilFinished];
     
+    [NSThread sleepForTimeInterval:60];
 }
 
 + (void)deleteIdentityPool {

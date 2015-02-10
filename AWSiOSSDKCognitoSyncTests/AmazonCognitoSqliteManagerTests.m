@@ -199,11 +199,13 @@ NSString *const DatasetName = @"testDataset";
     NSMutableArray *records = [NSMutableArray arrayWithCapacity:2];
     AWSCognitoRecordValue* on = [[AWSCognitoRecordValue alloc] initWithString:@"on"];
     AWSCognitoRecord* record = [[AWSCognitoRecord alloc] initWithId:@"wifi" data:on];
+    record.lastModifiedBy = @"me";
     record.syncCount = 1;
-    [records addObject:[[AWSCognitoRecordTuple alloc] initWithLocalRecord:record remoteRecord:nil]];
+    [records addObject:[[AWSCognitoRecordTuple alloc] initWithLocalRecord:nil remoteRecord:record]];
     record = [[AWSCognitoRecord alloc] initWithId:@"rememberme" data:on];
     record.syncCount = 2;
-    [records addObject:[[AWSCognitoRecordTuple alloc] initWithLocalRecord:record remoteRecord:nil]];
+    record.lastModifiedBy = @"me";
+    [records addObject:[[AWSCognitoRecordTuple alloc] initWithLocalRecord:nil remoteRecord:record]];
     [self.manager updateLocalRecordMetadata:DatasetName records:records error:&error];
     [self.manager updateLastSyncCount:DatasetName syncCount:[NSNumber numberWithInt:2] lastModifiedBy:@"me"];
 

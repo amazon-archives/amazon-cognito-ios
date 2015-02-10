@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'AWSCognitoSync'
-  s.version      = '1.0.7'
+  s.version      = '1.0.8'
   s.summary      = 'Amazon Cognito SDK for iOS'
 
   s.description  = 'Amazon Cognito offers multi device data synchronization with offline access'
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '7.0'
   s.source       = { :git => 'https://github.com/aws/amazon-cognito-ios.git',
                      :tag => s.version}
-  s.dependency 'AWSiOSSDKv2'
+  s.dependency 'AWSiOSSDKv2', '~> 2.0.16'
   s.requires_arc = true
 
   s.subspec 'Cognito' do |cognito|
