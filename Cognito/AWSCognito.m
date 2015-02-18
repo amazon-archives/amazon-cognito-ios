@@ -224,7 +224,11 @@ static AWSCognitoSyncPlatform _pushPlatform;
             AWSCognitoSyncRegisterDeviceResponse* response = task.result;
             keychain[[AWSCognitoUtil deviceIdKey:_pushPlatform]] = response.deviceId;
             keychain[[AWSCognitoUtil deviceIdentityKey:_pushPlatform]] = self.cognitoCredentialsProvider.identityId;
-            [keychain synchronize];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+            if ([UICKeyChainStore instancesRespondToSelector:@selector(synchronize)])
+                 [keychain synchronize];
+#pragma clang diagnostic pop
             [self setDeviceId:response.deviceId];
             return [BFTask taskWithResult:response.deviceId];
         }
