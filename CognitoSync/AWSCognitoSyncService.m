@@ -1,8 +1,8 @@
 /**
- * Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  */
 
-#import "AWSCognitoSync.h"
+#import "AWSCognitoSyncService.h"
 #import "AWSNetworking.h"
 #import "AWSCategory.h"
 #import "AWSNetworking.h"
@@ -12,16 +12,11 @@
 #import "AWSURLRequestSerialization.h"
 #import "AWSURLResponseSerialization.h"
 #import "AWSURLRequestRetryHandler.h"
+#import "AWSSynchronizedMutableDictionary.h"
 
-NSString *const AWSCognitoSyncDefinitionFileName = @"css-2014-06-30";
+NSString *const AWSCognitoSyncDefinitionFileName = @"cognito-sync-2014-06-30";
 
 @interface AWSCognitoSyncResponseSerializer : AWSJSONResponseSerializer
-
-@property (nonatomic, assign) Class outputClass;
-
-+ (instancetype)serializerWithOutputClass:(Class)outputClass
-                                 resource:(NSString *)resource
-                               actionName:(NSString *)actionName;
 
 @end
 
@@ -32,27 +27,18 @@ NSString *const AWSCognitoSyncDefinitionFileName = @"css-2014-06-30";
 static NSDictionary *errorCodeDictionary = nil;
 + (void)initialize {
     errorCodeDictionary = @{
-                             @"IncompleteSignature" : @(AWSCognitoSyncErrorIncompleteSignature),
-                             @"InvalidClientTokenId" : @(AWSCognitoSyncErrorInvalidClientTokenId),
-                             @"MissingAuthenticationToken" : @(AWSCognitoSyncErrorMissingAuthenticationToken),
-                             @"InternalErrorException" : @(AWSCognitoSyncErrorInternalError),
-                             @"InvalidConfigurationException" : @(AWSCognitoSyncErrorInvalidConfiguration),
-                             @"InvalidParameterException" : @(AWSCognitoSyncErrorInvalidParameter),
-                             @"LimitExceededException" : @(AWSCognitoSyncErrorLimitExceeded),
-                             @"NotAuthorizedException" : @(AWSCognitoSyncErrorNotAuthorized),
-                             @"ResourceConflictException" : @(AWSCognitoSyncErrorResourceConflict),
-                             @"ResourceNotFoundException" : @(AWSCognitoSyncErrorResourceNotFound),
-                             @"TooManyRequestsException" : @(AWSCognitoSyncErrorTooManyRequests),
-                             };
-}
-
-+ (instancetype)serializerWithOutputClass:(Class)outputClass
-                                 resource:(NSString *)resource
-                               actionName:(NSString *)actionName {
-    AWSCognitoSyncResponseSerializer *serializer = [AWSCognitoSyncResponseSerializer serializerWithResource:resource actionName:actionName];
-    serializer.outputClass = outputClass;
-
-    return serializer;
+                            @"IncompleteSignature" : @(AWSCognitoSyncErrorIncompleteSignature),
+                            @"InvalidClientTokenId" : @(AWSCognitoSyncErrorInvalidClientTokenId),
+                            @"MissingAuthenticationToken" : @(AWSCognitoSyncErrorMissingAuthenticationToken),
+                            @"InternalErrorException" : @(AWSCognitoSyncErrorInternalError),
+                            @"InvalidConfigurationException" : @(AWSCognitoSyncErrorInvalidConfiguration),
+                            @"InvalidParameterException" : @(AWSCognitoSyncErrorInvalidParameter),
+                            @"LimitExceededException" : @(AWSCognitoSyncErrorLimitExceeded),
+                            @"NotAuthorizedException" : @(AWSCognitoSyncErrorNotAuthorized),
+                            @"ResourceConflictException" : @(AWSCognitoSyncErrorResourceConflict),
+                            @"ResourceNotFoundException" : @(AWSCognitoSyncErrorResourceNotFound),
+                            @"TooManyRequestsException" : @(AWSCognitoSyncErrorTooManyRequests),
+                            };
 }
 
 - (id)responseObjectForResponse:(NSHTTPURLResponse *)response
@@ -122,11 +108,11 @@ static NSDictionary *errorCodeDictionary = nil;
             case AWSCognitoSyncErrorIncompleteSignature:
             case AWSCognitoSyncErrorInvalidClientTokenId:
             case AWSCognitoSyncErrorMissingAuthenticationToken:
-                retryType = AWSNetworkingRetryTypeShouldRefreshCredentialsAndRetry;
-                break;
+            retryType = AWSNetworkingRetryTypeShouldRefreshCredentialsAndRetry;
+            break;
 
             default:
-                break;
+            break;
         }
     }
 
@@ -151,23 +137,48 @@ static NSDictionary *errorCodeDictionary = nil;
 
 @implementation AWSCognitoSync
 
+static AWSSynchronizedMutableDictionary *_serviceClients = nil;
+
 + (instancetype)defaultCognitoSync {
     if (![AWSServiceManager defaultServiceManager].defaultServiceConfiguration) {
         return nil;
     }
 
-    static AWSCognitoSync *_defaultCognitoIdentityService = nil;
+    static AWSCognitoSync *_defaultCognitoSync = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _defaultCognitoIdentityService = [[AWSCognitoSync alloc] initWithConfiguration:[AWSServiceManager defaultServiceManager].defaultServiceConfiguration];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        _defaultCognitoSync = [[AWSCognitoSync alloc] initWithConfiguration:AWSServiceManager.defaultServiceManager.defaultServiceConfiguration];
+#pragma clang diagnostic pop
     });
 
-    return _defaultCognitoIdentityService;
+    return _defaultCognitoSync;
+}
+
++ (void)registerCognitoSyncWithConfiguration:(AWSServiceConfiguration *)configuration forKey:(NSString *)key {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _serviceClients = [AWSSynchronizedMutableDictionary new];
+    });
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    [_serviceClients setObject:[[AWSCognitoSync alloc] initWithConfiguration:configuration]
+                        forKey:key];
+#pragma clang diagnostic pop
+}
+
++ (instancetype)CognitoSyncForKey:(NSString *)key {
+    return [_serviceClients objectForKey:key];
+}
+
++ (void)removeCognitoSyncForKey:(NSString *)key {
+    [_serviceClients removeObjectForKey:key];
 }
 
 - (instancetype)init {
     @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:@"`- init` is not a valid initializer. Use `+ defaultCognitoSync` or `- initWithConfiguration:` instead."
+                                   reason:@"`- init` is not a valid initializer. Use `+ defaultCognitoSync` or `+ CognitoSyncForKey:` instead."
                                  userInfo:nil];
     return nil;
 }
@@ -232,12 +243,13 @@ static NSDictionary *errorCodeDictionary = nil;
     networkingRequest.headers = headers;
     networkingRequest.URLString = blockSafeURLString;
     networkingRequest.HTTPMethod = HTTPMethod;
-    networkingRequest.responseSerializer = [AWSCognitoSyncResponseSerializer serializerWithOutputClass:outputClass
-                                                                                              resource:@""
-                                                                                            actionName:operationName];
-    
-    networkingRequest.requestSerializer = [AWSJSONRequestSerializer serializerWithResource:AWSCognitoSyncDefinitionFileName
-                                                                                actionName:operationName];
+    networkingRequest.requestSerializer = [[AWSJSONRequestSerializer alloc] initWithResource:AWSCognitoSyncDefinitionFileName
+                                                                                  actionName:operationName
+                                                                              classForBundle:[self class]];
+    networkingRequest.responseSerializer = [[AWSCognitoSyncResponseSerializer alloc] initWithResource:@""
+                                                                                           actionName:operationName
+                                                                                          outputClass:outputClass
+                                                                                       classForBundle:[self class]];
 
     return [self.networking sendRequest:networkingRequest];
 }

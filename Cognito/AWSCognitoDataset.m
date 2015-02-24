@@ -1,17 +1,16 @@
 /**
- * Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  */
 
 #import "AWSCognitoDataset.h"
 #import "AWSCognitoUtil.h"
 #import "AWSCognitoConstants.h"
-#import "AWSCognito.h"
+#import "AWSCognitoService.h"
 #import "AWSCognitoRecord_Internal.h"
 #import "AWSCognitoSQLiteManager.h"
 #import "AWSCognitoConflict_Internal.h"
 #import "AWSLogging.h"
 #import "AWSCognitoRecord.h"
-#import "CognitoSync.h"
 #import "Reachability.h"
 
 @interface AWSCognitoDatasetMetadata()

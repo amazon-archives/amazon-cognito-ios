@@ -1,0 +1,605 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1583ECEC29BA84A20CCDA57B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1E19DBA9C1868C68804FEB2 /* libPods.a */; };
+		BD5F77561AC254A100C48662 /* cognito-sync-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = BDCA35841AC22E4100228D15 /* cognito-sync-2014-06-30.json */; };
+		BDCA356F1AC22D7A00228D15 /* libAWSCognito.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDCA35631AC22D7A00228D15 /* libAWSCognito.a */; };
+		BDCA359A1AC22E4100228D15 /* AWSCognitoSyncService.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA357F1AC22E4100228D15 /* AWSCognitoSyncService.m */; };
+		BDCA359B1AC22E4100228D15 /* AWSCognitoSyncModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35811AC22E4100228D15 /* AWSCognitoSyncModel.m */; };
+		BDCA359C1AC22E4100228D15 /* AWSCognitoService.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35871AC22E4100228D15 /* AWSCognitoService.m */; };
+		BDCA359D1AC22E4100228D15 /* AWSCognitoConflict.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35891AC22E4100228D15 /* AWSCognitoConflict.m */; };
+		BDCA359E1AC22E4100228D15 /* AWSCognitoDataset.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA358B1AC22E4100228D15 /* AWSCognitoDataset.m */; };
+		BDCA359F1AC22E4100228D15 /* AWSCognitoRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA358E1AC22E4100228D15 /* AWSCognitoRecord.m */; };
+		BDCA35A01AC22E4100228D15 /* AWSCognitoConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35931AC22E4100228D15 /* AWSCognitoConstants.m */; };
+		BDCA35A11AC22E4100228D15 /* AWSCognitoSQLiteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35971AC22E4100228D15 /* AWSCognitoSQLiteManager.m */; };
+		BDCA35A21AC22E4100228D15 /* AWSCognitoUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35991AC22E4100228D15 /* AWSCognitoUtil.m */; };
+		BDCA35A91AC230B400228D15 /* AmazonCognitoSqliteManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35A31AC230B400228D15 /* AmazonCognitoSqliteManagerTests.m */; };
+		BDCA35AA1AC230B400228D15 /* AWSCognitoClientTest.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35A41AC230B400228D15 /* AWSCognitoClientTest.m */; };
+		BDCA35AB1AC230B400228D15 /* AWSCognitoSyncServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35A51AC230B400228D15 /* AWSCognitoSyncServiceTests.m */; };
+		BDCA35AC1AC230B400228D15 /* CognitoTestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35A81AC230B400228D15 /* CognitoTestUtils.m */; };
+		BDCA35CD1AC24AC000228D15 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BDCA35CC1AC24AC000228D15 /* libsqlite3.dylib */; };
+		BDF744F71AC25056000E0FEA /* credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = BDF744F61AC25056000E0FEA /* credentials.json */; };
+		BDFC08361AC260470058444D /* AWSCognitoSyncService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BDCA357E1AC22E4100228D15 /* AWSCognitoSyncService.h */; };
+		BDFC08371AC260470058444D /* AWSCognitoSyncModel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BDCA35801AC22E4100228D15 /* AWSCognitoSyncModel.h */; };
+		BDFC08391AC260470058444D /* AWSCognitoService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BDCA35861AC22E4100228D15 /* AWSCognitoService.h */; };
+		BDFC083A1AC260470058444D /* AWSCognitoConflict.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BDCA35881AC22E4100228D15 /* AWSCognitoConflict.h */; };
+		BDFC083B1AC260470058444D /* AWSCognitoDataset.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BDCA358A1AC22E4100228D15 /* AWSCognitoDataset.h */; };
+		BDFC083C1AC260470058444D /* AWSCognitoHandlers.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BDCA358C1AC22E4100228D15 /* AWSCognitoHandlers.h */; };
+		BDFC083D1AC260470058444D /* AWSCognitoRecord.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BDCA358D1AC22E4100228D15 /* AWSCognitoRecord.h */; };
+		BDFC083E1AC260470058444D /* AWSCognito.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BDCA358F1AC22E4100228D15 /* AWSCognito.h */; };
+		BDFC08401AC261140058444D /* AWSCognitoSyncService.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA357E1AC22E4100228D15 /* AWSCognitoSyncService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BDFC08411AC261140058444D /* AWSCognitoSyncModel.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA35801AC22E4100228D15 /* AWSCognitoSyncModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BDFC08431AC261140058444D /* AWSCognitoService.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA35861AC22E4100228D15 /* AWSCognitoService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BDFC08441AC261140058444D /* AWSCognitoConflict.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA35881AC22E4100228D15 /* AWSCognitoConflict.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BDFC08451AC261140058444D /* AWSCognitoDataset.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA358A1AC22E4100228D15 /* AWSCognitoDataset.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BDFC08461AC261140058444D /* AWSCognitoHandlers.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA358C1AC22E4100228D15 /* AWSCognitoHandlers.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BDFC08471AC261140058444D /* AWSCognitoRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA358D1AC22E4100228D15 /* AWSCognitoRecord.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BDFC08481AC261140058444D /* AWSCognito.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA358F1AC22E4100228D15 /* AWSCognito.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BDFC08491AC2612A0058444D /* AWSCognitoConflict_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA35911AC22E4100228D15 /* AWSCognitoConflict_Internal.h */; };
+		BDFC084A1AC2612A0058444D /* AWSCognitoConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA35921AC22E4100228D15 /* AWSCognitoConstants.h */; };
+		BDFC084B1AC2612A0058444D /* AWSCognitoDataset_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA35941AC22E4100228D15 /* AWSCognitoDataset_Internal.h */; };
+		BDFC084C1AC2612A0058444D /* AWSCognitoRecord_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA35951AC22E4100228D15 /* AWSCognitoRecord_Internal.h */; };
+		BDFC084D1AC2612A0058444D /* AWSCognitoSQLiteManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA35961AC22E4100228D15 /* AWSCognitoSQLiteManager.h */; };
+		BDFC084E1AC2612A0058444D /* AWSCognitoUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA35981AC22E4100228D15 /* AWSCognitoUtil.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BDCA35701AC22D7A00228D15 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BDCA355B1AC22D7A00228D15 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BDCA35621AC22D7A00228D15;
+			remoteInfo = AWSCognitoSync;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BDCA35611AC22D7A00228D15 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				BDFC08361AC260470058444D /* AWSCognitoSyncService.h in CopyFiles */,
+				BDFC08371AC260470058444D /* AWSCognitoSyncModel.h in CopyFiles */,
+				BDFC08391AC260470058444D /* AWSCognitoService.h in CopyFiles */,
+				BDFC083A1AC260470058444D /* AWSCognitoConflict.h in CopyFiles */,
+				BDFC083B1AC260470058444D /* AWSCognitoDataset.h in CopyFiles */,
+				BDFC083C1AC260470058444D /* AWSCognitoHandlers.h in CopyFiles */,
+				BDFC083D1AC260470058444D /* AWSCognitoRecord.h in CopyFiles */,
+				BDFC083E1AC260470058444D /* AWSCognito.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		553E69A5431170019C85784A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		5F25449A452AD5D23DE547ED /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		BDCA35631AC22D7A00228D15 /* libAWSCognito.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAWSCognito.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDCA356E1AC22D7A00228D15 /* AWSCognitoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWSCognitoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDCA35741AC22D7A00228D15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDCA357E1AC22E4100228D15 /* AWSCognitoSyncService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSyncService.h; sourceTree = "<group>"; };
+		BDCA357F1AC22E4100228D15 /* AWSCognitoSyncService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSyncService.m; sourceTree = "<group>"; };
+		BDCA35801AC22E4100228D15 /* AWSCognitoSyncModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSyncModel.h; sourceTree = "<group>"; };
+		BDCA35811AC22E4100228D15 /* AWSCognitoSyncModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSyncModel.m; sourceTree = "<group>"; };
+		BDCA35841AC22E4100228D15 /* cognito-sync-2014-06-30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cognito-sync-2014-06-30.json"; sourceTree = "<group>"; };
+		BDCA35861AC22E4100228D15 /* AWSCognitoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoService.h; sourceTree = "<group>"; };
+		BDCA35871AC22E4100228D15 /* AWSCognitoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoService.m; sourceTree = "<group>"; };
+		BDCA35881AC22E4100228D15 /* AWSCognitoConflict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoConflict.h; sourceTree = "<group>"; };
+		BDCA35891AC22E4100228D15 /* AWSCognitoConflict.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoConflict.m; sourceTree = "<group>"; };
+		BDCA358A1AC22E4100228D15 /* AWSCognitoDataset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoDataset.h; sourceTree = "<group>"; };
+		BDCA358B1AC22E4100228D15 /* AWSCognitoDataset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoDataset.m; sourceTree = "<group>"; };
+		BDCA358C1AC22E4100228D15 /* AWSCognitoHandlers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoHandlers.h; sourceTree = "<group>"; };
+		BDCA358D1AC22E4100228D15 /* AWSCognitoRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoRecord.h; sourceTree = "<group>"; };
+		BDCA358E1AC22E4100228D15 /* AWSCognitoRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoRecord.m; sourceTree = "<group>"; };
+		BDCA358F1AC22E4100228D15 /* AWSCognito.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognito.h; sourceTree = "<group>"; };
+		BDCA35911AC22E4100228D15 /* AWSCognitoConflict_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoConflict_Internal.h; sourceTree = "<group>"; };
+		BDCA35921AC22E4100228D15 /* AWSCognitoConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoConstants.h; sourceTree = "<group>"; };
+		BDCA35931AC22E4100228D15 /* AWSCognitoConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoConstants.m; sourceTree = "<group>"; };
+		BDCA35941AC22E4100228D15 /* AWSCognitoDataset_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoDataset_Internal.h; sourceTree = "<group>"; };
+		BDCA35951AC22E4100228D15 /* AWSCognitoRecord_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoRecord_Internal.h; sourceTree = "<group>"; };
+		BDCA35961AC22E4100228D15 /* AWSCognitoSQLiteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSQLiteManager.h; sourceTree = "<group>"; };
+		BDCA35971AC22E4100228D15 /* AWSCognitoSQLiteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSQLiteManager.m; sourceTree = "<group>"; };
+		BDCA35981AC22E4100228D15 /* AWSCognitoUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoUtil.h; sourceTree = "<group>"; };
+		BDCA35991AC22E4100228D15 /* AWSCognitoUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoUtil.m; sourceTree = "<group>"; };
+		BDCA35A31AC230B400228D15 /* AmazonCognitoSqliteManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazonCognitoSqliteManagerTests.m; sourceTree = "<group>"; };
+		BDCA35A41AC230B400228D15 /* AWSCognitoClientTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoClientTest.m; sourceTree = "<group>"; };
+		BDCA35A51AC230B400228D15 /* AWSCognitoSyncServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSyncServiceTests.m; sourceTree = "<group>"; };
+		BDCA35A61AC230B400228D15 /* AWSCognitoTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AWSCognitoTests-Prefix.pch"; sourceTree = "<group>"; };
+		BDCA35A71AC230B400228D15 /* CognitoTestUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CognitoTestUtils.h; sourceTree = "<group>"; };
+		BDCA35A81AC230B400228D15 /* CognitoTestUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CognitoTestUtils.m; sourceTree = "<group>"; };
+		BDCA35CC1AC24AC000228D15 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		BDF744F61AC25056000E0FEA /* credentials.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = credentials.json; path = ../../AWSiOSSDKv2/AWSCoreTests/credentials.json; sourceTree = "<group>"; };
+		D1E19DBA9C1868C68804FEB2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BDCA35601AC22D7A00228D15 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BDCA356B1AC22D7A00228D15 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDCA35CD1AC24AC000228D15 /* libsqlite3.dylib in Frameworks */,
+				BDCA356F1AC22D7A00228D15 /* libAWSCognito.a in Frameworks */,
+				1583ECEC29BA84A20CCDA57B /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		532D70E702F6E1D0BEE95991 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BDCA35CC1AC24AC000228D15 /* libsqlite3.dylib */,
+				D1E19DBA9C1868C68804FEB2 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A64353DFCB970CA309A7A52A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				553E69A5431170019C85784A /* Pods.debug.xcconfig */,
+				5F25449A452AD5D23DE547ED /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		BDCA355A1AC22D7A00228D15 = {
+			isa = PBXGroup;
+			children = (
+				BDCA35851AC22E4100228D15 /* Cognito */,
+				BDCA35721AC22D7A00228D15 /* AWSCognitoSyncTests */,
+				BDCA35641AC22D7A00228D15 /* Products */,
+				A64353DFCB970CA309A7A52A /* Pods */,
+				532D70E702F6E1D0BEE95991 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		BDCA35641AC22D7A00228D15 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BDCA35631AC22D7A00228D15 /* libAWSCognito.a */,
+				BDCA356E1AC22D7A00228D15 /* AWSCognitoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BDCA35721AC22D7A00228D15 /* AWSCognitoSyncTests */ = {
+			isa = PBXGroup;
+			children = (
+				BDCA35A31AC230B400228D15 /* AmazonCognitoSqliteManagerTests.m */,
+				BDCA35A41AC230B400228D15 /* AWSCognitoClientTest.m */,
+				BDCA35A51AC230B400228D15 /* AWSCognitoSyncServiceTests.m */,
+				BDCA35A61AC230B400228D15 /* AWSCognitoTests-Prefix.pch */,
+				BDCA35A71AC230B400228D15 /* CognitoTestUtils.h */,
+				BDCA35A81AC230B400228D15 /* CognitoTestUtils.m */,
+				BDCA35731AC22D7A00228D15 /* Supporting Files */,
+			);
+			path = AWSCognitoSyncTests;
+			sourceTree = "<group>";
+		};
+		BDCA35731AC22D7A00228D15 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BDF744F61AC25056000E0FEA /* credentials.json */,
+				BDCA35741AC22D7A00228D15 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BDCA357D1AC22E4100228D15 /* CognitoSync */ = {
+			isa = PBXGroup;
+			children = (
+				BDCA35801AC22E4100228D15 /* AWSCognitoSyncModel.h */,
+				BDCA35811AC22E4100228D15 /* AWSCognitoSyncModel.m */,
+				BDCA357E1AC22E4100228D15 /* AWSCognitoSyncService.h */,
+				BDCA357F1AC22E4100228D15 /* AWSCognitoSyncService.m */,
+				BDCA35831AC22E4100228D15 /* Resources */,
+			);
+			path = CognitoSync;
+			sourceTree = SOURCE_ROOT;
+		};
+		BDCA35831AC22E4100228D15 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BDCA35841AC22E4100228D15 /* cognito-sync-2014-06-30.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BDCA35851AC22E4100228D15 /* Cognito */ = {
+			isa = PBXGroup;
+			children = (
+				BDCA358F1AC22E4100228D15 /* AWSCognito.h */,
+				BDCA35881AC22E4100228D15 /* AWSCognitoConflict.h */,
+				BDCA35891AC22E4100228D15 /* AWSCognitoConflict.m */,
+				BDCA358A1AC22E4100228D15 /* AWSCognitoDataset.h */,
+				BDCA358B1AC22E4100228D15 /* AWSCognitoDataset.m */,
+				BDCA358C1AC22E4100228D15 /* AWSCognitoHandlers.h */,
+				BDCA358D1AC22E4100228D15 /* AWSCognitoRecord.h */,
+				BDCA358E1AC22E4100228D15 /* AWSCognitoRecord.m */,
+				BDCA35861AC22E4100228D15 /* AWSCognitoService.h */,
+				BDCA35871AC22E4100228D15 /* AWSCognitoService.m */,
+				BDCA357D1AC22E4100228D15 /* CognitoSync */,
+				BDCA35901AC22E4100228D15 /* Internal */,
+			);
+			path = Cognito;
+			sourceTree = "<group>";
+		};
+		BDCA35901AC22E4100228D15 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				BDCA35911AC22E4100228D15 /* AWSCognitoConflict_Internal.h */,
+				BDCA35921AC22E4100228D15 /* AWSCognitoConstants.h */,
+				BDCA35931AC22E4100228D15 /* AWSCognitoConstants.m */,
+				BDCA35941AC22E4100228D15 /* AWSCognitoDataset_Internal.h */,
+				BDCA35951AC22E4100228D15 /* AWSCognitoRecord_Internal.h */,
+				BDCA35961AC22E4100228D15 /* AWSCognitoSQLiteManager.h */,
+				BDCA35971AC22E4100228D15 /* AWSCognitoSQLiteManager.m */,
+				BDCA35981AC22E4100228D15 /* AWSCognitoUtil.h */,
+				BDCA35991AC22E4100228D15 /* AWSCognitoUtil.m */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		BDFC083F1AC261020058444D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDFC08401AC261140058444D /* AWSCognitoSyncService.h in Headers */,
+				BDFC08411AC261140058444D /* AWSCognitoSyncModel.h in Headers */,
+				BDFC08431AC261140058444D /* AWSCognitoService.h in Headers */,
+				BDFC08441AC261140058444D /* AWSCognitoConflict.h in Headers */,
+				BDFC08451AC261140058444D /* AWSCognitoDataset.h in Headers */,
+				BDFC08461AC261140058444D /* AWSCognitoHandlers.h in Headers */,
+				BDFC08471AC261140058444D /* AWSCognitoRecord.h in Headers */,
+				BDFC08481AC261140058444D /* AWSCognito.h in Headers */,
+				BDFC08491AC2612A0058444D /* AWSCognitoConflict_Internal.h in Headers */,
+				BDFC084A1AC2612A0058444D /* AWSCognitoConstants.h in Headers */,
+				BDFC084B1AC2612A0058444D /* AWSCognitoDataset_Internal.h in Headers */,
+				BDFC084C1AC2612A0058444D /* AWSCognitoRecord_Internal.h in Headers */,
+				BDFC084D1AC2612A0058444D /* AWSCognitoSQLiteManager.h in Headers */,
+				BDFC084E1AC2612A0058444D /* AWSCognitoUtil.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		BDCA35621AC22D7A00228D15 /* AWSCognito */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BDCA35771AC22D7A00228D15 /* Build configuration list for PBXNativeTarget "AWSCognito" */;
+			buildPhases = (
+				BDCA355F1AC22D7A00228D15 /* Sources */,
+				BDCA35601AC22D7A00228D15 /* Frameworks */,
+				BDCA35611AC22D7A00228D15 /* CopyFiles */,
+				BDFC083F1AC261020058444D /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AWSCognito;
+			productName = AWSCognitoSync;
+			productReference = BDCA35631AC22D7A00228D15 /* libAWSCognito.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		BDCA356D1AC22D7A00228D15 /* AWSCognitoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BDCA357A1AC22D7A00228D15 /* Build configuration list for PBXNativeTarget "AWSCognitoTests" */;
+			buildPhases = (
+				B2258D9BD95199332C6A6A0B /* Check Pods Manifest.lock */,
+				BDCA356A1AC22D7A00228D15 /* Sources */,
+				BDCA356B1AC22D7A00228D15 /* Frameworks */,
+				BDCA356C1AC22D7A00228D15 /* Resources */,
+				6266AAE5C2DB5C977DC31B0F /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BDCA35711AC22D7A00228D15 /* PBXTargetDependency */,
+			);
+			name = AWSCognitoTests;
+			productName = AWSCognitoSyncTests;
+			productReference = BDCA356E1AC22D7A00228D15 /* AWSCognitoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BDCA355B1AC22D7A00228D15 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = "Amazon Web Services";
+				TargetAttributes = {
+					BDCA35621AC22D7A00228D15 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+					BDCA356D1AC22D7A00228D15 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+				};
+			};
+			buildConfigurationList = BDCA355E1AC22D7A00228D15 /* Build configuration list for PBXProject "AWSCognito" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = BDCA355A1AC22D7A00228D15;
+			productRefGroup = BDCA35641AC22D7A00228D15 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BDCA35621AC22D7A00228D15 /* AWSCognito */,
+				BDCA356D1AC22D7A00228D15 /* AWSCognitoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BDCA356C1AC22D7A00228D15 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD5F77561AC254A100C48662 /* cognito-sync-2014-06-30.json in Resources */,
+				BDF744F71AC25056000E0FEA /* credentials.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6266AAE5C2DB5C977DC31B0F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B2258D9BD95199332C6A6A0B /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BDCA355F1AC22D7A00228D15 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDCA35A01AC22E4100228D15 /* AWSCognitoConstants.m in Sources */,
+				BDCA359B1AC22E4100228D15 /* AWSCognitoSyncModel.m in Sources */,
+				BDCA359E1AC22E4100228D15 /* AWSCognitoDataset.m in Sources */,
+				BDCA359F1AC22E4100228D15 /* AWSCognitoRecord.m in Sources */,
+				BDCA359C1AC22E4100228D15 /* AWSCognitoService.m in Sources */,
+				BDCA359A1AC22E4100228D15 /* AWSCognitoSyncService.m in Sources */,
+				BDCA359D1AC22E4100228D15 /* AWSCognitoConflict.m in Sources */,
+				BDCA35A11AC22E4100228D15 /* AWSCognitoSQLiteManager.m in Sources */,
+				BDCA35A21AC22E4100228D15 /* AWSCognitoUtil.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BDCA356A1AC22D7A00228D15 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDCA35AA1AC230B400228D15 /* AWSCognitoClientTest.m in Sources */,
+				BDCA35AC1AC230B400228D15 /* CognitoTestUtils.m in Sources */,
+				BDCA35AB1AC230B400228D15 /* AWSCognitoSyncServiceTests.m in Sources */,
+				BDCA35A91AC230B400228D15 /* AmazonCognitoSqliteManagerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BDCA35711AC22D7A00228D15 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BDCA35621AC22D7A00228D15 /* AWSCognito */;
+			targetProxy = BDCA35701AC22D7A00228D15 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		BDCA35751AC22D7A00228D15 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/Pods/Headers/**";
+			};
+			name = Debug;
+		};
+		BDCA35761AC22D7A00228D15 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/Pods/Headers/**";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BDCA35781AC22D7A00228D15 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = AWSCognito;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		BDCA35791AC22D7A00228D15 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = AWSCognito;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		BDCA357B1AC22D7A00228D15 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553E69A5431170019C85784A /* Pods.debug.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREFIX_HEADER = "AWSCognitoSyncTests/AWSCognitoTests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = AWSCognitoSyncTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = AWSCognitoTests;
+			};
+			name = Debug;
+		};
+		BDCA357C1AC22D7A00228D15 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F25449A452AD5D23DE547ED /* Pods.release.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREFIX_HEADER = "AWSCognitoSyncTests/AWSCognitoTests-Prefix.pch";
+				INFOPLIST_FILE = AWSCognitoSyncTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = AWSCognitoTests;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BDCA355E1AC22D7A00228D15 /* Build configuration list for PBXProject "AWSCognito" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BDCA35751AC22D7A00228D15 /* Debug */,
+				BDCA35761AC22D7A00228D15 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BDCA35771AC22D7A00228D15 /* Build configuration list for PBXNativeTarget "AWSCognito" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BDCA35781AC22D7A00228D15 /* Debug */,
+				BDCA35791AC22D7A00228D15 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BDCA357A1AC22D7A00228D15 /* Build configuration list for PBXNativeTarget "AWSCognitoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BDCA357B1AC22D7A00228D15 /* Debug */,
+				BDCA357C1AC22D7A00228D15 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BDCA355B1AC22D7A00228D15 /* Project object */;
+}

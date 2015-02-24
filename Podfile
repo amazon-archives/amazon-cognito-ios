@@ -1,3 +1,4 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-pod 'AWSiOSSDKv2'
+link_with 'AWSCognitoTests'
+pod 'AWSCore', '~> 2.1.0'

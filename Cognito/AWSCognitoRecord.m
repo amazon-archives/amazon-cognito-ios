@@ -1,8 +1,8 @@
 /**
- * Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  */
 
-#import "AWScognito.h"
+#import "AWSCognitoService.h"
 #import "AWSCognitoRecord.h"
 #import "AWSCognitoUtil.h"
 #import "AWSCognitoConstants.h"

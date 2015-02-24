@@ -1,20 +1,20 @@
 /**
- * Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  */
 
-#import "AWSCognito.h"
+#import "AWSCognitoService.h"
 #import "AWSCredentialsProvider.h"
 #import "AWSCognitoRecord_Internal.h"
 #import "AWSCognitoSQLiteManager.h"
 #import "AWSCognitoDataset.h"
 #import "AWSCognitoConstants.h"
 #import "AWSCognitoUtil.h"
-#import "CognitoSync.h"
 #import "AWSCognitoDataset_Internal.h"
 #import "AWSLogging.h"
 #import "AWSCognitoHandlers.h"
 #import "AWSCognitoConflict_Internal.h"
 #import "UICKeyChainStore.h"
+#import "AWSSynchronizedMutableDictionary.h"
 
 NSString *const AWSCognitoDidStartSynchronizeNotification = @"com.amazon.cognito.AWSCognitoDidStartSynchronizeNotification";
 NSString *const AWSCognitoDidEndSynchronizeNotification = @"com.amazon.cognito.AWSCognitoDidEndSynchronizeNotification";
@@ -45,9 +45,11 @@ static AWSCognitoSyncPlatform _pushPlatform;
 
 @implementation AWSCognito
 
+static AWSSynchronizedMutableDictionary *_serviceClients = nil;
+
 #pragma mark - Setups
 
-+ (void) initialize {
++ (void)initialize {
     keychain = [UICKeyChainStore keyChainStoreWithService:[NSString stringWithFormat:@"%@.%@", [NSBundle mainBundle].bundleIdentifier, [AWSCognito class]]];
     _pushPlatform = [AWSCognitoUtil pushPlatform];
 }
@@ -61,14 +63,44 @@ static AWSCognitoSyncPlatform _pushPlatform;
     if (![[AWSServiceManager defaultServiceManager].defaultServiceConfiguration.credentialsProvider isKindOfClass:[AWSCognitoCredentialsProvider class]]) {
         return nil;
     }
-    
+
     static AWSCognito *_defaultCognito = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _defaultCognito = [[AWSCognito alloc] initWithConfiguration:[AWSServiceManager defaultServiceManager].defaultServiceConfiguration];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        _defaultCognito = [[AWSCognito alloc] initWithConfiguration:AWSServiceManager.defaultServiceManager.defaultServiceConfiguration];
+#pragma clang diagnostic pop
     });
-    
+
     return _defaultCognito;
+}
+
++ (void)registerCognitoWithConfiguration:(AWSServiceConfiguration *)configuration forKey:(NSString *)key {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _serviceClients = [AWSSynchronizedMutableDictionary new];
+    });
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    [_serviceClients setObject:[[AWSCognito alloc] initWithConfiguration:configuration]
+                        forKey:key];
+#pragma clang diagnostic pop
+}
+
++ (instancetype)CognitoForKey:(NSString *)key {
+    return [_serviceClients objectForKey:key];
+}
+
++ (void)removeCognitoForKey:(NSString *)key {
+    [_serviceClients removeObjectForKey:key];
+}
+
+- (instancetype)init {
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:@"`- init` is not a valid initializer. Use `+ defaultCognito` or `+ CognitoForKey:` instead."
+                                 userInfo:nil];
+    return nil;
 }
 
 - (instancetype)initWithConfiguration:(AWSServiceConfiguration *)configuration
@@ -90,7 +122,10 @@ static AWSCognitoSyncPlatform _pushPlatform;
         
         _conflictHandler = [AWSCognito defaultConflictHandler];
         _sqliteManager = [[AWSCognitoSQLiteManager alloc] initWithIdentityId:_cognitoCredentialsProvider.identityId deviceId:_deviceId];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         _cognitoService = [[AWSCognitoSync alloc] initWithConfiguration:configuration];
+#pragma clang diagnostic pop
         // register to know when the identity on our provider changes
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(identityChanged:) name:AWSCognitoIdentityIdChangedNotification object:_cognitoCredentialsProvider.identityProvider];
         
@@ -224,7 +259,6 @@ static AWSCognitoSyncPlatform _pushPlatform;
             AWSCognitoSyncRegisterDeviceResponse* response = task.result;
             keychain[[AWSCognitoUtil deviceIdKey:_pushPlatform]] = response.deviceId;
             keychain[[AWSCognitoUtil deviceIdentityKey:_pushPlatform]] = self.cognitoCredentialsProvider.identityId;
-            [keychain synchronize];
             [self setDeviceId:response.deviceId];
             return [BFTask taskWithResult:response.deviceId];
         }

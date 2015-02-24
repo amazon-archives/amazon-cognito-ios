@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 
-  s.name         = 'AWSCognitoSync'
+  s.name         = 'AWSCognito'
   s.version      = '2.1.0'
   s.summary      = 'Amazon Cognito SDK for iOS'
 
@@ -15,7 +15,12 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.library      = 'sqlite3'
   s.dependency 'AWSCore', '~> 2.1.0'
-  s.dependency 'AWSCognito', '2.1.0'
   s.dependency 'Bolts', '~> 1.1.0'
   s.dependency 'Mantle', '~> 1.4'
+  s.dependency 'UICKeyChainStore', '~> 2.0'
+  s.dependency 'Reachability', '~> 3.1'
+  
+  s.source_files = 'CognitoSync/*.{h,m}', 'Cognito/*.{h,m}', 'Cognito/**/*.{h,m}'
+  s.public_header_files = "Cognito/*.h",'CognitoSync/*.{h,m}'
+  s.resources = ['CognitoSync/Resources/*.json']
 end

@@ -1,12 +1,12 @@
 /**
- * Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  */
 
 #if AWS_TEST_COGNITO_CLIENT
 
 #import <XCTest/XCTest.h>
 #import "AWSCore.h"
-#import "Cognito.h"
+#import "AWSCognito.h"
 #import "CognitoTestUtils.h"
 #import "AWSCognitoSQLiteManager.h"
 
@@ -36,14 +36,14 @@ Method _mockMethod;
 
 
 -(NSDictionary *)swizzled_recordsUpdatedAfterLastSync:(NSString *) datasetName error:(NSError **)error {
-    
+
     // call the original implementation (which has been swapped with this method)
     NSDictionary *returnValue = [self swizzled_recordsUpdatedAfterLastSync:datasetName error:error];
-    
+
     // modify a value
     AWSCognitoDataset *dataset = [[AWSCognito defaultCognito] openOrCreateDataset:_concurrentDataset];
     [dataset setString:@"forced" forKey:_concurrentKey];
-    
+
     // return the original result
     return returnValue;
 }
@@ -53,17 +53,17 @@ Method _mockMethod;
 
 
 @implementation AWSCognitoClientTest
-+ (void)setUp {    
++ (void)setUp {
     [CognitoTestUtils createFBAccount];
     [CognitoTestUtils createIdentityPool];
-    
-    
-    AWSCognitoCredentialsProvider *provider = [AWSCognitoCredentialsProvider credentialsWithRegionType:AWSRegionUSEast1
-                                                                                        identityPoolId:[CognitoTestUtils identityPoolId]];
-                                               
-    
-    AWSServiceConfiguration *configuration = [AWSServiceConfiguration configurationWithRegion:AWSRegionUSEast1 credentialsProvider:provider];
-    
+
+
+    AWSCognitoCredentialsProvider *provider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:AWSRegionUSEast1
+                                                                                         identityPoolId:[CognitoTestUtils identityPoolId]];
+
+
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:provider];
+
     [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
 }
 
@@ -76,20 +76,20 @@ Method _mockMethod;
 - (void)forceUpdate:(NSString *)datasetName withKey:(NSString *)key {
     // generate a remote update
     AWSCognitoSync *client = [AWSCognitoSync defaultCognitoSync];
-    
+
     AWSCognitoSyncListRecordsRequest *list = [AWSCognitoSyncListRecordsRequest new];
     list.datasetName = datasetName;
     list.identityId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityId;
     list.identityPoolId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityPoolId;
     [[[[client listRecords:list] continueWithBlock:^id(BFTask *task) {
         AWSCognitoSyncListRecordsResponse *listResponse = task.result;
-        
+
         AWSCognitoSyncRecordPatch *patch = [AWSCognitoSyncRecordPatch new];
         patch.key = key;
         patch.syncCount = listResponse.datasetSyncCount;
         patch.value = @"forced";
         patch.op = AWSCognitoSyncOperationReplace;
-        
+
         AWSCognitoSyncUpdateRecordsRequest *update = [AWSCognitoSyncUpdateRecordsRequest new];
         update.identityId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityId;
         update.identityPoolId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityPoolId;
@@ -106,13 +106,13 @@ Method _mockMethod;
 - (void)fakeLocalDirty:(NSString *)datasetName withKey:(NSString *)key {
     // generate a remote update
     AWSCognitoSync *client = [AWSCognitoSync defaultCognitoSync];
-    
+
     // Create a sqlitemanager with a different ID
     AWSCognitoSQLiteManager *manager = [[AWSCognitoSQLiteManager alloc] initWithIdentityId:((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityId deviceId:@"tester"];
-    
+
     AWSCognitoRecord* record = [manager getRecordById:key datasetName:datasetName error:nil];
     record.syncCount--;
-    
+
     [manager putRecord:record datasetName:datasetName error:nil];
 }
 
@@ -170,7 +170,7 @@ Method _mockMethod;
     [[dataset synchronize] waitUntilFinished];
     // now remove it
     [dataset removeObjectForKey:@"wifi"];
-    
+
     // list the records, record should still show up
     NSArray *records = [dataset getAllRecords];
     XCTAssertTrue(records.count == 1, @"should be one record");
@@ -179,17 +179,17 @@ Method _mockMethod;
         XCTAssertTrue([record.recordId isEqualToString:@"wifi"], @"Unexpected record id");
         XCTAssertTrue([record isDirty], @"Record should be dirty");
     }
-    
+
     // dictionary should be empty
     NSDictionary *recordsAsDictionary = [dataset getAll];
     XCTAssertTrue(recordsAsDictionary.count == 0, @"should be no records in the dictionary");
     [[dataset synchronize] waitUntilFinished];
-    
+
     // list the records again, should be empty
     records = [dataset getAllRecords];
     XCTAssertTrue(records.count == 1, @"should be one record");
-    
-    // dictionary should still be empty 
+
+    // dictionary should still be empty
     recordsAsDictionary = [dataset getAll];
     XCTAssertTrue(recordsAsDictionary.count == 0, @"should be no records in the dictionary");
     [dataset clear];
@@ -203,19 +203,19 @@ Method _mockMethod;
     [dataset clear];
     [[dataset synchronize] waitUntilFinished];
     for(AWSCognitoRecord * record in [dataset getAllRecords]){
-       XCTFail(@"Record exists after deletion: %@", record.recordId);
+        XCTFail(@"Record exists after deletion: %@", record.recordId);
     }
 }
 
 - (void)testListDatasets {
     NSArray *datasets = [[AWSCognito defaultCognito] listDatasets];
     NSUInteger oldCount = [datasets count];
-    
+
     // add a new dataset
     AWSCognitoDataset* dataset = [[AWSCognito defaultCognito] openOrCreateDataset:@"newlocal"];
     [dataset setString:@"on" forKey:@"wifi"];
     datasets = [[AWSCognito defaultCognito] listDatasets];
-    
+
     NSUInteger newCount = [datasets count];
     XCTAssertTrue(oldCount + 1 == newCount, @"number of datasets should have increased");
 }
@@ -231,12 +231,12 @@ Method _mockMethod;
         count = datasets.count;
         return nil;
     }] waitUntilFinished];
-    
+
     // add a new dataset
     AWSCognitoDataset* dataset = [[AWSCognito defaultCognito] openOrCreateDataset:@"newremote"];
     [dataset setString:@"on" forKey:@"wifi"];
     [[dataset synchronize] waitUntilFinished];
-    
+
     [[[[AWSCognito defaultCognito] refreshDatasetMetadata] continueWithBlock:^id(BFTask *task) {
         XCTAssertNil(task.error, @"Error in listDatasets [%@]", task.error);
         NSArray *datasets = task.result;
@@ -251,87 +251,87 @@ Method _mockMethod;
 - (void)testSyncWithOldDirtyLocal {
     NSString *datasetName = @"conflicts";
     NSString *keyName = @"conflicting";
-    
-    
+
+
     // create a dataset
     AWSCognitoDataset* dataset = [[AWSCognito defaultCognito] openOrCreateDataset:datasetName];
     [dataset setString:@"old" forKey:keyName];
-    
+
     // call a sync
     [[dataset synchronize] waitUntilFinished];
-    
-    // Modify the remote 
+
+    // Modify the remote
     [self forceUpdate:datasetName withKey:keyName];
     [dataset setString:@"test" forKey:keyName];
-    
+
     // this should succeed
     [[[dataset synchronize] continueWithBlock:^id(BFTask *task) {
         XCTAssertNil(task.error, @"Error in synchronize [%@]", task.error);
         return nil;
     }] waitUntilFinished];
-    
-    
+
+
     AWSCognitoRecord *record = [dataset recordForKey:keyName];
     XCTAssertFalse(record.dirty, @"Record is dirty");
-    
+
     // forcefully change the sync count of a local record to an older count
     [self fakeLocalDirty:datasetName withKey:keyName];
-    
+
     // this should succeed
     [[[dataset synchronize] continueWithBlock:^id(BFTask *task) {
         XCTAssertNil(task.error, @"Error in synchronize [%@]", task.error);
         return nil;
     }] waitUntilFinished];
-    
+
     record = [dataset recordForKey:keyName];
     XCTAssertFalse(record.dirty, @"Record is dirty");
-    
+
     // delete the dataset
     [dataset clear];
     [[dataset synchronize] waitUntilFinished];
 }
 
 - (void)testSyncWithConcurrentModification {
-    
+
     // create a dataset
     AWSCognitoDataset* dataset = [[AWSCognito defaultCognito] openOrCreateDataset:_concurrentDataset];
     [dataset setString:@"old" forKey:_concurrentKey];
-    
+
     // call a sync
     [[dataset synchronize] waitUntilFinished];
-    
+
     // modify the record again
     [dataset setString:@"new" forKey:_concurrentKey];
-    
+
     // switch out this method to wrap it and modify the record after getting the list
     _originalMethod = class_getInstanceMethod([AWSCognitoSQLiteManager class], @selector(recordsUpdatedAfterLastSync:error:));
     _mockMethod = class_getInstanceMethod([AWSCognitoSQLiteManager class], @selector(swizzled_recordsUpdatedAfterLastSync:error:));
     method_exchangeImplementations(_originalMethod, _mockMethod);
-    
+
     // this should succeed
     [[[dataset synchronize] continueWithBlock:^id(BFTask *task) {
         XCTAssertNil(task.error, @"Error in synchronize [%@]", task.error);
         return nil;
     }] waitUntilFinished];
-    
+
     // Check the record, should still be dirty
     AWSCognitoRecord *record = [dataset recordForKey:_concurrentKey];
     XCTAssertTrue(record.dirty, @"Record is not dirty");
     XCTAssertTrue([record.data.string isEqualToString:@"forced"], @"Record doesn't have latest value");
-    
+
     // switch back the implementations
     method_exchangeImplementations(_originalMethod, _mockMethod);
-    
+
     // this should succeed
     [[[dataset synchronize] continueWithBlock:^id(BFTask *task) {
         XCTAssertNil(task.error, @"Error in synchronize [%@]", task.error);
         return nil;
     }] waitUntilFinished];
-    
+
     // Check the record, should now be clean
     record = [dataset recordForKey:_concurrentKey];
     XCTAssertFalse(record.dirty, @"Record is dirty");
-    
+
     // delete the dataset
     [dataset clear];
     [[dataset synchronize] waitUntilFinished];
@@ -343,44 +343,44 @@ Method _mockMethod;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncRemoteChangedNotification:) name:AWSCognitoDidChangeRemoteValueNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncLocalChangedNotification:) name:AWSCognitoDidChangeLocalValueFromRemoteNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncFailedNotification:) name:AWSCognitoDidFailToSynchronizeNotification object:nil];
-    
+
     // create a dataset
     AWSCognitoDataset* dataset = [[AWSCognito defaultCognito] openOrCreateDataset:_notificationDataset];
     [dataset setString:@"old" forKey:_notificationKey];
-    
+
     // call a sync
     [[dataset synchronize] waitUntilFinished];
-    
+
     XCTAssertTrue(_startReceived, @"Did not get start notification");
     XCTAssertTrue(_endReceived, @"Did not get end notification");
     XCTAssertTrue(_remoteChangeReceived, @"Did not get remote changed notification");
-    
+
     [self forceUpdate:_notificationDataset withKey:_notificationKey];
-    
+
     [[dataset synchronize] waitUntilFinished];
-    
+
     XCTAssertTrue(_localChangeReceived, @"Did not get local changed notification");
-    
+
     // reset the value
     [dataset setString:@"old" forKey:_notificationKey];
     [[dataset synchronize] waitUntilFinished];
-    
+
     // set a conflict handler to force a sync failure
     dataset.conflictHandler = ^AWSCognitoResolvedConflict* (NSString *datasetName, AWSCognitoConflict *conflict) {
         return nil;
     };
-    
+
     // create a conflict
     [dataset setString:@"new" forKey:_notificationKey];
     [self forceUpdate:_notificationDataset withKey:_notificationKey];
-    
+
     // this should fail
     [[dataset synchronize] waitUntilFinished];
-    
+
     XCTAssertTrue(_failedReceived, @"Did not get sync failed notification");
-    
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
+
     // delete the dataset
     [dataset clear];
     [[dataset synchronize] waitUntilFinished];
@@ -390,17 +390,17 @@ Method _mockMethod;
     __block BOOL handlerCalled = NO;
     NSString *myDataset = @"testconflict";
     NSString *key = @"conflict";
-    
+
     // create a dataset
     AWSCognitoDataset* dataset = [[AWSCognito defaultCognito] openOrCreateDataset:myDataset];
     [dataset setString:@"old" forKey:key];
-    
+
     [[dataset synchronize] waitUntilFinished];
-    
+
     // create a conflict
     [self forceUpdate:myDataset withKey:key];
     [dataset setString:@"new" forKey:key];
-    
+
     // set a conflict handler
     dataset.conflictHandler = ^AWSCognitoResolvedConflict* (NSString *datasetName, AWSCognitoConflict *conflict) {
         XCTAssertTrue([datasetName isEqualToString:myDataset], @"Dataset doesn't match");
@@ -409,37 +409,37 @@ Method _mockMethod;
         handlerCalled = YES;
         return nil;
     };
-    
+
     [[dataset synchronize] waitUntilFinished];
-    
+
     XCTAssertTrue(handlerCalled, @"Conflict handler wasn't called");
     AWSCognitoRecord *record = [dataset recordForKey:key];
     XCTAssertTrue(record.dirty, @"Record is not dirty");
-    
+
     // set a different handler
     dataset.conflictHandler = ^AWSCognitoResolvedConflict* (NSString *datasetName, AWSCognitoConflict *conflict) {
         return [conflict resolveWithLocalRecord];
     };
     [[dataset synchronize] waitUntilFinished];
-    
+
     // our local change should be persisted
     record = [dataset recordForKey:key];
     XCTAssertFalse(record.dirty, @"Record is dirty");
     XCTAssertTrue([record.data.string isEqualToString:@"new"]);
-    
+
     [dataset clear];
     [[dataset synchronize] waitUntilFinished];
 }
 
 -(void)testDatasetDeletedHandler {
     __block NSString *myDatasetName = @"testdelete";
-    
+
     // create a dataset with data and sync it
     AWSCognitoDataset *dataset = [[AWSCognito defaultCognito] openOrCreateDataset:myDatasetName];
     [dataset setString:@"foo" forKey:@"bar"];
     [[dataset synchronize] waitUntilFinished];
-    
-    
+
+
     // delete the dataset with the low level client
     AWSCognitoSync *client = [AWSCognitoSync defaultCognitoSync];
     AWSCognitoSyncDeleteDatasetRequest *deleteDataset = [AWSCognitoSyncDeleteDatasetRequest new];
@@ -447,27 +447,27 @@ Method _mockMethod;
     deleteDataset.identityId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityId;
     deleteDataset.identityPoolId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityPoolId;
     [[client deleteDataset:deleteDataset] waitUntilFinished];
-    
-    
+
+
     __block BOOL _handlerCalled = NO;
-    
+
     // set our handler to return YES so the dataset will be recreated
     dataset.datasetDeletedHandler = ^BOOL (NSString *datasetName) {
         XCTAssertTrue([myDatasetName isEqualToString:datasetName], @"dataset names do not match");
         _handlerCalled = YES;
         return YES;
     };
-    
+
     // sync again
     [[dataset synchronize] waitUntilFinished];
-    
+
     // make sure the handler was called
     XCTAssertTrue(_handlerCalled, @"handler was not called");
-    
+
     // check to see our data is still there
     NSString *value = [dataset stringForKey:@"bar"];
     XCTAssertTrue([value isEqualToString:@"foo"]);
-    
+
     _handlerCalled = NO;
     // set the handler to return NO so it will be deleted
     dataset.datasetDeletedHandler = ^BOOL (NSString *datasetName) {
@@ -475,16 +475,16 @@ Method _mockMethod;
         _handlerCalled = YES;
         return NO;
     };
-    
+
     // delete it again
     [[client deleteDataset:deleteDataset] waitUntilFinished];
-    
+
     // sync again
     [[dataset synchronize] waitUntilFinished];
-    
+
     // make sure the handler was called
     XCTAssertTrue(_handlerCalled, @"handler was not called");
-    
+
     // check to see that our data is no longer there
     value = [dataset stringForKey:@"bar"];
     XCTAssertNil(value, @"value was not deleted");
@@ -492,12 +492,12 @@ Method _mockMethod;
 
 -(void)testDatasetDeletedHandlerOnResurrect {
     __block NSString *myDatasetName = @"testresurrection";
-    
+
     // create a dataset with data and sync it
     AWSCognitoDataset *dataset = [[AWSCognito defaultCognito] openOrCreateDataset:myDatasetName];
     [dataset setString:@"foo" forKey:@"bar"];
     [[dataset synchronize] waitUntilFinished];
-    
+
     // delete the dataset with the low level client
     AWSCognitoSync *client = [AWSCognitoSync defaultCognitoSync];
     AWSCognitoSyncDeleteDatasetRequest *deleteDataset = [AWSCognitoSyncDeleteDatasetRequest new];
@@ -505,18 +505,18 @@ Method _mockMethod;
     deleteDataset.identityId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityId;
     deleteDataset.identityPoolId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityPoolId;
     [[client deleteDataset:deleteDataset] waitUntilFinished];
-    
+
     [self forceUpdate:myDatasetName withKey:@"baz"];
-    
+
     // sync again
     [[dataset synchronize] waitUntilFinished];
-    
+
     // check to see our data is still there
     NSString *value = [dataset stringForKey:@"bar"];
     XCTAssertTrue([value isEqualToString:@"foo"]);
     value = [dataset stringForKey:@"baz"];
     XCTAssertTrue([value isEqualToString:@"forced"]);
-    
+
     __block BOOL _handlerCalled = NO;
     // set the handler to return NO so it will be deleted
     dataset.datasetDeletedHandler = ^BOOL (NSString *datasetName) {
@@ -524,20 +524,20 @@ Method _mockMethod;
         _handlerCalled = YES;
         return NO;
     };
-    
+
     // set a value that will be deleted
     [dataset setString:@"deleteme" forKey:@"deleteme"];
-    
+
     // delete and resurrect it again
     [[client deleteDataset:deleteDataset] waitUntilFinished];
     [self forceUpdate:myDatasetName withKey:@"baz"];
-    
+
     // sync again
     [[dataset synchronize] waitUntilFinished];
-    
+
     // make sure the handler was called
     XCTAssertTrue(_handlerCalled, @"handler was not called");
-    
+
     // check to see that our data is no longer there
     value = [dataset stringForKey:@"deleteme"];
     XCTAssertNil(value, @"value was not deleted");
@@ -548,25 +548,25 @@ Method _mockMethod;
 -(void)testDatasetMergedHandlerLocal {
     [[((AWSCognitoCredentialsProvider *)[AWSCognito defaultCognito].configuration.credentialsProvider) getIdentityId] waitUntilFinished];
     __block NSString *myDatasetName = @"testmerge";
-    
+
     // Create a sqlitemanager with a different ID
     AWSCognitoSQLiteManager *manager = [[AWSCognitoSQLiteManager alloc] initWithIdentityId:@"otherid" deviceId:@"tester"];
     [manager initializeDatasetTables:myDatasetName];
-    
+
     // Create a dataset in different ID
     AWSCognitoRecordValue* on = [[AWSCognitoRecordValue alloc] initWithString:@"on"];
     AWSCognitoRecord* record = [[AWSCognitoRecord alloc] initWithId:@"wifi" data:on];
     [manager putRecord:record datasetName:myDatasetName error:nil];
-    
+
     // Reparent the dataset
     [manager reparentDatasets:@"otherid" withNewId:((AWSCognitoCredentialsProvider *)[AWSCognito defaultCognito].configuration.credentialsProvider).identityId error:nil];
-    
+
     // Open the same dataset name in our ID
     AWSCognitoDataset *dataset = [[AWSCognito defaultCognito] openOrCreateDataset:myDatasetName];
-    
+
     __block BOOL _handlerCalled = NO;
     __block NSString *_mergedDatasetName = nil;
-    
+
     // Register merge handler
     dataset.datasetMergedHandler = ^(NSString *datasetName, NSArray *datasets) {
         _handlerCalled = YES;
@@ -574,27 +574,27 @@ Method _mockMethod;
         XCTAssertTrue(datasets.count == 1, @"There should only be one merged dataset");
         _mergedDatasetName = [datasets objectAtIndex:0];
     };
-    
+
     // Sync the dataset
     [[dataset synchronize] waitUntilFinished];
-    
+
     // Check handler (should have run)
     XCTAssertTrue(_handlerCalled, @"Handler never ran");
     XCTAssertNotNil(_mergedDatasetName, @"should have gotten a dataset name");
-    
+
     // Clear the merged dataset
     AWSCognitoDataset *mergedDataset = [[AWSCognito defaultCognito] openOrCreateDataset:_mergedDatasetName];
     [mergedDataset clear];
     [[mergedDataset synchronize] waitUntilFinished];
-    
+
     // reset the handler (shouldn't run this time
     dataset.datasetMergedHandler = ^(NSString *datasetName, NSArray *datasets) {
         XCTFail(@"Handler shouldn't have run");
     };
-    
+
     // Sync the dataset
     [[dataset synchronize] waitUntilFinished];
-    
+
     // Clean up
     [dataset clear];
     [[dataset synchronize] waitUntilFinished];

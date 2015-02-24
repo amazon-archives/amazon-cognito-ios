@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  */
 
 
@@ -13,7 +13,7 @@
 #import "AWSLogging.h"
 #import "AWSCredentialsProvider.h"
 #import "AWSCognitoConflict_Internal.h"
-#import "AWSCognitoSync.h"
+#import "AWSCognitoSyncService.h"
 
 @interface AWSCognitoSQLiteManager()
 {

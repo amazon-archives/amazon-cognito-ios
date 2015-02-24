@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  */
 
 #if AWS_TEST_COGNITO_SQLITE_MANAGER
@@ -7,7 +7,7 @@
 #import "AWSCognitoSQLiteManager.h"
 #import "AWSCore.h"
 #import <XCTest/XCTest.h>
-#import "Cognito.h"
+#import "AWSCognito.h"
 #import "AWSCognitoConflict_Internal.h"
 
 @interface AmazonCognitoSqliteManagerTests : XCTestCase

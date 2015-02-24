@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  */
 
 #import "AWSCognitoSyncModel.h"
@@ -470,6 +470,17 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 
 + (NSValueTransformer *)pushSyncJSONTransformer {
 	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncPushSync class]];
+}
+
+@end
+
+@implementation AWSCognitoSyncSilentSync
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"applicationArns" : @"ApplicationArns",
+             @"roleArn" : @"RoleArn",
+             };
 }
 
 @end

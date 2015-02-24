@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  */
 
 /**
@@ -10,6 +10,9 @@
  * <li>AWSCognitoRecordValueTypeDeleted - A deleted value.</li>
  * </ul>
  */
+
+#import <Foundation/Foundation.h>
+
 typedef NS_ENUM(NSInteger, AWSCognitoRecordValueType) {
     AWSCognitoRecordValueTypeUnknown,
     AWSCognitoRecordValueTypeString,
