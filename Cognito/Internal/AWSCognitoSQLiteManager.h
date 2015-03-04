@@ -18,7 +18,7 @@
 - (void)deleteSQLiteDatabase;
 
 - (NSArray *)getDatasets:(NSError **)error;
-- (void)loadDatasetMetadata:(AWSCognitoDatasetMetadata *)dataset error:(NSError **)error;
+- (BOOL)loadDatasetMetadata:(AWSCognitoDatasetMetadata *)dataset error:(NSError **)error;
 - (BOOL)putDatasetMetadata:(NSArray *)datasets error:(NSError **)error;
 - (AWSCognitoRecord *)getRecordById:(NSString *)recordId datasetName:(NSString *)datasetName error:(NSError **)error;
 - (BOOL)putRecord:(AWSCognitoRecord *)record datasetName:(NSString *)datasetName  error:(NSError **)error;
