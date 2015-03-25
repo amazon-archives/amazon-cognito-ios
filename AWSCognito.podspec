@@ -21,6 +21,6 @@ Pod::Spec.new do |s|
   s.dependency 'Reachability', '~> 3.1'
   
   s.source_files = 'CognitoSync/*.{h,m}', 'Cognito/*.{h,m}', 'Cognito/**/*.{h,m}'
-  s.public_header_files = "Cognito/*.h",'CognitoSync/*.{h,m}'
+  s.public_header_files = "Cognito/*.h",'CognitoSync/*.h'
   s.resources = ['CognitoSync/Resources/*.json']
 end
