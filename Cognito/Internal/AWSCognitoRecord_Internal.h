@@ -14,8 +14,6 @@
 
 @interface AWSCognitoRecord()
 
-@property (nonatomic, strong) NSDate *lastModified;
-
 /**
  * Initializes a AWSCognitoRecord with the values from a dictionary.
  *
