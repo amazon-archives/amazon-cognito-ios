@@ -7,6 +7,60 @@
 
 NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorDomain";
 
+@implementation AWSCognitoSyncBulkPublishRequest
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"identityPoolId" : @"IdentityPoolId",
+             };
+}
+
+@end
+
+@implementation AWSCognitoSyncBulkPublishResponse
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"identityPoolId" : @"IdentityPoolId",
+             };
+}
+
+@end
+
+@implementation AWSCognitoSyncCognitoStreams
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"roleArn" : @"RoleArn",
+             @"streamName" : @"StreamName",
+             @"streamingStatus" : @"StreamingStatus",
+             };
+}
+
++ (NSValueTransformer *)streamingStatusJSONTransformer {
+    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value isEqualToString:@"ENABLED"]) {
+            return @(AWSCognitoSyncStreamingStatusEnabled);
+        }
+        if ([value isEqualToString:@"DISABLED"]) {
+            return @(AWSCognitoSyncStreamingStatusDisabled);
+        }
+        return @(AWSCognitoSyncStreamingStatusUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSCognitoSyncStreamingStatusEnabled:
+                return @"ENABLED";
+            case AWSCognitoSyncStreamingStatusDisabled:
+                return @"DISABLED";
+            case AWSCognitoSyncStreamingStatusUnknown:
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
 @implementation AWSCognitoSyncDataset
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
@@ -140,6 +194,98 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 
 @end
 
+@implementation AWSCognitoSyncGetBulkPublishDetailsRequest
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"identityPoolId" : @"IdentityPoolId",
+             };
+}
+
+@end
+
+@implementation AWSCognitoSyncGetBulkPublishDetailsResponse
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"bulkPublishCompleteTime" : @"BulkPublishCompleteTime",
+             @"bulkPublishStartTime" : @"BulkPublishStartTime",
+             @"bulkPublishStatus" : @"BulkPublishStatus",
+             @"failureMessage" : @"FailureMessage",
+             @"identityPoolId" : @"IdentityPoolId",
+             };
+}
+
++ (NSValueTransformer *)bulkPublishCompleteTimeJSONTransformer {
+	return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+        return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
+    } reverseBlock:^id(NSDate *date) {
+        return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
+    }];
+}
+
++ (NSValueTransformer *)bulkPublishStartTimeJSONTransformer {
+	return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+        return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
+    } reverseBlock:^id(NSDate *date) {
+        return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
+    }];
+}
+
++ (NSValueTransformer *)bulkPublishStatusJSONTransformer {
+    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value isEqualToString:@"NOT_STARTED"]) {
+            return @(AWSCognitoSyncBulkPublishStatusNotStarted);
+        }
+        if ([value isEqualToString:@"IN_PROGRESS"]) {
+            return @(AWSCognitoSyncBulkPublishStatusInProgress);
+        }
+        if ([value isEqualToString:@"FAILED"]) {
+            return @(AWSCognitoSyncBulkPublishStatusFailed);
+        }
+        if ([value isEqualToString:@"SUCCEEDED"]) {
+            return @(AWSCognitoSyncBulkPublishStatusSucceeded);
+        }
+        return @(AWSCognitoSyncBulkPublishStatusUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSCognitoSyncBulkPublishStatusNotStarted:
+                return @"NOT_STARTED";
+            case AWSCognitoSyncBulkPublishStatusInProgress:
+                return @"IN_PROGRESS";
+            case AWSCognitoSyncBulkPublishStatusFailed:
+                return @"FAILED";
+            case AWSCognitoSyncBulkPublishStatusSucceeded:
+                return @"SUCCEEDED";
+            case AWSCognitoSyncBulkPublishStatusUnknown:
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
+@implementation AWSCognitoSyncGetCognitoEventsRequest
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"identityPoolId" : @"IdentityPoolId",
+             };
+}
+
+@end
+
+@implementation AWSCognitoSyncGetCognitoEventsResponse
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"events" : @"Events",
+             };
+}
+
+@end
+
 @implementation AWSCognitoSyncGetIdentityPoolConfigurationRequest
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
@@ -154,9 +300,14 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"cognitoStreams" : @"CognitoStreams",
              @"identityPoolId" : @"IdentityPoolId",
              @"pushSync" : @"PushSync",
              };
+}
+
++ (NSValueTransformer *)cognitoStreamsJSONTransformer {
+	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncCognitoStreams class]];
 }
 
 + (NSValueTransformer *)pushSyncJSONTransformer {
@@ -444,13 +595,29 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 
 @end
 
+@implementation AWSCognitoSyncSetCognitoEventsRequest
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"events" : @"Events",
+             @"identityPoolId" : @"IdentityPoolId",
+             };
+}
+
+@end
+
 @implementation AWSCognitoSyncSetIdentityPoolConfigurationRequest
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"cognitoStreams" : @"CognitoStreams",
              @"identityPoolId" : @"IdentityPoolId",
              @"pushSync" : @"PushSync",
              };
+}
+
++ (NSValueTransformer *)cognitoStreamsJSONTransformer {
+	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncCognitoStreams class]];
 }
 
 + (NSValueTransformer *)pushSyncJSONTransformer {
@@ -463,24 +630,18 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"cognitoStreams" : @"CognitoStreams",
              @"identityPoolId" : @"IdentityPoolId",
              @"pushSync" : @"PushSync",
              };
 }
 
-+ (NSValueTransformer *)pushSyncJSONTransformer {
-	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncPushSync class]];
++ (NSValueTransformer *)cognitoStreamsJSONTransformer {
+	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncCognitoStreams class]];
 }
 
-@end
-
-@implementation AWSCognitoSyncSilentSync
-
-+ (NSDictionary *)JSONKeyPathsByPropertyKey {
-	return @{
-             @"applicationArns" : @"ApplicationArns",
-             @"roleArn" : @"RoleArn",
-             };
++ (NSValueTransformer *)pushSyncJSONTransformer {
+	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncPushSync class]];
 }
 
 @end

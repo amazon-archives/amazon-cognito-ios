@@ -16,6 +16,8 @@
 
 @import ObjectiveC.runtime;
 
+NSString * const lambda = @"Lambda";
+
 NSString *_notificationDataset = @"notifications";
 NSString *_notificationKey = @"notificationKey";
 NSString *_concurrentDataset = @"concurrent";
@@ -25,6 +27,7 @@ BOOL _endReceived = NO;
 BOOL _remoteChangeReceived = NO;
 BOOL _localChangeReceived = NO;
 BOOL _failedReceived = NO;
+NSDate *_swizzledLastModified;
 
 Method _originalMethod;
 Method _mockMethod;
@@ -48,9 +51,36 @@ Method _mockMethod;
     return returnValue;
 }
 
-
 @end
 
+@implementation AWSCognitoSync(LambaTest)
+
+-(BFTask *)swizzled_updateRecords:(AWSCognitoSyncUpdateRecordsRequest *)request {
+    
+    // call the original implementation (which has been swapped with this method)
+    return [[self swizzled_updateRecords:request] continueWithBlock:^id(BFTask *task) {
+        AWSCognitoSyncUpdateRecordsResponse *response = task.result;
+        NSArray * records = response.records;
+        NSMutableArray * patchedRecords = [NSMutableArray new];
+        [patchedRecords addObjectsFromArray:records];
+        
+        //add an additional record to the response
+        AWSCognitoSyncRecord * record = [AWSCognitoSyncRecord new];
+        record.deviceLastModifiedDate = [NSDate date];
+        record.lastModifiedBy = lambda;
+        record.lastModifiedDate = [NSDate date];
+        _swizzledLastModified = record.lastModifiedDate;
+        record.syncCount = [NSNumber numberWithInt:1];
+        record.key = lambda;
+        record.value = lambda;
+        [patchedRecords addObject: record];
+        response.records = patchedRecords;
+        
+        // return the original result
+        return task;
+    }];
+}
+@end
 
 @implementation AWSCognitoClientTest
 + (void)setUp {
@@ -337,6 +367,36 @@ Method _mockMethod;
     [[dataset synchronize] waitUntilFinished];
 }
 
+
+- (void)testSyncWithLambdaModification {
+    
+    // create a dataset
+    AWSCognitoDataset* dataset = [[AWSCognito defaultCognito] openOrCreateDataset:@"testLambda"];
+    [dataset setString:@"value" forKey:@"key"];
+    
+    // switch out updateRecords to wrap it and modify the record after getting the list
+    _originalMethod = class_getInstanceMethod([AWSCognitoSync class], @selector(updateRecords:));
+    _mockMethod = class_getInstanceMethod([AWSCognitoSync class], @selector(swizzled_updateRecords:));
+    method_exchangeImplementations(_originalMethod, _mockMethod);
+    
+    
+    // call a sync
+    [[dataset synchronize] waitUntilFinished];
+    
+    
+    // switch back method implementation
+    method_exchangeImplementations(_originalMethod, _mockMethod);
+    
+    AWSCognitoRecord *record = [dataset recordForKey:lambda];
+    XCTAssertEqualObjects(lambda, record.data.string);
+    XCTAssertEqualWithAccuracy([_swizzledLastModified timeIntervalSinceReferenceDate], [record.lastModified timeIntervalSinceReferenceDate], .001);
+    XCTAssertEqualObjects(lambda, record.lastModifiedBy);
+    
+    record = [dataset recordForKey:@"key"];
+    XCTAssertNotNil(record);
+}
+
+
 - (void)testSyncNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncStartNotification:) name:AWSCognitoDidStartSynchronizeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncEndNotification:) name:AWSCognitoDidEndSynchronizeNotification object:nil];
@@ -571,7 +631,7 @@ Method _mockMethod;
     dataset.datasetMergedHandler = ^(NSString *datasetName, NSArray *datasets) {
         _handlerCalled = YES;
         XCTAssertTrue([datasetName isEqualToString:myDatasetName], @"dataset name doesn't match");
-        XCTAssertTrue(datasets.count == 1, @"There should only be one merged dataset");
+        XCTAssertTrue(1 == datasets.count, @"There should only be one merged dataset");
         _mergedDatasetName = [datasets objectAtIndex:0];
     };
 

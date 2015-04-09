@@ -119,7 +119,7 @@ NSString *_facebookId = nil;
 
     [AWSCognitoIdentity removeCognitoIdentityForKey:@"createIdentityPool"];
 
-    [NSThread sleepForTimeInterval:60];
+    [NSThread sleepForTimeInterval:20];
 }
 
 + (void)deleteIdentityPool {

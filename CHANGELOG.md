@@ -1,5 +1,10 @@
 # AWSCognitoSync CHANGELOG
 
+## 2.1.1
+
+### New Features
+* **Amazon Cognito** - Added support for Amazon Cognito Events.
+
 ## 2.1.0
 
 ### Misc Updates

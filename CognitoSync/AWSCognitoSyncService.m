@@ -30,11 +30,15 @@ static NSDictionary *errorCodeDictionary = nil;
                             @"IncompleteSignature" : @(AWSCognitoSyncErrorIncompleteSignature),
                             @"InvalidClientTokenId" : @(AWSCognitoSyncErrorInvalidClientTokenId),
                             @"MissingAuthenticationToken" : @(AWSCognitoSyncErrorMissingAuthenticationToken),
+                            @"AlreadyStreamedException" : @(AWSCognitoSyncErrorAlreadyStreamed),
+                            @"DuplicateRequestException" : @(AWSCognitoSyncErrorDuplicateRequest),
                             @"InternalErrorException" : @(AWSCognitoSyncErrorInternalError),
                             @"InvalidConfigurationException" : @(AWSCognitoSyncErrorInvalidConfiguration),
+                            @"InvalidLambdaFunctionOutputException" : @(AWSCognitoSyncErrorInvalidLambdaFunctionOutput),
                             @"InvalidParameterException" : @(AWSCognitoSyncErrorInvalidParameter),
+                            @"LambdaThrottledException" : @(AWSCognitoSyncErrorLambdaThrottled),
                             @"LimitExceededException" : @(AWSCognitoSyncErrorLimitExceeded),
-                            @"NotAuthorizedException" : @(AWSCognitoSyncErrorNotAuthorized),
+                            @"NotAuthorizedErrorException" : @(AWSCognitoSyncErrorNotAuthorized),
                             @"ResourceConflictException" : @(AWSCognitoSyncErrorResourceConflict),
                             @"ResourceNotFoundException" : @(AWSCognitoSyncErrorResourceNotFound),
                             @"TooManyRequestsException" : @(AWSCognitoSyncErrorTooManyRequests),
@@ -224,37 +228,31 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         networkingRequest.parameters = @{};
     }
 
-    NSMutableDictionary *parameters = [NSMutableDictionary new];
-    __block NSString *blockSafeURLString = [URLString copy];
-    [networkingRequest.parameters enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        NSString *stringToFind = [NSString stringWithFormat:@"{%@}", key];
-        if ([blockSafeURLString rangeOfString:stringToFind].location == NSNotFound) {
-            [parameters setObject:obj forKey:key];
-        } else {
-            blockSafeURLString = [blockSafeURLString stringByReplacingOccurrencesOfString:stringToFind
-                                                                               withString:obj];
-        }
-    }];
-    networkingRequest.parameters = parameters;
 
     NSMutableDictionary *headers = [NSMutableDictionary new];
-    headers[@"X-Amz-Target"] = [NSString stringWithFormat:@"%@.%@", targetPrefix, operationName];
 
     networkingRequest.headers = headers;
-    networkingRequest.URLString = blockSafeURLString;
     networkingRequest.HTTPMethod = HTTPMethod;
     networkingRequest.requestSerializer = [[AWSJSONRequestSerializer alloc] initWithResource:AWSCognitoSyncDefinitionFileName
                                                                                   actionName:operationName
                                                                               classForBundle:[self class]];
-    networkingRequest.responseSerializer = [[AWSCognitoSyncResponseSerializer alloc] initWithResource:@""
+    networkingRequest.responseSerializer = [[AWSCognitoSyncResponseSerializer alloc] initWithResource:AWSCognitoSyncDefinitionFileName
                                                                                            actionName:operationName
                                                                                           outputClass:outputClass
                                                                                        classForBundle:[self class]];
-
     return [self.networking sendRequest:networkingRequest];
 }
 
 #pragma mark - Service method
+
+- (BFTask *)bulkPublish:(AWSCognitoSyncBulkPublishRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/identitypools/{IdentityPoolId}/bulkpublish"
+                  targetPrefix:@""
+                 operationName:@"BulkPublish"
+                   outputClass:[AWSCognitoSyncBulkPublishResponse class]];
+}
 
 - (BFTask *)deleteDataset:(AWSCognitoSyncDeleteDatasetRequest *)request {
     return [self invokeRequest:request
@@ -290,6 +288,24 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
                   targetPrefix:@""
                  operationName:@"DescribeIdentityUsage"
                    outputClass:[AWSCognitoSyncDescribeIdentityUsageResponse class]];
+}
+
+- (BFTask *)getBulkPublishDetails:(AWSCognitoSyncGetBulkPublishDetailsRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/identitypools/{IdentityPoolId}/getBulkPublishDetails"
+                  targetPrefix:@""
+                 operationName:@"GetBulkPublishDetails"
+                   outputClass:[AWSCognitoSyncGetBulkPublishDetailsResponse class]];
+}
+
+- (BFTask *)getCognitoEvents:(AWSCognitoSyncGetCognitoEventsRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodGET
+                     URLString:@"/identitypools/{IdentityPoolId}/events"
+                  targetPrefix:@""
+                 operationName:@"GetCognitoEvents"
+                   outputClass:[AWSCognitoSyncGetCognitoEventsResponse class]];
 }
 
 - (BFTask *)getIdentityPoolConfiguration:(AWSCognitoSyncGetIdentityPoolConfigurationRequest *)request {
@@ -335,6 +351,15 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
                   targetPrefix:@""
                  operationName:@"RegisterDevice"
                    outputClass:[AWSCognitoSyncRegisterDeviceResponse class]];
+}
+
+- (BFTask *)setCognitoEvents:(AWSCognitoSyncSetCognitoEventsRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/identitypools/{IdentityPoolId}/events"
+                  targetPrefix:@""
+                 operationName:@"SetCognitoEvents"
+                   outputClass:nil];
 }
 
 - (BFTask *)setIdentityPoolConfiguration:(AWSCognitoSyncSetIdentityPoolConfigurationRequest *)request {

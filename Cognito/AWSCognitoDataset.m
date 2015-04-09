@@ -315,7 +315,7 @@
             AWSLogError(@"Unable to list records: %@", task.error);
             return task;
         }else {
-            NSError *error;
+            NSError *error = nil;
             NSMutableArray *conflicts = [NSMutableArray new];
             // collect updates to write in a transaction
             NSMutableArray *nonConflictRecords = [NSMutableArray new];
@@ -352,7 +352,7 @@
             }
             
             // check the response for merged datasets, call the appropriate handler
-            if (response.mergedDatasetNames && self.datasetMergedHandler) {
+            if (response.mergedDatasetNames && response.mergedDatasetNames.count > 0 && self.datasetMergedHandler) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     self.datasetMergedHandler(self.name, response.mergedDatasetNames);
                 });
@@ -447,7 +447,7 @@
     
     //if there are no pending conflicts
     NSMutableArray *patches = [NSMutableArray new];
-    NSError *error;
+    NSError *error = nil;
     self.records = [self.sqliteManager recordsUpdatedAfterLastSync:self.name error:&error];
     NSNumber* maxPatchSyncCount = [NSNumber numberWithLongLong:0L];
     
@@ -525,13 +525,26 @@
                         }
                         newRecord.syncCount = [record.syncCount longLongValue];
                         newRecord.dirtyCount = 0;
+                        newRecord.lastModifiedBy = record.lastModifiedBy;
+                        if(newRecord.lastModifiedBy == nil){
+                            newRecord.lastModifiedBy = @"Unknown";
+                        }
+                        newRecord.lastModified = record.lastModifiedDate;
                         
                         AWSCognitoRecord * existingRecord = [self.records objectForKey:record.key];
-                        newRecord.lastModifiedBy = existingRecord.lastModifiedBy;
+                        if(existingRecord == nil){
+                            //this means we got an update returned by the server that we didn't cause
+                            //i.e. based on some updates, the lambda function run server side inserted
+                            //a brand new key unrelated to our patches into our dataset.
+                            //get the current value of that key from our dataset if it exists
+                            //and overwrite it with what was returned from the server
+                            NSError *error = nil;
+                            existingRecord = [self.sqliteManager getRecordById:record.key datasetName:self.name error:&error];
+                        }
                         
                         [changedRecords addObject:[[AWSCognitoRecordTuple alloc] initWithLocalRecord:existingRecord remoteRecord:newRecord]];
                     }
-                    NSError *error;
+                    NSError *error = nil;
                     if([self.sqliteManager updateLocalRecordMetadata:self.name records:changedRecords error:&error]) {
                         // successfully wrote the update notify interested parties
                         [self postDidChangeRemoteValueNotification:changedRecordsNames];
