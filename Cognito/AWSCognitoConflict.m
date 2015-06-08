@@ -1,4 +1,4 @@
-/**
+/*
  Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  */
 

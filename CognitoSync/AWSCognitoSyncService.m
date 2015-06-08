@@ -205,7 +205,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         _configuration.headers = @{@"Host" : _endpoint.hostName,
                                    @"Content-Type" : @"application/x-amz-json-1.1"};
 
-        _networking = [AWSNetworking networking:_configuration];
+        _networking = [[AWSNetworking alloc] initWithConfiguration:_configuration];
     }
 
     return self;
