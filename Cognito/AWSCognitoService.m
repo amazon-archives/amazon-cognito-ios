@@ -13,7 +13,7 @@
 #import "AWSLogging.h"
 #import "AWSCognitoHandlers.h"
 #import "AWSCognitoConflict_Internal.h"
-#import "UICKeyChainStore.h"
+#import "AWSUICKeyChainStore.h"
 #import "AWSSynchronizedMutableDictionary.h"
 
 NSString *const AWSCognitoDidStartSynchronizeNotification = @"com.amazon.cognito.AWSCognitoDidStartSynchronizeNotification";
@@ -28,7 +28,7 @@ NSString *const AWSCognitoIdentityIdChangedInternalNotification = @"com.amazonaw
 
 NSString *const AWSCognitoErrorDomain = @"com.amazon.cognito.AWSCognitoErrorDomain";
 
-static UICKeyChainStore *keychain = nil;
+static AWSUICKeyChainStore *keychain = nil;
 
 static AWSCognitoSyncPlatform _pushPlatform;
 
@@ -39,7 +39,7 @@ static AWSCognitoSyncPlatform _pushPlatform;
 @property (nonatomic, strong) AWSCognitoSQLiteManager *sqliteManager;
 @property (nonatomic, strong) AWSCognitoSync *cognitoService;
 @property (nonatomic, strong) AWSCognitoCredentialsProvider *cognitoCredentialsProvider;
-@property (nonatomic, strong) UICKeyChainStore *keychain;
+@property (nonatomic, strong) AWSUICKeyChainStore *keychain;
 
 @end
 
@@ -50,7 +50,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 #pragma mark - Setups
 
 + (void)initialize {
-    keychain = [UICKeyChainStore keyChainStoreWithService:[NSString stringWithFormat:@"%@.%@", [NSBundle mainBundle].bundleIdentifier, [AWSCognito class]]];
+    keychain = [AWSUICKeyChainStore keyChainStoreWithService:[NSString stringWithFormat:@"%@.%@", [NSBundle mainBundle].bundleIdentifier, [AWSCognito class]]];
     _pushPlatform = [AWSCognitoUtil pushPlatform];
 }
 
@@ -160,25 +160,25 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [self.cognitoCredentialsProvider clearKeychain];
 }
 
-- (BFTask *)refreshDatasetMetadata {
-    return [[[self.cognitoCredentialsProvider getIdentityId] continueWithBlock:^id(BFTask *task) {
+- (AWSTask *)refreshDatasetMetadata {
+    return [[[self.cognitoCredentialsProvider getIdentityId] continueWithBlock:^id(AWSTask *task) {
         if (task.error) {
-            return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoAuthenticationFailed userInfo:nil]];
+            return [AWSTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoAuthenticationFailed userInfo:nil]];
         }
         AWSCognitoSyncListDatasetsRequest *request = [AWSCognitoSyncListDatasetsRequest new];
         request.identityPoolId = self.cognitoCredentialsProvider.identityPoolId;
         request.identityId = self.cognitoCredentialsProvider.identityId;
         return [self.cognitoService listDatasets:request];
-    }] continueWithBlock:^id(BFTask *task) {
+    }] continueWithBlock:^id(AWSTask *task) {
         if(task.isCancelled){
-            return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil]];
+            return [AWSTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil]];
         }else if(task.error){
             AWSLogError(@"Unable to list datasets: %@", task.error);
             return task;
         }else {
             AWSCognitoSyncListDatasetsResponse* response = task.result;
             [self.sqliteManager putDatasetMetadata: response.datasets error:nil];
-            return [BFTask taskWithResult:response.datasets];
+            return [AWSTask taskWithResult:response.datasets];
         }
     }];
 }
@@ -223,7 +223,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     return keychain[[AWSCognitoUtil deviceIdentityKey:_pushPlatform]];
 }
 
--(BFTask *)registerDevice:(NSData *) deviceToken {
+-(AWSTask *)registerDevice:(NSData *) deviceToken {
     const unsigned char* bytes = (const unsigned char*)[deviceToken bytes];
     NSMutableString * devTokenHex = [[NSMutableString alloc] initWithCapacity:2*deviceToken.length];
     for(int i=0; i<deviceToken.length; i++){
@@ -232,16 +232,16 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     return [self registerDeviceInternal:devTokenHex];
 }
 
--(BFTask *)registerDeviceInternal:(NSString *) deviceToken {
-    return [[[self.cognitoCredentialsProvider getIdentityId] continueWithBlock:^id(BFTask *task) {
+-(AWSTask *)registerDeviceInternal:(NSString *) deviceToken {
+    return [[[self.cognitoCredentialsProvider getIdentityId] continueWithBlock:^id(AWSTask *task) {
         if (task.error) {
-            return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoAuthenticationFailed userInfo:nil]];
+            return [AWSTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoAuthenticationFailed userInfo:nil]];
         }
         
         NSString *currentDeviceId = [AWSCognito cognitoDeviceId];
         NSString *currentDeviceIdentity = [AWSCognito cognitoDeviceIdentity];
         if(currentDeviceId && currentDeviceIdentity && [self.cognitoCredentialsProvider.identityId isEqualToString:currentDeviceIdentity]){
-            return [BFTask taskWithResult:currentDeviceId];
+            return [AWSTask taskWithResult:currentDeviceId];
         }
         AWSCognitoSyncRegisterDeviceRequest* request = [AWSCognitoSyncRegisterDeviceRequest new];
         request.platform = _pushPlatform;
@@ -249,9 +249,9 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         request.identityPoolId = self.cognitoCredentialsProvider.identityPoolId;
         request.identityId = self.cognitoCredentialsProvider.identityId;
         return [self.cognitoService registerDevice:request];
-    }] continueWithBlock:^id(BFTask *task) {
+    }] continueWithBlock:^id(AWSTask *task) {
         if(task.isCancelled){
-            return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil]];
+            return [AWSTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil]];
         }else if(task.error){
             AWSLogError(@"Unable to register device: %@", task.error);
             return task;
@@ -260,7 +260,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
             keychain[[AWSCognitoUtil deviceIdKey:_pushPlatform]] = response.deviceId;
             keychain[[AWSCognitoUtil deviceIdentityKey:_pushPlatform]] = self.cognitoCredentialsProvider.identityId;
             [self setDeviceId:response.deviceId];
-            return [BFTask taskWithResult:response.deviceId];
+            return [AWSTask taskWithResult:response.deviceId];
         }
     }];
 }
@@ -273,27 +273,27 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     return _pushPlatform;
 }
 
--(BFTask *)subscribe:(NSArray *) datasetNames {
+-(AWSTask *)subscribe:(NSArray *) datasetNames {
     NSMutableArray *tasks = [NSMutableArray new];
     for (NSString * datasetName in datasetNames) {
         [tasks addObject:[[self openOrCreateDataset:datasetName] subscribe]];
     }
-    return [BFTask taskForCompletionOfAllTasks:tasks];
+    return [AWSTask taskForCompletionOfAllTasks:tasks];
 }
 
--(BFTask *)subscribeAll {
+-(AWSTask *)subscribeAll {
     return [self subscribe:[self listDatasets]];
 }
 
--(BFTask *)unsubscribe:(NSArray *) datasetNames {
+-(AWSTask *)unsubscribe:(NSArray *) datasetNames {
     NSMutableArray *tasks = [NSMutableArray new];
     for (NSString * datasetName in datasetNames) {
         [tasks addObject:[[self openOrCreateDataset:datasetName] unsubscribe]];
     }
-    return [BFTask taskForCompletionOfAllTasks:tasks];
+    return [AWSTask taskForCompletionOfAllTasks:tasks];
 }
 
--(BFTask *)unsubscribeAll {
+-(AWSTask *)unsubscribeAll {
     return [self unsubscribe:[self listDatasets]];
 }
 

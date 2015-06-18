@@ -47,7 +47,7 @@ NSString *_identityId;
     request.identityPoolId = [CognitoTestUtils identityPoolId];
     request.identityId = _identityId;
 
-    [[[[AWSCognitoSync CognitoSyncForKey:@"AWSCognitoSyncTests"] listRecords:request] continueWithBlock:^id(BFTask *task) {
+    [[[[AWSCognitoSync CognitoSyncForKey:@"AWSCognitoSyncTests"] listRecords:request] continueWithBlock:^id(AWSTask *task) {
         AWSCognitoSyncListRecordsResponse *response = task.result;
         XCTAssertNotNil(response, @"response should not be nil");
         return nil;
@@ -65,7 +65,7 @@ NSString *_identityId;
     request.identityPoolId = [CognitoTestUtils identityPoolId];
     request.identityId = _identityId;
 
-    [[[client describeDataset:request] continueWithBlock:^id(BFTask *task) {
+    [[[client describeDataset:request] continueWithBlock:^id(AWSTask *task) {
         XCTAssertNotNil(task.error,@"expected error but got nil");
         XCTAssertEqual(AWSCognitoSyncErrorResourceNotFound, task.error.code, @"expected AWSCognitoSyncErrorResourceNotFound Error but got: %ld",(long)task.error.code);
 
@@ -84,7 +84,7 @@ NSString *_identityId;
     listRequest.lastSyncCount = @0;
 
     __block NSString *_sessionToken = nil;
-    [[[[AWSCognitoSync CognitoSyncForKey:@"AWSCognitoSyncTests"] listRecords:listRequest] continueWithBlock:^id(BFTask *task) {
+    [[[[AWSCognitoSync CognitoSyncForKey:@"AWSCognitoSyncTests"] listRecords:listRequest] continueWithBlock:^id(AWSTask *task) {
         XCTAssertNil(task.error, @"Error: [%@].", task.error);
         AWSCognitoSyncListRecordsResponse *result = task.result;
         _sessionToken = result.syncSessionToken;
@@ -96,7 +96,7 @@ NSString *_identityId;
     // Retry the list with the token
     listRequest.syncSessionToken = _sessionToken;
 
-    [[[[AWSCognitoSync CognitoSyncForKey:@"AWSCognitoSyncTests"] listRecords:listRequest] continueWithBlock:^id(BFTask *task) {
+    [[[[AWSCognitoSync CognitoSyncForKey:@"AWSCognitoSyncTests"] listRecords:listRequest] continueWithBlock:^id(AWSTask *task) {
         XCTAssertNil(task.error, @"Error from list w/session token: %@", task.error);
         return nil;
     }] waitUntilFinished];
@@ -115,13 +115,13 @@ NSString *_identityId;
     updateRequest.syncSessionToken = _sessionToken;
     updateRequest.recordPatches = [NSArray arrayWithObject:patch];
 
-    [[[[AWSCognitoSync CognitoSyncForKey:@"AWSCognitoSyncTests"] updateRecords:updateRequest] continueWithBlock:^id(BFTask *task) {
+    [[[[AWSCognitoSync CognitoSyncForKey:@"AWSCognitoSyncTests"] updateRecords:updateRequest] continueWithBlock:^id(AWSTask *task) {
         XCTAssertNil(task.error, @"Error from update w/session token: %@", task.error);
         return nil;
     }] waitUntilFinished];
 
     // Now that the token was used to push, listing again should fail
-    [[[[AWSCognitoSync CognitoSyncForKey:@"AWSCognitoSyncTests"] listRecords:listRequest] continueWithBlock:^id(BFTask *task) {
+    [[[[AWSCognitoSync CognitoSyncForKey:@"AWSCognitoSyncTests"] listRecords:listRequest] continueWithBlock:^id(AWSTask *task) {
         XCTAssertNotNil(task.error, @"Should have gotten error");
         return nil;
     }] waitUntilFinished];

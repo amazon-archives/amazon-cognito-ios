@@ -55,10 +55,10 @@ Method _mockMethod;
 
 @implementation AWSCognitoSync(LambaTest)
 
--(BFTask *)swizzled_updateRecords:(AWSCognitoSyncUpdateRecordsRequest *)request {
+-(AWSTask *)swizzled_updateRecords:(AWSCognitoSyncUpdateRecordsRequest *)request {
     
     // call the original implementation (which has been swapped with this method)
-    return [[self swizzled_updateRecords:request] continueWithBlock:^id(BFTask *task) {
+    return [[self swizzled_updateRecords:request] continueWithBlock:^id(AWSTask *task) {
         AWSCognitoSyncUpdateRecordsResponse *response = task.result;
         NSArray * records = response.records;
         NSMutableArray * patchedRecords = [NSMutableArray new];
@@ -111,7 +111,7 @@ Method _mockMethod;
     list.datasetName = datasetName;
     list.identityId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityId;
     list.identityPoolId = ((AWSCognitoCredentialsProvider *)client.configuration.credentialsProvider).identityPoolId;
-    [[[[client listRecords:list] continueWithBlock:^id(BFTask *task) {
+    [[[[client listRecords:list] continueWithBlock:^id(AWSTask *task) {
         AWSCognitoSyncListRecordsResponse *listResponse = task.result;
 
         AWSCognitoSyncRecordPatch *patch = [AWSCognitoSyncRecordPatch new];
@@ -127,7 +127,7 @@ Method _mockMethod;
         update.recordPatches = [NSArray arrayWithObject:patch];
         update.syncSessionToken = listResponse.syncSessionToken;
         return [client updateRecords:update];
-    }] continueWithBlock:^id(BFTask *task) {
+    }] continueWithBlock:^id(AWSTask *task) {
         XCTAssertNil(task.error, @"Could not write update");
         return nil;
     }] waitUntilFinished];
@@ -252,7 +252,7 @@ Method _mockMethod;
 
 - (void)testRefreshDatasetMetadata {
     __block NSUInteger count;
-    [[[[AWSCognito defaultCognito] refreshDatasetMetadata] continueWithBlock:^id(BFTask *task) {
+    [[[[AWSCognito defaultCognito] refreshDatasetMetadata] continueWithBlock:^id(AWSTask *task) {
         XCTAssertNil(task.error, @"Error in listDatasets [%@]", task.error);
         NSArray *datasets = task.result;
         for(AWSCognitoSyncDataset * dataset in datasets){
@@ -267,7 +267,7 @@ Method _mockMethod;
     [dataset setString:@"on" forKey:@"wifi"];
     [[dataset synchronize] waitUntilFinished];
 
-    [[[[AWSCognito defaultCognito] refreshDatasetMetadata] continueWithBlock:^id(BFTask *task) {
+    [[[[AWSCognito defaultCognito] refreshDatasetMetadata] continueWithBlock:^id(AWSTask *task) {
         XCTAssertNil(task.error, @"Error in listDatasets [%@]", task.error);
         NSArray *datasets = task.result;
         for(AWSCognitoSyncDataset * dataset in datasets){
@@ -295,7 +295,7 @@ Method _mockMethod;
     [dataset setString:@"test" forKey:keyName];
 
     // this should succeed
-    [[[dataset synchronize] continueWithBlock:^id(BFTask *task) {
+    [[[dataset synchronize] continueWithBlock:^id(AWSTask *task) {
         XCTAssertNil(task.error, @"Error in synchronize [%@]", task.error);
         return nil;
     }] waitUntilFinished];
@@ -308,7 +308,7 @@ Method _mockMethod;
     [self fakeLocalDirty:datasetName withKey:keyName];
 
     // this should succeed
-    [[[dataset synchronize] continueWithBlock:^id(BFTask *task) {
+    [[[dataset synchronize] continueWithBlock:^id(AWSTask *task) {
         XCTAssertNil(task.error, @"Error in synchronize [%@]", task.error);
         return nil;
     }] waitUntilFinished];
@@ -339,7 +339,7 @@ Method _mockMethod;
     method_exchangeImplementations(_originalMethod, _mockMethod);
 
     // this should succeed
-    [[[dataset synchronize] continueWithBlock:^id(BFTask *task) {
+    [[[dataset synchronize] continueWithBlock:^id(AWSTask *task) {
         XCTAssertNil(task.error, @"Error in synchronize [%@]", task.error);
         return nil;
     }] waitUntilFinished];
@@ -353,7 +353,7 @@ Method _mockMethod;
     method_exchangeImplementations(_originalMethod, _mockMethod);
 
     // this should succeed
-    [[[dataset synchronize] continueWithBlock:^id(BFTask *task) {
+    [[[dataset synchronize] continueWithBlock:^id(AWSTask *task) {
         XCTAssertNil(task.error, @"Error in synchronize [%@]", task.error);
         return nil;
     }] waitUntilFinished];

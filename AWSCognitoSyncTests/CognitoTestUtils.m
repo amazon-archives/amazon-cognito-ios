@@ -105,7 +105,7 @@ NSString *_facebookId = nil;
     createPoolForAuthProvider.allowUnauthenticatedIdentities = @YES;
     createPoolForAuthProvider.supportedLoginProviders = @{@"graph.facebook.com" : AWSCognitoClientTestsFacebookAppID};
 
-    [[[cib createIdentityPool:createPoolForAuthProvider] continueWithSuccessBlock:^id(BFTask *task) {
+    [[[cib createIdentityPool:createPoolForAuthProvider] continueWithSuccessBlock:^id(AWSTask *task) {
         AWSCognitoIdentityIdentityPool *identityPool = task.result;
         _identityPoolId = identityPool.identityPoolId;
 

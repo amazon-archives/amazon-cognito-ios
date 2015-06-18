@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1583ECEC29BA84A20CCDA57B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1E19DBA9C1868C68804FEB2 /* libPods.a */; };
-		BD5F77561AC254A100C48662 /* cognito-sync-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = BDCA35841AC22E4100228D15 /* cognito-sync-2014-06-30.json */; };
 		BDCA356F1AC22D7A00228D15 /* libAWSCognito.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDCA35631AC22D7A00228D15 /* libAWSCognito.a */; };
 		BDCA359A1AC22E4100228D15 /* AWSCognitoSyncService.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA357F1AC22E4100228D15 /* AWSCognitoSyncService.m */; };
 		BDCA359B1AC22E4100228D15 /* AWSCognitoSyncModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35811AC22E4100228D15 /* AWSCognitoSyncModel.m */; };
@@ -25,6 +24,8 @@
 		BDCA35AC1AC230B400228D15 /* CognitoTestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35A81AC230B400228D15 /* CognitoTestUtils.m */; };
 		BDCA35CD1AC24AC000228D15 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BDCA35CC1AC24AC000228D15 /* libsqlite3.dylib */; };
 		BDF744F71AC25056000E0FEA /* credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = BDF744F61AC25056000E0FEA /* credentials.json */; };
+		BDF8F6601B1D4CC700A2CEF9 /* AWSCognitoSyncResources.h in Headers */ = {isa = PBXBuildFile; fileRef = BDF8F65E1B1D4CC700A2CEF9 /* AWSCognitoSyncResources.h */; };
+		BDF8F6611B1D4CC700A2CEF9 /* AWSCognitoSyncResources.m in Sources */ = {isa = PBXBuildFile; fileRef = BDF8F65F1B1D4CC700A2CEF9 /* AWSCognitoSyncResources.m */; };
 		BDFC08361AC260470058444D /* AWSCognitoSyncService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BDCA357E1AC22E4100228D15 /* AWSCognitoSyncService.h */; };
 		BDFC08371AC260470058444D /* AWSCognitoSyncModel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BDCA35801AC22E4100228D15 /* AWSCognitoSyncModel.h */; };
 		BDFC08391AC260470058444D /* AWSCognitoService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BDCA35861AC22E4100228D15 /* AWSCognitoService.h */; };
@@ -85,17 +86,16 @@
 		BDCA35631AC22D7A00228D15 /* libAWSCognito.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAWSCognito.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDCA356E1AC22D7A00228D15 /* AWSCognitoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWSCognitoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDCA35741AC22D7A00228D15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BDCA357E1AC22E4100228D15 /* AWSCognitoSyncService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSyncService.h; sourceTree = "<group>"; };
-		BDCA357F1AC22E4100228D15 /* AWSCognitoSyncService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSyncService.m; sourceTree = "<group>"; };
+		BDCA357E1AC22E4100228D15 /* AWSCognitoSyncService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AWSCognitoSyncService.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		BDCA357F1AC22E4100228D15 /* AWSCognitoSyncService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AWSCognitoSyncService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BDCA35801AC22E4100228D15 /* AWSCognitoSyncModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSyncModel.h; sourceTree = "<group>"; };
 		BDCA35811AC22E4100228D15 /* AWSCognitoSyncModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSyncModel.m; sourceTree = "<group>"; };
-		BDCA35841AC22E4100228D15 /* cognito-sync-2014-06-30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cognito-sync-2014-06-30.json"; sourceTree = "<group>"; };
-		BDCA35861AC22E4100228D15 /* AWSCognitoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoService.h; sourceTree = "<group>"; };
-		BDCA35871AC22E4100228D15 /* AWSCognitoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoService.m; sourceTree = "<group>"; };
+		BDCA35861AC22E4100228D15 /* AWSCognitoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AWSCognitoService.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		BDCA35871AC22E4100228D15 /* AWSCognitoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AWSCognitoService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BDCA35881AC22E4100228D15 /* AWSCognitoConflict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoConflict.h; sourceTree = "<group>"; };
 		BDCA35891AC22E4100228D15 /* AWSCognitoConflict.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoConflict.m; sourceTree = "<group>"; };
-		BDCA358A1AC22E4100228D15 /* AWSCognitoDataset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoDataset.h; sourceTree = "<group>"; };
-		BDCA358B1AC22E4100228D15 /* AWSCognitoDataset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoDataset.m; sourceTree = "<group>"; };
+		BDCA358A1AC22E4100228D15 /* AWSCognitoDataset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AWSCognitoDataset.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		BDCA358B1AC22E4100228D15 /* AWSCognitoDataset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AWSCognitoDataset.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BDCA358C1AC22E4100228D15 /* AWSCognitoHandlers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoHandlers.h; sourceTree = "<group>"; };
 		BDCA358D1AC22E4100228D15 /* AWSCognitoRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoRecord.h; sourceTree = "<group>"; };
 		BDCA358E1AC22E4100228D15 /* AWSCognitoRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoRecord.m; sourceTree = "<group>"; };
@@ -110,13 +110,15 @@
 		BDCA35981AC22E4100228D15 /* AWSCognitoUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoUtil.h; sourceTree = "<group>"; };
 		BDCA35991AC22E4100228D15 /* AWSCognitoUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoUtil.m; sourceTree = "<group>"; };
 		BDCA35A31AC230B400228D15 /* AmazonCognitoSqliteManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazonCognitoSqliteManagerTests.m; sourceTree = "<group>"; };
-		BDCA35A41AC230B400228D15 /* AWSCognitoClientTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoClientTest.m; sourceTree = "<group>"; };
-		BDCA35A51AC230B400228D15 /* AWSCognitoSyncServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSyncServiceTests.m; sourceTree = "<group>"; };
+		BDCA35A41AC230B400228D15 /* AWSCognitoClientTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AWSCognitoClientTest.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		BDCA35A51AC230B400228D15 /* AWSCognitoSyncServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AWSCognitoSyncServiceTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BDCA35A61AC230B400228D15 /* AWSCognitoTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AWSCognitoTests-Prefix.pch"; sourceTree = "<group>"; };
 		BDCA35A71AC230B400228D15 /* CognitoTestUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CognitoTestUtils.h; sourceTree = "<group>"; };
-		BDCA35A81AC230B400228D15 /* CognitoTestUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CognitoTestUtils.m; sourceTree = "<group>"; };
+		BDCA35A81AC230B400228D15 /* CognitoTestUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CognitoTestUtils.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BDCA35CC1AC24AC000228D15 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		BDF744F61AC25056000E0FEA /* credentials.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = credentials.json; path = ../../AWSiOSSDKv2/AWSCoreTests/credentials.json; sourceTree = "<group>"; };
+		BDF8F65E1B1D4CC700A2CEF9 /* AWSCognitoSyncResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSyncResources.h; sourceTree = "<group>"; };
+		BDF8F65F1B1D4CC700A2CEF9 /* AWSCognitoSyncResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSyncResources.m; sourceTree = "<group>"; };
 		D1E19DBA9C1868C68804FEB2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -209,18 +211,11 @@
 				BDCA35811AC22E4100228D15 /* AWSCognitoSyncModel.m */,
 				BDCA357E1AC22E4100228D15 /* AWSCognitoSyncService.h */,
 				BDCA357F1AC22E4100228D15 /* AWSCognitoSyncService.m */,
-				BDCA35831AC22E4100228D15 /* Resources */,
+				BDF8F65E1B1D4CC700A2CEF9 /* AWSCognitoSyncResources.h */,
+				BDF8F65F1B1D4CC700A2CEF9 /* AWSCognitoSyncResources.m */,
 			);
 			path = CognitoSync;
 			sourceTree = SOURCE_ROOT;
-		};
-		BDCA35831AC22E4100228D15 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				BDCA35841AC22E4100228D15 /* cognito-sync-2014-06-30.json */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
 		};
 		BDCA35851AC22E4100228D15 /* Cognito */ = {
 			isa = PBXGroup;
@@ -271,6 +266,7 @@
 				BDFC08451AC261140058444D /* AWSCognitoDataset.h in Headers */,
 				BDFC08461AC261140058444D /* AWSCognitoHandlers.h in Headers */,
 				BDFC08471AC261140058444D /* AWSCognitoRecord.h in Headers */,
+				BDF8F6601B1D4CC700A2CEF9 /* AWSCognitoSyncResources.h in Headers */,
 				BDFC08481AC261140058444D /* AWSCognito.h in Headers */,
 				BDFC08491AC2612A0058444D /* AWSCognitoConflict_Internal.h in Headers */,
 				BDFC084A1AC2612A0058444D /* AWSCognitoConstants.h in Headers */,
@@ -362,7 +358,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD5F77561AC254A100C48662 /* cognito-sync-2014-06-30.json in Resources */,
 				BDF744F71AC25056000E0FEA /* credentials.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,6 +404,7 @@
 			files = (
 				BDCA35A01AC22E4100228D15 /* AWSCognitoConstants.m in Sources */,
 				BDCA359B1AC22E4100228D15 /* AWSCognitoSyncModel.m in Sources */,
+				BDF8F6611B1D4CC700A2CEF9 /* AWSCognitoSyncResources.m in Sources */,
 				BDCA359E1AC22E4100228D15 /* AWSCognitoDataset.m in Sources */,
 				BDCA359F1AC22E4100228D15 /* AWSCognitoRecord.m in Sources */,
 				BDCA359C1AC22E4100228D15 /* AWSCognitoService.m in Sources */,

@@ -1,5 +1,16 @@
-/**
- Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+/*
+ Copyright 2010-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License").
+ You may not use this file except in compliance with the License.
+ A copy of the License is located at
+
+ http://aws.amazon.com/apache2.0
+
+ or in the "license" file accompanying this file. This file is distributed
+ on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ express or implied. See the License for the specific language governing
+ permissions and limitations under the License.
  */
 
 #import "AWSCognitoSyncModel.h"
@@ -38,7 +49,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)streamingStatusJSONTransformer {
-    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
         if ([value isEqualToString:@"ENABLED"]) {
             return @(AWSCognitoSyncStreamingStatusEnabled);
         }
@@ -76,7 +87,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)creationDateJSONTransformer {
-	return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+	return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
         return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
     } reverseBlock:^id(NSDate *date) {
         return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
@@ -84,7 +95,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)lastModifiedDateJSONTransformer {
-	return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+	return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
         return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
     } reverseBlock:^id(NSDate *date) {
         return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
@@ -114,7 +125,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)datasetJSONTransformer {
-	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncDataset class]];
+	return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncDataset class]];
 }
 
 @end
@@ -140,7 +151,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)datasetJSONTransformer {
-	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncDataset class]];
+	return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncDataset class]];
 }
 
 @end
@@ -164,7 +175,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)identityPoolUsageJSONTransformer {
-	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncIdentityPoolUsage class]];
+	return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncIdentityPoolUsage class]];
 }
 
 @end
@@ -189,7 +200,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)identityUsageJSONTransformer {
-	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncIdentityUsage class]];
+	return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncIdentityUsage class]];
 }
 
 @end
@@ -217,7 +228,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)bulkPublishCompleteTimeJSONTransformer {
-	return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+	return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
         return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
     } reverseBlock:^id(NSDate *date) {
         return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
@@ -225,7 +236,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)bulkPublishStartTimeJSONTransformer {
-	return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+	return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
         return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
     } reverseBlock:^id(NSDate *date) {
         return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
@@ -233,7 +244,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)bulkPublishStatusJSONTransformer {
-    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
         if ([value isEqualToString:@"NOT_STARTED"]) {
             return @(AWSCognitoSyncBulkPublishStatusNotStarted);
         }
@@ -307,11 +318,11 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)cognitoStreamsJSONTransformer {
-	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncCognitoStreams class]];
+	return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncCognitoStreams class]];
 }
 
 + (NSValueTransformer *)pushSyncJSONTransformer {
-	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncPushSync class]];
+	return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncPushSync class]];
 }
 
 @end
@@ -328,7 +339,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)lastModifiedDateJSONTransformer {
-	return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+	return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
         return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
     } reverseBlock:^id(NSDate *date) {
         return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
@@ -350,7 +361,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)lastModifiedDateJSONTransformer {
-	return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+	return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
         return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
     } reverseBlock:^id(NSDate *date) {
         return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
@@ -383,7 +394,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)datasetsJSONTransformer {
-	return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncDataset class]];
+	return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncDataset class]];
 }
 
 @end
@@ -411,7 +422,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)identityPoolUsagesJSONTransformer {
-	return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncIdentityPoolUsage class]];
+	return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncIdentityPoolUsage class]];
 }
 
 @end
@@ -449,7 +460,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)recordsJSONTransformer {
-	return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncRecord class]];
+	return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncRecord class]];
 }
 
 @end
@@ -479,7 +490,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)deviceLastModifiedDateJSONTransformer {
-	return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+	return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
         return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
     } reverseBlock:^id(NSDate *date) {
         return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
@@ -487,7 +498,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)lastModifiedDateJSONTransformer {
-	return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+	return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
         return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
     } reverseBlock:^id(NSDate *date) {
         return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
@@ -509,7 +520,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)deviceLastModifiedDateJSONTransformer {
-	return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+	return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
         return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
     } reverseBlock:^id(NSDate *date) {
         return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
@@ -517,7 +528,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)opJSONTransformer {
-    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
         if ([value isEqualToString:@"replace"]) {
             return @(AWSCognitoSyncOperationReplace);
         }
@@ -552,7 +563,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)platformJSONTransformer {
-    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
         if ([value isEqualToString:@"APNS"]) {
             return @(AWSCognitoSyncPlatformApns);
         }
@@ -617,11 +628,11 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)cognitoStreamsJSONTransformer {
-	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncCognitoStreams class]];
+	return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncCognitoStreams class]];
 }
 
 + (NSValueTransformer *)pushSyncJSONTransformer {
-	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncPushSync class]];
+	return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncPushSync class]];
 }
 
 @end
@@ -637,11 +648,11 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)cognitoStreamsJSONTransformer {
-	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncCognitoStreams class]];
+	return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncCognitoStreams class]];
 }
 
 + (NSValueTransformer *)pushSyncJSONTransformer {
-	return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncPushSync class]];
+	return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSCognitoSyncPushSync class]];
 }
 
 @end
@@ -695,7 +706,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)recordPatchesJSONTransformer {
-	return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncRecordPatch class]];
+	return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncRecordPatch class]];
 }
 
 @end
@@ -709,7 +720,7 @@ NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorD
 }
 
 + (NSValueTransformer *)recordsJSONTransformer {
-	return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncRecord class]];
+	return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSCognitoSyncRecord class]];
 }
 
 @end

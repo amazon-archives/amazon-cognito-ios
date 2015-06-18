@@ -11,7 +11,7 @@
 #import "AWSCognitoConflict_Internal.h"
 #import "AWSLogging.h"
 #import "AWSCognitoRecord.h"
-#import "Reachability.h"
+#import "AWSReachability.h"
 
 @interface AWSCognitoDatasetMetadata()
 
@@ -48,7 +48,7 @@
 
 @property (nonatomic, strong) AWSCognitoSync *cognitoService;
 
-@property (nonatomic, strong) Reachability *reachability;
+@property (nonatomic, strong) AWSReachability *reachability;
 
 @property (nonatomic, strong) NSNumber *currentSyncCount;
 @property (nonatomic, strong) NSDictionary *records;
@@ -62,7 +62,7 @@
     if(self = [super initWithDatasetName:datasetName dataSource:sqliteManager]) {
         _sqliteManager = sqliteManager;
         _cognitoService = cognitoService;
-        _reachability = [Reachability reachabilityWithHostname:@"cognito-sync.us-east-1.amazonaws.com"];
+        _reachability = [AWSReachability reachabilityWithHostname:@"cognito-sync.us-east-1.amazonaws.com"];
     }
     return self;
 }
@@ -294,7 +294,7 @@
  * 1. Do a list records, overlay changes
  * 2. Resolve conflicts
  */
-- (BFTask *)syncPull:(uint32_t)remainingAttempts {
+- (AWSTask *)syncPull:(uint32_t)remainingAttempts {
     
     //list records that have changed since last sync
     AWSCognitoSyncListRecordsRequest *request = [AWSCognitoSyncListRecordsRequest new];
@@ -306,11 +306,11 @@
     
     self.lastSyncCount = self.currentSyncCount;
     
-    return [[self.cognitoService listRecords:request] continueWithBlock:^id(BFTask *task) {
+    return [[self.cognitoService listRecords:request] continueWithBlock:^id(AWSTask *task) {
         if (task.isCancelled) {
             NSError *error = [NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil];
             [self postDidFailToSynchronizeNotification:error];
-            return [BFTask taskWithError:error];
+            return [AWSTask taskWithError:error];
         }else if(task.error){
             AWSLogError(@"Unable to list records: %@", task.error);
             return task;
@@ -405,7 +405,7 @@
                         if (resolved == nil) {
                             NSError *error = [NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil];
                             [self postDidFailToSynchronizeNotification:error];
-                            return [BFTask taskWithError:error];
+                            return [AWSTask taskWithError:error];
                         }
                         
                         [resolvedConflicts addObject:resolved];
@@ -420,7 +420,7 @@
                     }
                     else {
                         [self postDidFailToSynchronizeNotification:error];
-                        return [BFTask taskWithError:error];
+                        return [AWSTask taskWithError:error];
                     }
                 }
                 
@@ -443,7 +443,7 @@
  * 1. Write any changes to remote
  * 2. Restart sync if errors occur
  */
-- (BFTask *)syncPush:(uint32_t)remainingAttempts {
+- (AWSTask *)syncPush:(uint32_t)remainingAttempts {
     
     //if there are no pending conflicts
     NSMutableArray *patches = [NSMutableArray new];
@@ -472,7 +472,7 @@
         if([self size] > AWSCognitoMaxDatasetSize){
             NSError *error = [NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorUserDataSizeLimitExceeded userInfo:nil];
             [self postDidFailToSynchronizeNotification:error];
-            return [BFTask taskWithError:error];
+            return [AWSTask taskWithError:error];
         }
 
         AWSCognitoSyncUpdateRecordsRequest *request = [AWSCognitoSyncUpdateRecordsRequest new];
@@ -482,13 +482,13 @@
         request.recordPatches = patches;
         request.syncSessionToken = self.syncSessionToken;
         request.deviceId = [AWSCognito cognitoDeviceId];
-        return [[self.cognitoService updateRecords:request] continueWithBlock:^id(BFTask *task) {
+        return [[self.cognitoService updateRecords:request] continueWithBlock:^id(AWSTask *task) {
             NSNumber * currentSyncCount = self.lastSyncCount;
             BOOL okToUpdateSyncCount = YES;
             if(task.isCancelled){
                 NSError *error = [NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil];
                 [self postDidFailToSynchronizeNotification:error];
-                return [BFTask taskWithError:error];
+                return [AWSTask taskWithError:error];
             }else if(task.error){
                 if(task.error.code == AWSCognitoSyncErrorResourceConflict){
                     AWSLogInfo("Conflicts existed on update, restarting synchronize.");
@@ -554,7 +554,7 @@
                         }
                     } else {
                         [self postDidFailToSynchronizeNotification:error];
-                        return [BFTask taskWithError:error];
+                        return [AWSTask taskWithError:error];
                     }
                 }
             }
@@ -564,7 +564,7 @@
     return nil;
 }
 
-- (BFTask *)synchronize {
+- (AWSTask *)synchronize {
     // uninstall notifier
     if(self.reachability.reachableBlock != nil){
         self.reachability.reachableBlock = nil;
@@ -572,10 +572,10 @@
     }
     
     // ensure necessary network is available
-    if(self.synchronizeOnWiFiOnly && self.reachability.currentReachabilityStatus != ReachableViaWiFi){
+    if(self.synchronizeOnWiFiOnly && self.reachability.currentReachabilityStatus != AWSNetworkStatusReachableViaWiFi){
         NSError *error = [NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorWiFiNotAvailable userInfo:nil];
         [self postDidFailToSynchronizeNotification:error];
-        return [BFTask taskWithError:error];
+        return [AWSTask taskWithError:error];
     }
     
     [self postDidStartSynchronizeNotification];
@@ -585,25 +585,25 @@
     self.syncSessionToken = nil;
     
     AWSCognitoCredentialsProvider *cognitoCredentials = self.cognitoService.configuration.credentialsProvider;
-    return [[[cognitoCredentials getIdentityId] continueWithBlock:^id(BFTask *task) {
+    return [[[cognitoCredentials getIdentityId] continueWithBlock:^id(AWSTask *task) {
         if (task.error) {
             NSError *error = [NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoAuthenticationFailed userInfo:nil];
             [self postDidFailToSynchronizeNotification:error];
-            return [BFTask taskWithError:error];
+            return [AWSTask taskWithError:error];
         }
         return [self synchronizeInternal:self.synchronizeRetries];
-    }] continueWithBlock:^id(BFTask *task) {
+    }] continueWithBlock:^id(AWSTask *task) {
         [self postDidEndSynchronizeNotification];
         return task;
     }];
 }
 
-- (BFTask *)synchronizeInternal:(uint32_t)remainingAttempts {
+- (AWSTask *)synchronizeInternal:(uint32_t)remainingAttempts {
     if(remainingAttempts == 0){
         AWSLogError(@"Conflict retries exhausted");
         NSError *error = [NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorConflictRetriesExhausted userInfo:nil];
         [self postDidFailToSynchronizeNotification:error];
-        return [BFTask taskWithError:error];
+        return [AWSTask taskWithError:error];
     }
     
     //used for determining if we can fast forward the last sync count after update
@@ -615,11 +615,11 @@
         request.identityPoolId = ((AWSCognitoCredentialsProvider *)self.cognitoService.configuration.credentialsProvider).identityPoolId;
         request.identityId = ((AWSCognitoCredentialsProvider *)self.cognitoService.configuration.credentialsProvider).identityId;
         request.datasetName = self.name;
-        return [[self.cognitoService deleteDataset:request]continueWithBlock:^id(BFTask *task) {
+        return [[self.cognitoService deleteDataset:request]continueWithBlock:^id(AWSTask *task) {
             if(task.isCancelled) {
                 NSError *error = [NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil];
                 [self postDidFailToSynchronizeNotification:error];
-                return [BFTask taskWithError:error];
+                return [AWSTask taskWithError:error];
             } else if(task.error && task.error.code != AWSCognitoSyncErrorResourceNotFound){
                 AWSLogError(@"Unable to delete dataset: %@", task.error);
                 return task;
@@ -630,15 +630,15 @@
         }];
     }
     
-    return [[self syncPull:remainingAttempts] continueWithSuccessBlock:^id(BFTask *task) {
+    return [[self syncPull:remainingAttempts] continueWithSuccessBlock:^id(AWSTask *task) {
         return [self syncPush:remainingAttempts];
     }];
 }
 
-- (BFTask *)synchronizeOnConnectivity {
+- (AWSTask *)synchronizeOnConnectivity {
     //if no network, or network doesn't match requested network type queue request
-    if(self.reachability.currentReachabilityStatus == NotReachable
-       || (self.reachability.currentReachabilityStatus != ReachableViaWiFi && self.synchronizeOnWiFiOnly)){
+    if(self.reachability.currentReachabilityStatus == AWSNetworkStatusNotReachable
+       || (self.reachability.currentReachabilityStatus != AWSNetworkStatusReachableViaWiFi && self.synchronizeOnWiFiOnly)){
 
         //set notify on wifi only
         self.reachability.reachableOnWWAN = !self.synchronizeOnWiFiOnly;
@@ -646,22 +646,22 @@
         //only configure reachable block once
         if(self.reachability.reachableBlock == nil){
             __weak AWSCognitoDataset* weakSelf = self;
-            self.reachability.reachableBlock = ^(Reachability * reachability){
+            self.reachability.reachableBlock = ^(AWSReachability * reachability){
                 [weakSelf synchronize];
             };
             [self.reachability startNotifier];
         }
-        return [BFTask taskWithResult:nil];
+        return [AWSTask taskWithResult:nil];
     }else{
         return [self synchronize];
     }
 }
 
--(BFTask *)subscribe {
+-(AWSTask *)subscribe {
     NSString *currentDeviceId = [AWSCognito cognitoDeviceId];
     
     if(!currentDeviceId){
-        return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorDeviceNotRegistered userInfo:nil]];
+        return [AWSTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorDeviceNotRegistered userInfo:nil]];
     }
 
     AWSCognitoSyncSubscribeToDatasetRequest* request = [AWSCognitoSyncSubscribeToDatasetRequest new];
@@ -669,23 +669,23 @@
     request.identityId = ((AWSCognitoCredentialsProvider *)self.cognitoService.configuration.credentialsProvider).identityId;
     request.datasetName = self.name;
     request.deviceId = currentDeviceId;
-    return [[self.cognitoService subscribeToDataset:request] continueWithBlock:^id(BFTask *task) {
+    return [[self.cognitoService subscribeToDataset:request] continueWithBlock:^id(AWSTask *task) {
         if(task.isCancelled){
-            return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil]];
+            return [AWSTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil]];
         }else if(task.error){
             AWSLogError(@"Unable to subscribe dataset: %@", task.error);
             return task;
         }else {
-            return [BFTask taskWithResult:task.result];
+            return [AWSTask taskWithResult:task.result];
         }
     }];
 }
 
--(BFTask *)unsubscribe {
+-(AWSTask *)unsubscribe {
     NSString *currentDeviceId = [AWSCognito cognitoDeviceId];
     
     if(!currentDeviceId){
-        return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorDeviceNotRegistered userInfo:nil]];
+        return [AWSTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorDeviceNotRegistered userInfo:nil]];
     }
     
     AWSCognitoSyncUnsubscribeFromDatasetRequest* request = [AWSCognitoSyncUnsubscribeFromDatasetRequest new];
@@ -693,14 +693,14 @@
     request.identityId = ((AWSCognitoCredentialsProvider *)self.cognitoService.configuration.credentialsProvider).identityId;
     request.datasetName = self.name;
     request.deviceId = currentDeviceId;
-    return [[self.cognitoService unsubscribeFromDataset:request] continueWithBlock:^id(BFTask *task) {
+    return [[self.cognitoService unsubscribeFromDataset:request] continueWithBlock:^id(AWSTask *task) {
         if(task.isCancelled){
-            return [BFTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil]];
+            return [AWSTask taskWithError:[NSError errorWithDomain:AWSCognitoErrorDomain code:AWSCognitoErrorTaskCanceled userInfo:nil]];
         }else if(task.error){
             AWSLogError(@"Unable to unsubscribe dataset: %@", task.error);
             return task;
         }else {
-            return [BFTask taskWithResult:task.result];
+            return [AWSTask taskWithResult:task.result];
         }
     }];
 }
