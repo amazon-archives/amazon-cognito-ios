@@ -14,7 +14,7 @@
  */
 
 #import "AWSCognitoSyncResources.h"
-#import "AWSLogging.h"
+#import <AWSCore/AWSLogging.h>
 
 @interface AWSCognitoSyncResources ()
 

@@ -14,7 +14,7 @@
  */
 
 #import "AWSCognitoSyncModel.h"
-#import "AWSCategory.h"
+#import <AWSCore/AWSCategory.h>
 
 NSString *const AWSCognitoSyncErrorDomain = @"com.amazonaws.AWSCognitoSyncErrorDomain";
 

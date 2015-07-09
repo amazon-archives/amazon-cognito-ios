@@ -9,9 +9,9 @@
 #import "AWSCognitoRecord_Internal.h"
 #import "AWSCognitoSQLiteManager.h"
 #import "AWSCognitoConflict_Internal.h"
-#import "AWSLogging.h"
+#import <AWSCore/AWSLogging.h>
 #import "AWSCognitoRecord.h"
-#import "AWSReachability.h"
+#import <AWSCore/AWSReachability.h>
 
 @interface AWSCognitoDatasetMetadata()
 

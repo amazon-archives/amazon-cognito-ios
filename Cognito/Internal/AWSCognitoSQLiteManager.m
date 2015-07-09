@@ -10,8 +10,8 @@
 #import "AWSCognitoConstants.h"
 #import "AWSCognitoDataset_Internal.h"
 #import "AWSCognitoRecord_Internal.h"
-#import "AWSLogging.h"
-#import "AWSCredentialsProvider.h"
+#import <AWSCore/AWSLogging.h>
+#import <AWSCore/AWSCredentialsProvider.h>
 #import "AWSCognitoConflict_Internal.h"
 #import "AWSCognitoSyncService.h"
 

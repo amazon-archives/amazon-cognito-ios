@@ -7,7 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1583ECEC29BA84A20CCDA57B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1E19DBA9C1868C68804FEB2 /* libPods.a */; };
+		BD4FF3B71B45D36F00976400 /* libAWSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD4FF3B61B45D36F00976400 /* libAWSCore.a */; };
+		BD4FF3BD1B45D42B00976400 /* CognitoTestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35A81AC230B400228D15 /* CognitoTestUtils.m */; };
+		BD4FF3C11B45D42B00976400 /* libAWSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD4FF3B61B45D36F00976400 /* libAWSCore.a */; };
+		BD4FF3C21B45D42B00976400 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BD810F9F1B29163A0055E6CA /* libz.dylib */; };
+		BD4FF3C31B45D42B00976400 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD810F9D1B29162A0055E6CA /* SystemConfiguration.framework */; };
+		BD4FF3C41B45D42B00976400 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BDCA35CC1AC24AC000228D15 /* libsqlite3.dylib */; };
+		BD4FF3C51B45D42B00976400 /* libAWSCognito.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDCA35631AC22D7A00228D15 /* libAWSCognito.a */; };
+		BD810F9E1B29162A0055E6CA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD810F9D1B29162A0055E6CA /* SystemConfiguration.framework */; };
+		BD810FA01B29163A0055E6CA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BD810F9F1B29163A0055E6CA /* libz.dylib */; };
 		BDCA356F1AC22D7A00228D15 /* libAWSCognito.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDCA35631AC22D7A00228D15 /* libAWSCognito.a */; };
 		BDCA359A1AC22E4100228D15 /* AWSCognitoSyncService.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA357F1AC22E4100228D15 /* AWSCognitoSyncService.m */; };
 		BDCA359B1AC22E4100228D15 /* AWSCognitoSyncModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35811AC22E4100228D15 /* AWSCognitoSyncModel.m */; };
@@ -18,11 +26,11 @@
 		BDCA35A01AC22E4100228D15 /* AWSCognitoConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35931AC22E4100228D15 /* AWSCognitoConstants.m */; };
 		BDCA35A11AC22E4100228D15 /* AWSCognitoSQLiteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35971AC22E4100228D15 /* AWSCognitoSQLiteManager.m */; };
 		BDCA35A21AC22E4100228D15 /* AWSCognitoUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35991AC22E4100228D15 /* AWSCognitoUtil.m */; };
-		BDCA35A91AC230B400228D15 /* AmazonCognitoSqliteManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35A31AC230B400228D15 /* AmazonCognitoSqliteManagerTests.m */; };
 		BDCA35AA1AC230B400228D15 /* AWSCognitoClientTest.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35A41AC230B400228D15 /* AWSCognitoClientTest.m */; };
 		BDCA35AB1AC230B400228D15 /* AWSCognitoSyncServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35A51AC230B400228D15 /* AWSCognitoSyncServiceTests.m */; };
 		BDCA35AC1AC230B400228D15 /* CognitoTestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35A81AC230B400228D15 /* CognitoTestUtils.m */; };
 		BDCA35CD1AC24AC000228D15 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BDCA35CC1AC24AC000228D15 /* libsqlite3.dylib */; };
+		BDD876721B45F8BF009268C7 /* AmazonCognitoSqliteManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCA35A31AC230B400228D15 /* AmazonCognitoSqliteManagerTests.m */; };
 		BDF744F71AC25056000E0FEA /* credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = BDF744F61AC25056000E0FEA /* credentials.json */; };
 		BDF8F6601B1D4CC700A2CEF9 /* AWSCognitoSyncResources.h in Headers */ = {isa = PBXBuildFile; fileRef = BDF8F65E1B1D4CC700A2CEF9 /* AWSCognitoSyncResources.h */; };
 		BDF8F6611B1D4CC700A2CEF9 /* AWSCognitoSyncResources.m in Sources */ = {isa = PBXBuildFile; fileRef = BDF8F65F1B1D4CC700A2CEF9 /* AWSCognitoSyncResources.m */; };
@@ -51,6 +59,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		BD4FF3BA1B45D42B00976400 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BDCA355B1AC22D7A00228D15 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BDCA35621AC22D7A00228D15;
+			remoteInfo = AWSCognitoSync;
+		};
 		BDCA35701AC22D7A00228D15 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BDCA355B1AC22D7A00228D15 /* Project object */;
@@ -81,8 +96,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		553E69A5431170019C85784A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		5F25449A452AD5D23DE547ED /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		BD4FF3B61B45D36F00976400 /* libAWSCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAWSCore.a; path = "../build/Debug-iphoneos/libAWSCore.a"; sourceTree = "<group>"; };
+		BD4FF3CB1B45D42B00976400 /* AWSCognitoUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWSCognitoUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD810F9D1B29162A0055E6CA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		BD810F9F1B29163A0055E6CA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BDCA35631AC22D7A00228D15 /* libAWSCognito.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAWSCognito.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDCA356E1AC22D7A00228D15 /* AWSCognitoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWSCognitoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDCA35741AC22D7A00228D15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -116,13 +133,24 @@
 		BDCA35A71AC230B400228D15 /* CognitoTestUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CognitoTestUtils.h; sourceTree = "<group>"; };
 		BDCA35A81AC230B400228D15 /* CognitoTestUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CognitoTestUtils.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BDCA35CC1AC24AC000228D15 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		BDF744F61AC25056000E0FEA /* credentials.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = credentials.json; path = ../../AWSiOSSDKv2/AWSCoreTests/credentials.json; sourceTree = "<group>"; };
+		BDF744F61AC25056000E0FEA /* credentials.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = credentials.json; path = ../../AWSCoreTests/credentials.json; sourceTree = "<group>"; };
 		BDF8F65E1B1D4CC700A2CEF9 /* AWSCognitoSyncResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSyncResources.h; sourceTree = "<group>"; };
 		BDF8F65F1B1D4CC700A2CEF9 /* AWSCognitoSyncResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSyncResources.m; sourceTree = "<group>"; };
-		D1E19DBA9C1868C68804FEB2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		BD4FF3C01B45D42B00976400 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD4FF3C11B45D42B00976400 /* libAWSCore.a in Frameworks */,
+				BD4FF3C21B45D42B00976400 /* libz.dylib in Frameworks */,
+				BD4FF3C31B45D42B00976400 /* SystemConfiguration.framework in Frameworks */,
+				BD4FF3C41B45D42B00976400 /* libsqlite3.dylib in Frameworks */,
+				BD4FF3C51B45D42B00976400 /* libAWSCognito.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BDCA35601AC22D7A00228D15 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -134,9 +162,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD4FF3B71B45D36F00976400 /* libAWSCore.a in Frameworks */,
+				BD810FA01B29163A0055E6CA /* libz.dylib in Frameworks */,
+				BD810F9E1B29162A0055E6CA /* SystemConfiguration.framework in Frameworks */,
 				BDCA35CD1AC24AC000228D15 /* libsqlite3.dylib in Frameworks */,
 				BDCA356F1AC22D7A00228D15 /* libAWSCognito.a in Frameworks */,
-				1583ECEC29BA84A20CCDA57B /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,19 +176,12 @@
 		532D70E702F6E1D0BEE95991 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BD4FF3B61B45D36F00976400 /* libAWSCore.a */,
+				BD810F9F1B29163A0055E6CA /* libz.dylib */,
+				BD810F9D1B29162A0055E6CA /* SystemConfiguration.framework */,
 				BDCA35CC1AC24AC000228D15 /* libsqlite3.dylib */,
-				D1E19DBA9C1868C68804FEB2 /* libPods.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		A64353DFCB970CA309A7A52A /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				553E69A5431170019C85784A /* Pods.debug.xcconfig */,
-				5F25449A452AD5D23DE547ED /* Pods.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		BDCA355A1AC22D7A00228D15 = {
@@ -167,7 +190,6 @@
 				BDCA35851AC22E4100228D15 /* Cognito */,
 				BDCA35721AC22D7A00228D15 /* AWSCognitoSyncTests */,
 				BDCA35641AC22D7A00228D15 /* Products */,
-				A64353DFCB970CA309A7A52A /* Pods */,
 				532D70E702F6E1D0BEE95991 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -177,6 +199,7 @@
 			children = (
 				BDCA35631AC22D7A00228D15 /* libAWSCognito.a */,
 				BDCA356E1AC22D7A00228D15 /* AWSCognitoTests.xctest */,
+				BD4FF3CB1B45D42B00976400 /* AWSCognitoUnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -280,6 +303,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		BD4FF3B81B45D42B00976400 /* AWSCognitoUnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BD4FF3C81B45D42B00976400 /* Build configuration list for PBXNativeTarget "AWSCognitoUnitTests" */;
+			buildPhases = (
+				BD4FF3BB1B45D42B00976400 /* Sources */,
+				BD4FF3C01B45D42B00976400 /* Frameworks */,
+				BD4FF3C61B45D42B00976400 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BD4FF3B91B45D42B00976400 /* PBXTargetDependency */,
+			);
+			name = AWSCognitoUnitTests;
+			productName = AWSCognitoSyncTests;
+			productReference = BD4FF3CB1B45D42B00976400 /* AWSCognitoUnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		BDCA35621AC22D7A00228D15 /* AWSCognito */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BDCA35771AC22D7A00228D15 /* Build configuration list for PBXNativeTarget "AWSCognito" */;
@@ -302,11 +343,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BDCA357A1AC22D7A00228D15 /* Build configuration list for PBXNativeTarget "AWSCognitoTests" */;
 			buildPhases = (
-				B2258D9BD95199332C6A6A0B /* Check Pods Manifest.lock */,
 				BDCA356A1AC22D7A00228D15 /* Sources */,
 				BDCA356B1AC22D7A00228D15 /* Frameworks */,
 				BDCA356C1AC22D7A00228D15 /* Resources */,
-				6266AAE5C2DB5C977DC31B0F /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -349,11 +388,19 @@
 			targets = (
 				BDCA35621AC22D7A00228D15 /* AWSCognito */,
 				BDCA356D1AC22D7A00228D15 /* AWSCognitoTests */,
+				BD4FF3B81B45D42B00976400 /* AWSCognitoUnitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		BD4FF3C61B45D42B00976400 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BDCA356C1AC22D7A00228D15 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -364,40 +411,15 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		6266AAE5C2DB5C977DC31B0F /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B2258D9BD95199332C6A6A0B /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
+		BD4FF3BB1B45D42B00976400 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD4FF3BD1B45D42B00976400 /* CognitoTestUtils.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BDCA355F1AC22D7A00228D15 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -422,13 +444,18 @@
 				BDCA35AA1AC230B400228D15 /* AWSCognitoClientTest.m in Sources */,
 				BDCA35AC1AC230B400228D15 /* CognitoTestUtils.m in Sources */,
 				BDCA35AB1AC230B400228D15 /* AWSCognitoSyncServiceTests.m in Sources */,
-				BDCA35A91AC230B400228D15 /* AmazonCognitoSqliteManagerTests.m in Sources */,
+				BDD876721B45F8BF009268C7 /* AmazonCognitoSqliteManagerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		BD4FF3B91B45D42B00976400 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BDCA35621AC22D7A00228D15 /* AWSCognito */;
+			targetProxy = BD4FF3BA1B45D42B00976400 /* PBXContainerItemProxy */;
+		};
 		BDCA35711AC22D7A00228D15 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BDCA35621AC22D7A00228D15 /* AWSCognito */;
@@ -437,6 +464,64 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		BD4FF3C91B45D42B00976400 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(PROJECT_DIR)/Dependencies",
+				);
+				GCC_PREFIX_HEADER = "AWSCognitoSyncTests/AWSCognitoTests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = AWSCognitoSyncTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SYMROOT)",
+					"$(PROJECT_DIR)/../AWSCoreTests/OCMock",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-force_load",
+					"$(PROJECT_DIR)/../AWSCoreTests/OCMock/libOCMock.a",
+				);
+				PRODUCT_NAME = AWSCognitoUnitTests;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../include/** $(PROJECT_DIR)/../AWSCoreTests/OCMock";
+			};
+			name = Debug;
+		};
+		BD4FF3CA1B45D42B00976400 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(PROJECT_DIR)/Dependencies",
+				);
+				GCC_PREFIX_HEADER = "AWSCognitoSyncTests/AWSCognitoTests-Prefix.pch";
+				INFOPLIST_FILE = AWSCognitoSyncTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SYMROOT)",
+					"$(PROJECT_DIR)/../AWSCoreTests/OCMock",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-force_load",
+					"$(PROJECT_DIR)/../AWSCoreTests/OCMock/libOCMock.a",
+				);
+				PRODUCT_NAME = AWSCognitoUnitTests;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../include/** $(PROJECT_DIR)/../AWSCoreTests/OCMock";
+			};
+			name = Release;
+		};
 		BDCA35751AC22D7A00228D15 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -456,6 +541,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Dependencies/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -474,7 +560,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/Pods/Headers/**";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../include/**";
 			};
 			name = Debug;
 		};
@@ -498,6 +584,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Dependencies/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -508,7 +595,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/Pods/Headers/**";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../include/**";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -516,6 +603,14 @@
 		BDCA35781AC22D7A00228D15 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					armv7s,
+				);
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Dependencies",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = AWSCognito;
 				SKIP_INSTALL = YES;
@@ -525,6 +620,14 @@
 		BDCA35791AC22D7A00228D15 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					armv7s,
+				);
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Dependencies",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = AWSCognito;
 				SKIP_INSTALL = YES;
@@ -533,11 +636,11 @@
 		};
 		BDCA357B1AC22D7A00228D15 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553E69A5431170019C85784A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Dependencies",
 				);
 				GCC_PREFIX_HEADER = "AWSCognitoSyncTests/AWSCognitoTests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -546,21 +649,29 @@
 				);
 				INFOPLIST_FILE = AWSCognitoSyncTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYMROOT)",
+				);
 				PRODUCT_NAME = AWSCognitoTests;
 			};
 			name = Debug;
 		};
 		BDCA357C1AC22D7A00228D15 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5F25449A452AD5D23DE547ED /* Pods.release.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Dependencies",
 				);
 				GCC_PREFIX_HEADER = "AWSCognitoSyncTests/AWSCognitoTests-Prefix.pch";
 				INFOPLIST_FILE = AWSCognitoSyncTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYMROOT)",
+				);
 				PRODUCT_NAME = AWSCognitoTests;
 			};
 			name = Release;
@@ -568,6 +679,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		BD4FF3C81B45D42B00976400 /* Build configuration list for PBXNativeTarget "AWSCognitoUnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD4FF3C91B45D42B00976400 /* Debug */,
+				BD4FF3CA1B45D42B00976400 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		BDCA355E1AC22D7A00228D15 /* Build configuration list for PBXProject "AWSCognito" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

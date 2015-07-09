@@ -4,8 +4,9 @@
 
 #if AWS_TEST_COGNITO_SYNC_SERVICE
 
+#import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import "AWSCore.h"
+#import <AWSCore/AWSCore.h>
 #import "AWSCognito.h"
 #import "CognitoTestUtils.h"
 

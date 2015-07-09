@@ -3,7 +3,7 @@
  */
 
 #import "CognitoTestUtils.h"
-#import "AWSCore.h"
+#import <AWSCore/AWSCore.h>
 
 NSString * AWSCognitoClientTestsAccountID = nil;
 NSString * AWSCognitoClientTestsFacebookAppID = nil;

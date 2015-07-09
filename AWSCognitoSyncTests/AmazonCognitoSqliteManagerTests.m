@@ -4,8 +4,9 @@
 
 #if AWS_TEST_COGNITO_SQLITE_MANAGER
 
+#import <UIKit/UIKit.h>
 #import "AWSCognitoSQLiteManager.h"
-#import "AWSCore.h"
+#import <AWSCore/AWSCore.h>
 #import <XCTest/XCTest.h>
 #import "AWSCognito.h"
 #import "AWSCognitoConflict_Internal.h"

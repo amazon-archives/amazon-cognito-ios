@@ -3,18 +3,18 @@
  */
 
 #import "AWSCognitoService.h"
-#import "AWSCredentialsProvider.h"
+#import <AWSCore/AWSCredentialsProvider.h>
 #import "AWSCognitoRecord_Internal.h"
 #import "AWSCognitoSQLiteManager.h"
 #import "AWSCognitoDataset.h"
 #import "AWSCognitoConstants.h"
 #import "AWSCognitoUtil.h"
 #import "AWSCognitoDataset_Internal.h"
-#import "AWSLogging.h"
+#import <AWSCore/AWSLogging.h>
 #import "AWSCognitoHandlers.h"
 #import "AWSCognitoConflict_Internal.h"
-#import "AWSUICKeyChainStore.h"
-#import "AWSSynchronizedMutableDictionary.h"
+#import <AWSCore/AWSUICKeyChainStore.h>
+#import <AWSCore/AWSSynchronizedMutableDictionary.h>
 
 NSString *const AWSCognitoDidStartSynchronizeNotification = @"com.amazon.cognito.AWSCognitoDidStartSynchronizeNotification";
 NSString *const AWSCognitoDidEndSynchronizeNotification = @"com.amazon.cognito.AWSCognitoDidEndSynchronizeNotification";
