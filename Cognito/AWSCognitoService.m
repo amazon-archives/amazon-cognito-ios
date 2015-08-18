@@ -194,20 +194,22 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 
 - (void)identityChanged:(NSNotification *)notification {
     AWSLogDebug(@"IdentityChanged");
-    NSString *oldId = [notification.userInfo objectForKey:AWSCognitoNotificationPreviousId];
-    NSString *newId = [notification.userInfo objectForKey:AWSCognitoNotificationNewId];
+    NSDictionary *userInfo = notification.userInfo;
+
+    NSString *oldId = [userInfo objectForKey:AWSCognitoNotificationPreviousId];
+    NSString *newId = [userInfo objectForKey:AWSCognitoNotificationNewId];
     
     NSError *error;
     
     if ([self.sqliteManager reparentDatasets:oldId withNewId:newId error:&error]) {
         // update the id for the sqlitemanager
         self.sqliteManager.identityId = newId;
-        
+
         // Now that we've udpated the data, notify open datasets
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [[NSNotificationCenter defaultCenter] postNotificationName:AWSCognitoIdentityIdChangedInternalNotification
                                                                 object:self
-                                                              userInfo:notification.userInfo];
+                                                              userInfo:userInfo];
         });
     }
     else {
