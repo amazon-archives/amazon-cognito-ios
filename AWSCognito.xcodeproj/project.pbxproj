@@ -363,7 +363,7 @@
 		BDCA355B1AC22D7A00228D15 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Amazon Web Services";
 				TargetAttributes = {
 					BDCA35621AC22D7A00228D15 = {
@@ -468,7 +468,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependencies",
 				);
@@ -490,6 +489,7 @@
 					"-force_load",
 					"$(PROJECT_DIR)/../AWSCoreTests/OCMock/libOCMock.a",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.amazonaws.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = AWSCognitoUnitTests;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../include/** $(PROJECT_DIR)/../AWSCoreTests/OCMock";
 			};
@@ -499,7 +499,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependencies",
 				);
@@ -517,6 +516,7 @@
 					"-force_load",
 					"$(PROJECT_DIR)/../AWSCoreTests/OCMock/libOCMock.a",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.amazonaws.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = AWSCognitoUnitTests;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../include/** $(PROJECT_DIR)/../AWSCoreTests/OCMock";
 			};
@@ -541,6 +541,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Dependencies/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -607,6 +608,8 @@
 					"$(ARCHS_STANDARD)",
 					armv7s,
 				);
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependencies",
@@ -624,6 +627,8 @@
 					"$(ARCHS_STANDARD)",
 					armv7s,
 				);
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependencies",
@@ -638,7 +643,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependencies",
 				);
@@ -653,6 +657,7 @@
 					"$(inherited)",
 					"$(SYMROOT)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.amazonaws.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = AWSCognitoTests;
 			};
 			name = Debug;
@@ -661,7 +666,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependencies",
 				);
@@ -672,6 +676,7 @@
 					"$(inherited)",
 					"$(SYMROOT)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.amazonaws.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = AWSCognitoTests;
 			};
 			name = Release;
