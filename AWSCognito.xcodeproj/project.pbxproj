@@ -56,6 +56,9 @@
 		BDFC084C1AC2612A0058444D /* AWSCognitoRecord_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA35951AC22E4100228D15 /* AWSCognitoRecord_Internal.h */; };
 		BDFC084D1AC2612A0058444D /* AWSCognitoSQLiteManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA35961AC22E4100228D15 /* AWSCognitoSQLiteManager.h */; };
 		BDFC084E1AC2612A0058444D /* AWSCognitoUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCA35981AC22E4100228D15 /* AWSCognitoUtil.h */; };
+		CE2369051BF2960200924EBD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2369041BF2960200924EBD /* UIKit.framework */; };
+		CE2369061BF2960700924EBD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2369041BF2960200924EBD /* UIKit.framework */; };
+		CE2EDEAB1BF3E1E700B9F26B /* module.modulemap in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE6552481BEC396200DACBC2 /* module.modulemap */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +93,16 @@
 				BDFC083C1AC260470058444D /* AWSCognitoHandlers.h in CopyFiles */,
 				BDFC083D1AC260470058444D /* AWSCognitoRecord.h in CopyFiles */,
 				BDFC083E1AC260470058444D /* AWSCognito.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE2EDEAA1BF3E1DF00B9F26B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "modules/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				CE2EDEAB1BF3E1E700B9F26B /* module.modulemap in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +149,8 @@
 		BDF744F61AC25056000E0FEA /* credentials.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = credentials.json; path = ../../AWSCoreTests/credentials.json; sourceTree = "<group>"; };
 		BDF8F65E1B1D4CC700A2CEF9 /* AWSCognitoSyncResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSyncResources.h; sourceTree = "<group>"; };
 		BDF8F65F1B1D4CC700A2CEF9 /* AWSCognitoSyncResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSyncResources.m; sourceTree = "<group>"; };
+		CE2369041BF2960200924EBD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		CE6552481BEC396200DACBC2 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE2369061BF2960700924EBD /* UIKit.framework in Frameworks */,
 				BD4FF3C11B45D42B00976400 /* libAWSCore.a in Frameworks */,
 				BD4FF3C21B45D42B00976400 /* libz.dylib in Frameworks */,
 				BD4FF3C31B45D42B00976400 /* SystemConfiguration.framework in Frameworks */,
@@ -162,6 +178,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE2369051BF2960200924EBD /* UIKit.framework in Frameworks */,
 				BD4FF3B71B45D36F00976400 /* libAWSCore.a in Frameworks */,
 				BD810FA01B29163A0055E6CA /* libz.dylib in Frameworks */,
 				BD810F9E1B29162A0055E6CA /* SystemConfiguration.framework in Frameworks */,
@@ -176,6 +193,7 @@
 		532D70E702F6E1D0BEE95991 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE2369041BF2960200924EBD /* UIKit.framework */,
 				BD4FF3B61B45D36F00976400 /* libAWSCore.a */,
 				BD810F9F1B29163A0055E6CA /* libz.dylib */,
 				BD810F9D1B29162A0055E6CA /* SystemConfiguration.framework */,
@@ -243,6 +261,7 @@
 		BDCA35851AC22E4100228D15 /* Cognito */ = {
 			isa = PBXGroup;
 			children = (
+				CE6552481BEC396200DACBC2 /* module.modulemap */,
 				BDCA358F1AC22E4100228D15 /* AWSCognito.h */,
 				BDCA35881AC22E4100228D15 /* AWSCognitoConflict.h */,
 				BDCA35891AC22E4100228D15 /* AWSCognitoConflict.m */,
@@ -329,6 +348,7 @@
 				BDCA35601AC22D7A00228D15 /* Frameworks */,
 				BDCA35611AC22D7A00228D15 /* CopyFiles */,
 				BDFC083F1AC261020058444D /* Headers */,
+				CE2EDEAA1BF3E1DF00B9F26B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -528,7 +548,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -571,7 +592,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -610,13 +632,17 @@
 				);
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependencies",
 				);
+				MODULEMAP_FILE = "$(PRODUCT_NAME:c99extidentifier)/module.modulemap";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = AWSCognito;
 				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
 			};
 			name = Debug;
 		};
@@ -629,13 +655,17 @@
 				);
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependencies",
 				);
+				MODULEMAP_FILE = "$(PRODUCT_NAME:c99extidentifier)/module.modulemap";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = AWSCognito;
 				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
 			};
 			name = Release;
 		};

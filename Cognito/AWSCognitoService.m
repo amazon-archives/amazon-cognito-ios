@@ -16,6 +16,9 @@
 #import <AWSCore/AWSUICKeyChainStore.h>
 #import <AWSCore/AWSSynchronizedMutableDictionary.h>
 
+#import "FABKitProtocol.h"
+#import "Fabric+FABKits.h"
+
 NSString *const AWSCognitoDidStartSynchronizeNotification = @"com.amazon.cognito.AWSCognitoDidStartSynchronizeNotification";
 NSString *const AWSCognitoDidEndSynchronizeNotification = @"com.amazon.cognito.AWSCognitoDidEndSynchronizeNotification";
 NSString *const AWSCognitoDidChangeLocalValueFromRemoteNotification = @"com.amazon.cognito.AWSCognitoDidChangeLocalValueFromRemoteNotification";
@@ -32,9 +35,7 @@ static AWSUICKeyChainStore *keychain = nil;
 
 static AWSCognitoSyncPlatform _pushPlatform;
 
-@interface AWSCognito()
-{
-}
+@interface AWSCognito() <FABKit>
 
 @property (nonatomic, strong) AWSCognitoSQLiteManager *sqliteManager;
 @property (nonatomic, strong) AWSCognitoSync *cognitoService;
@@ -43,9 +44,47 @@ static AWSCognitoSyncPlatform _pushPlatform;
 
 @end
 
+@interface AWSService()
+
++ (void)initializeIfNeededWithDefaultRegionType:(AWSRegionType)defaultRegionType
+                      cognitoIdentityRegionType:(AWSRegionType)cognitoIdentityRegionType
+                          cognitoIdentityPoolId:(NSString *)cognitoIdentityPoolId;
+
++ (AWSRegionType)regionTypeFromString:(NSString *)regionTypeString;
+
+@end
+
 @implementation AWSCognito
 
 static AWSSynchronizedMutableDictionary *_serviceClients = nil;
+
++ (NSString *)bundleIdentifier {
+    return @"com.amazonaws.sdk.ios.AWSCognito";
+}
+
++ (NSString *)kitDisplayVersion {
+    return AWSiOSSDKVersion;
+}
+
++ (void)initializeIfNeeded {
+    // Retrieves the configuration from info.plist.
+    Class fabricClass = NSClassFromString(@"Fabric");
+    if (fabricClass
+        && [fabricClass respondsToSelector:@selector(configurationDictionaryForKitClass:)]) {
+        NSDictionary *configurationDictionary = [fabricClass configurationDictionaryForKitClass:[self class]];
+        NSString *defaultRegionTypeString = configurationDictionary[@"AWSDefaultRegionType"];
+        AWSRegionType defaultRegionType = [self regionTypeFromString:defaultRegionTypeString];
+        NSString *cognitoIdentityRegionTypeString = configurationDictionary[@"AWSCognitoIdentityRegionType"];
+        AWSRegionType cognitoIdentityRegionType = [self regionTypeFromString:cognitoIdentityRegionTypeString];
+        NSString *cognitoIdentityPoolId = configurationDictionary[@"AWSCognitoIdentityPoolId"];
+
+        [AWSService initializeIfNeededWithDefaultRegionType:defaultRegionType
+                                  cognitoIdentityRegionType:cognitoIdentityRegionType
+                                      cognitoIdentityPoolId:cognitoIdentityPoolId];
+    } else {
+        AWSLogError(@"Fabric is not available.");
+    }
+}
 
 #pragma mark - Setups
 

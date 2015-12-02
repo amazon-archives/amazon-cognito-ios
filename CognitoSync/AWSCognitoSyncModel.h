@@ -17,6 +17,8 @@
 #import <AWSCore/AWSNetworking.h>
 #import <AWSCore/AWSModel.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 FOUNDATION_EXPORT NSString *const AWSCognitoSyncErrorDomain;
 
 typedef NS_ENUM(NSInteger, AWSCognitoSyncErrorType) {
@@ -117,7 +119,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 @end
 
@@ -130,7 +132,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 @end
 
@@ -143,12 +145,12 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  The ARN of the role Amazon Cognito can assume in order to publish to the stream. This role must grant access to Amazon Cognito (cognito-sync) to invoke PutRecord on your Cognito stream.
  */
-@property (nonatomic, strong) NSString *roleArn;
+@property (nonatomic, strong) NSString * _Nullable roleArn;
 
 /**
  The name of the Cognito stream to receive updates. This stream must be in the developers account and in the same region as the identity pool.
  */
-@property (nonatomic, strong) NSString *streamName;
+@property (nonatomic, strong) NSString * _Nullable streamName;
 
 /**
  Status of the Cognito streams. Valid values are: <p>ENABLED - Streaming of updates to identity pool is enabled.</p><p>DISABLED - Streaming of updates to identity pool is disabled. Bulk publish will also fail if StreamingStatus is DISABLED.</p>
@@ -166,37 +168,37 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  Date on which the dataset was created.
  */
-@property (nonatomic, strong) NSDate *creationDate;
+@property (nonatomic, strong) NSDate * _Nullable creationDate;
 
 /**
  Total size in bytes of the records in this dataset.
  */
-@property (nonatomic, strong) NSNumber *dataStorage;
+@property (nonatomic, strong) NSNumber * _Nullable dataStorage;
 
 /**
  A string of up to 128 characters. Allowed characters are a-z, A-Z, 0-9, '_' (underscore), '-' (dash), and '.' (dot).
  */
-@property (nonatomic, strong) NSString *datasetName;
+@property (nonatomic, strong) NSString * _Nullable datasetName;
 
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityId;
+@property (nonatomic, strong) NSString * _Nullable identityId;
 
 /**
  The device that made the last change to this dataset.
  */
-@property (nonatomic, strong) NSString *lastModifiedBy;
+@property (nonatomic, strong) NSString * _Nullable lastModifiedBy;
 
 /**
  Date when the dataset was last modified.
  */
-@property (nonatomic, strong) NSDate *lastModifiedDate;
+@property (nonatomic, strong) NSDate * _Nullable lastModifiedDate;
 
 /**
  Number of records in this dataset.
  */
-@property (nonatomic, strong) NSNumber *numRecords;
+@property (nonatomic, strong) NSNumber * _Nullable numRecords;
 
 @end
 
@@ -210,17 +212,17 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  A string of up to 128 characters. Allowed characters are a-z, A-Z, 0-9, '_' (underscore), '-' (dash), and '.' (dot).
  */
-@property (nonatomic, strong) NSString *datasetName;
+@property (nonatomic, strong) NSString * _Nullable datasetName;
 
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityId;
+@property (nonatomic, strong) NSString * _Nullable identityId;
 
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 @end
 
@@ -233,7 +235,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  A collection of data for an identity pool. An identity pool can have multiple datasets. A dataset is per identity and can be general or associated with a particular entity in an application (like a saved game). Datasets are automatically created if they don't exist. Data is synced by dataset, and a dataset can hold up to 1MB of key-value pairs.
  */
-@property (nonatomic, strong) AWSCognitoSyncDataset *dataset;
+@property (nonatomic, strong) AWSCognitoSyncDataset * _Nullable dataset;
 
 @end
 
@@ -247,17 +249,17 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  A string of up to 128 characters. Allowed characters are a-z, A-Z, 0-9, '_' (underscore), '-' (dash), and '.' (dot).
  */
-@property (nonatomic, strong) NSString *datasetName;
+@property (nonatomic, strong) NSString * _Nullable datasetName;
 
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityId;
+@property (nonatomic, strong) NSString * _Nullable identityId;
 
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 @end
 
@@ -270,7 +272,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  Meta data for a collection of data for an identity. An identity can have multiple datasets. A dataset can be general or associated with a particular entity in an application (like a saved game). Datasets are automatically created if they don't exist. Data is synced by dataset, and a dataset can hold up to 1MB of key-value pairs.
  */
-@property (nonatomic, strong) AWSCognitoSyncDataset *dataset;
+@property (nonatomic, strong) AWSCognitoSyncDataset * _Nullable dataset;
 
 @end
 
@@ -284,7 +286,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 @end
 
@@ -297,7 +299,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  Information about the usage of the identity pool.
  */
-@property (nonatomic, strong) AWSCognitoSyncIdentityPoolUsage *identityPoolUsage;
+@property (nonatomic, strong) AWSCognitoSyncIdentityPoolUsage * _Nullable identityPoolUsage;
 
 @end
 
@@ -311,12 +313,12 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityId;
+@property (nonatomic, strong) NSString * _Nullable identityId;
 
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 @end
 
@@ -329,7 +331,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  Usage information for the identity.
  */
-@property (nonatomic, strong) AWSCognitoSyncIdentityUsage *identityUsage;
+@property (nonatomic, strong) AWSCognitoSyncIdentityUsage * _Nullable identityUsage;
 
 @end
 
@@ -343,7 +345,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 @end
 
@@ -356,12 +358,12 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  If BulkPublishStatus is SUCCEEDED, the time the last bulk publish operation completed.
  */
-@property (nonatomic, strong) NSDate *bulkPublishCompleteTime;
+@property (nonatomic, strong) NSDate * _Nullable bulkPublishCompleteTime;
 
 /**
  The date/time at which the last bulk publish was initiated.
  */
-@property (nonatomic, strong) NSDate *bulkPublishStartTime;
+@property (nonatomic, strong) NSDate * _Nullable bulkPublishStartTime;
 
 /**
  Status of the last bulk publish operation, valid values are: <p>NOT_STARTED - No bulk publish has been requested for this identity pool</p><p>IN_PROGRESS - Data is being published to the configured stream</p><p>SUCCEEDED - All data for the identity pool has been published to the configured stream</p><p>FAILED - Some portion of the data has failed to publish, check FailureMessage for the cause.</p>
@@ -371,12 +373,12 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  If BulkPublishStatus is FAILED this field will contain the error message that caused the bulk publish to fail.
  */
-@property (nonatomic, strong) NSString *failureMessage;
+@property (nonatomic, strong) NSString * _Nullable failureMessage;
 
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 @end
 
@@ -390,7 +392,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  <p>The Cognito Identity Pool ID for the request</p>
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 @end
 
@@ -403,7 +405,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  <p>The Cognito Events returned from the GetCognitoEvents request</p>
  */
-@property (nonatomic, strong) NSDictionary *events;
+@property (nonatomic, strong) NSDictionary * _Nullable events;
 
 @end
 
@@ -417,7 +419,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  <p>A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. This is the ID of the pool for which to return a configuration.</p>
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 @end
 
@@ -430,17 +432,17 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  Options to apply to this identity pool for Amazon Cognito streams.
  */
-@property (nonatomic, strong) AWSCognitoSyncCognitoStreams *cognitoStreams;
+@property (nonatomic, strong) AWSCognitoSyncCognitoStreams * _Nullable cognitoStreams;
 
 /**
  <p>A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito.</p>
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 /**
  <p>Options to apply to this identity pool for push synchronization.</p>
  */
-@property (nonatomic, strong) AWSCognitoSyncPushSync *pushSync;
+@property (nonatomic, strong) AWSCognitoSyncPushSync * _Nullable pushSync;
 
 @end
 
@@ -453,22 +455,22 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  Data storage information for the identity pool.
  */
-@property (nonatomic, strong) NSNumber *dataStorage;
+@property (nonatomic, strong) NSNumber * _Nullable dataStorage;
 
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 /**
  Date on which the identity pool was last modified.
  */
-@property (nonatomic, strong) NSDate *lastModifiedDate;
+@property (nonatomic, strong) NSDate * _Nullable lastModifiedDate;
 
 /**
  Number of sync sessions for the identity pool.
  */
-@property (nonatomic, strong) NSNumber *syncSessionsCount;
+@property (nonatomic, strong) NSNumber * _Nullable syncSessionsCount;
 
 @end
 
@@ -481,27 +483,27 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  Total data storage for this identity.
  */
-@property (nonatomic, strong) NSNumber *dataStorage;
+@property (nonatomic, strong) NSNumber * _Nullable dataStorage;
 
 /**
  Number of datasets for the identity.
  */
-@property (nonatomic, strong) NSNumber *datasetCount;
+@property (nonatomic, strong) NSNumber * _Nullable datasetCount;
 
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityId;
+@property (nonatomic, strong) NSString * _Nullable identityId;
 
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 /**
  Date on which the identity was last modified.
  */
-@property (nonatomic, strong) NSDate *lastModifiedDate;
+@property (nonatomic, strong) NSDate * _Nullable lastModifiedDate;
 
 @end
 
@@ -515,22 +517,22 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityId;
+@property (nonatomic, strong) NSString * _Nullable identityId;
 
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 /**
  The maximum number of results to be returned.
  */
-@property (nonatomic, strong) NSNumber *maxResults;
+@property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
 /**
  A pagination token for obtaining the next page of results.
  */
-@property (nonatomic, strong) NSString *nextToken;
+@property (nonatomic, strong) NSString * _Nullable nextToken;
 
 @end
 
@@ -543,17 +545,17 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  Number of datasets returned.
  */
-@property (nonatomic, strong) NSNumber *count;
+@property (nonatomic, strong) NSNumber * _Nullable count;
 
 /**
  A set of datasets.
  */
-@property (nonatomic, strong) NSArray *datasets;
+@property (nonatomic, strong) NSArray * _Nullable datasets;
 
 /**
  A pagination token for obtaining the next page of results.
  */
-@property (nonatomic, strong) NSString *nextToken;
+@property (nonatomic, strong) NSString * _Nullable nextToken;
 
 @end
 
@@ -566,12 +568,12 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  The maximum number of results to be returned.
  */
-@property (nonatomic, strong) NSNumber *maxResults;
+@property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
 /**
  A pagination token for obtaining the next page of results.
  */
-@property (nonatomic, strong) NSString *nextToken;
+@property (nonatomic, strong) NSString * _Nullable nextToken;
 
 @end
 
@@ -584,22 +586,22 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  Total number of identities for the identity pool.
  */
-@property (nonatomic, strong) NSNumber *count;
+@property (nonatomic, strong) NSNumber * _Nullable count;
 
 /**
  Usage information for the identity pools.
  */
-@property (nonatomic, strong) NSArray *identityPoolUsages;
+@property (nonatomic, strong) NSArray * _Nullable identityPoolUsages;
 
 /**
  The maximum number of results to be returned.
  */
-@property (nonatomic, strong) NSNumber *maxResults;
+@property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
 /**
  A pagination token for obtaining the next page of results.
  */
-@property (nonatomic, strong) NSString *nextToken;
+@property (nonatomic, strong) NSString * _Nullable nextToken;
 
 @end
 
@@ -613,37 +615,37 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  A string of up to 128 characters. Allowed characters are a-z, A-Z, 0-9, '_' (underscore), '-' (dash), and '.' (dot).
  */
-@property (nonatomic, strong) NSString *datasetName;
+@property (nonatomic, strong) NSString * _Nullable datasetName;
 
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityId;
+@property (nonatomic, strong) NSString * _Nullable identityId;
 
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 /**
  The last server sync count for this record.
  */
-@property (nonatomic, strong) NSNumber *lastSyncCount;
+@property (nonatomic, strong) NSNumber * _Nullable lastSyncCount;
 
 /**
  The maximum number of results to be returned.
  */
-@property (nonatomic, strong) NSNumber *maxResults;
+@property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
 /**
  A pagination token for obtaining the next page of results.
  */
-@property (nonatomic, strong) NSString *nextToken;
+@property (nonatomic, strong) NSString * _Nullable nextToken;
 
 /**
  A token containing a session ID, identity ID, and expiration.
  */
-@property (nonatomic, strong) NSString *syncSessionToken;
+@property (nonatomic, strong) NSString * _Nullable syncSessionToken;
 
 @end
 
@@ -656,47 +658,47 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  Total number of records.
  */
-@property (nonatomic, strong) NSNumber *count;
+@property (nonatomic, strong) NSNumber * _Nullable count;
 
 /**
  A boolean value specifying whether to delete the dataset locally.
  */
-@property (nonatomic, strong) NSNumber *datasetDeletedAfterRequestedSyncCount;
+@property (nonatomic, strong) NSNumber * _Nullable datasetDeletedAfterRequestedSyncCount;
 
 /**
  Indicates whether the dataset exists.
  */
-@property (nonatomic, strong) NSNumber *datasetExists;
+@property (nonatomic, strong) NSNumber * _Nullable datasetExists;
 
 /**
  Server sync count for this dataset.
  */
-@property (nonatomic, strong) NSNumber *datasetSyncCount;
+@property (nonatomic, strong) NSNumber * _Nullable datasetSyncCount;
 
 /**
  The user/device that made the last change to this record.
  */
-@property (nonatomic, strong) NSString *lastModifiedBy;
+@property (nonatomic, strong) NSString * _Nullable lastModifiedBy;
 
 /**
  Names of merged datasets.
  */
-@property (nonatomic, strong) NSArray *mergedDatasetNames;
+@property (nonatomic, strong) NSArray * _Nullable mergedDatasetNames;
 
 /**
  A pagination token for obtaining the next page of results.
  */
-@property (nonatomic, strong) NSString *nextToken;
+@property (nonatomic, strong) NSString * _Nullable nextToken;
 
 /**
  A list of all records.
  */
-@property (nonatomic, strong) NSArray *records;
+@property (nonatomic, strong) NSArray * _Nullable records;
 
 /**
  A token containing a session ID, identity ID, and expiration.
  */
-@property (nonatomic, strong) NSString *syncSessionToken;
+@property (nonatomic, strong) NSString * _Nullable syncSessionToken;
 
 @end
 
@@ -709,12 +711,12 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  <p>List of SNS platform application ARNs that could be used by clients.</p>
  */
-@property (nonatomic, strong) NSArray *applicationArns;
+@property (nonatomic, strong) NSArray * _Nullable applicationArns;
 
 /**
  <p>A role configured to allow Cognito to call SNS on behalf of the developer.</p>
  */
-@property (nonatomic, strong) NSString *roleArn;
+@property (nonatomic, strong) NSString * _Nullable roleArn;
 
 @end
 
@@ -727,32 +729,32 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  The last modified date of the client device.
  */
-@property (nonatomic, strong) NSDate *deviceLastModifiedDate;
+@property (nonatomic, strong) NSDate * _Nullable deviceLastModifiedDate;
 
 /**
  The key for the record.
  */
-@property (nonatomic, strong) NSString *key;
+@property (nonatomic, strong) NSString * _Nullable key;
 
 /**
  The user/device that made the last change to this record.
  */
-@property (nonatomic, strong) NSString *lastModifiedBy;
+@property (nonatomic, strong) NSString * _Nullable lastModifiedBy;
 
 /**
  The date on which the record was last modified.
  */
-@property (nonatomic, strong) NSDate *lastModifiedDate;
+@property (nonatomic, strong) NSDate * _Nullable lastModifiedDate;
 
 /**
  The server sync count for this record.
  */
-@property (nonatomic, strong) NSNumber *syncCount;
+@property (nonatomic, strong) NSNumber * _Nullable syncCount;
 
 /**
  The value for the record.
  */
-@property (nonatomic, strong) NSString *value;
+@property (nonatomic, strong) NSString * _Nullable value;
 
 @end
 
@@ -766,12 +768,12 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  The last modified date of the client device.
  */
-@property (nonatomic, strong) NSDate *deviceLastModifiedDate;
+@property (nonatomic, strong) NSDate * _Nullable deviceLastModifiedDate;
 
 /**
  The key associated with the record patch.
  */
-@property (nonatomic, strong) NSString *key;
+@property (nonatomic, strong) NSString * _Nullable key;
 
 /**
  An operation, either replace or remove.
@@ -781,12 +783,12 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  Last known server sync count for this record. Set to 0 if unknown.
  */
-@property (nonatomic, strong) NSNumber *syncCount;
+@property (nonatomic, strong) NSNumber * _Nullable syncCount;
 
 /**
  The value associated with the record patch.
  */
-@property (nonatomic, strong) NSString *value;
+@property (nonatomic, strong) NSString * _Nullable value;
 
 @end
 
@@ -800,12 +802,12 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  <p>The unique ID for this identity.</p>
  */
-@property (nonatomic, strong) NSString *identityId;
+@property (nonatomic, strong) NSString * _Nullable identityId;
 
 /**
  <p>A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. Here, the ID of the pool that the identity belongs to.</p>
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 /**
  <p>The SNS platform type (e.g. GCM, SDM, APNS, APNS_SANDBOX).</p>
@@ -815,7 +817,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  <p>The push token.</p>
  */
-@property (nonatomic, strong) NSString *token;
+@property (nonatomic, strong) NSString * _Nullable token;
 
 @end
 
@@ -828,7 +830,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  <p>The unique ID generated for this device by Cognito.</p>
  */
-@property (nonatomic, strong) NSString *deviceId;
+@property (nonatomic, strong) NSString * _Nullable deviceId;
 
 @end
 
@@ -842,12 +844,12 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  <p>The events to configure</p>
  */
-@property (nonatomic, strong) NSDictionary *events;
+@property (nonatomic, strong) NSDictionary * _Nullable events;
 
 /**
  <p>The Cognito Identity Pool to use when configuring Cognito Events</p>
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 @end
 
@@ -861,17 +863,17 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  Options to apply to this identity pool for Amazon Cognito streams.
  */
-@property (nonatomic, strong) AWSCognitoSyncCognitoStreams *cognitoStreams;
+@property (nonatomic, strong) AWSCognitoSyncCognitoStreams * _Nullable cognitoStreams;
 
 /**
  <p>A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. This is the ID of the pool to modify.</p>
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 /**
  <p>Options to apply to this identity pool for push synchronization.</p>
  */
-@property (nonatomic, strong) AWSCognitoSyncPushSync *pushSync;
+@property (nonatomic, strong) AWSCognitoSyncPushSync * _Nullable pushSync;
 
 @end
 
@@ -884,17 +886,17 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  Options to apply to this identity pool for Amazon Cognito streams.
  */
-@property (nonatomic, strong) AWSCognitoSyncCognitoStreams *cognitoStreams;
+@property (nonatomic, strong) AWSCognitoSyncCognitoStreams * _Nullable cognitoStreams;
 
 /**
  <p>A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito.</p>
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 /**
  <p>Options to apply to this identity pool for push synchronization.</p>
  */
-@property (nonatomic, strong) AWSCognitoSyncPushSync *pushSync;
+@property (nonatomic, strong) AWSCognitoSyncPushSync * _Nullable pushSync;
 
 @end
 
@@ -908,22 +910,22 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  <p>The name of the dataset to subcribe to.</p>
  */
-@property (nonatomic, strong) NSString *datasetName;
+@property (nonatomic, strong) NSString * _Nullable datasetName;
 
 /**
  <p>The unique ID generated for this device by Cognito.</p>
  */
-@property (nonatomic, strong) NSString *deviceId;
+@property (nonatomic, strong) NSString * _Nullable deviceId;
 
 /**
  <p>Unique ID for this identity.</p>
  */
-@property (nonatomic, strong) NSString *identityId;
+@property (nonatomic, strong) NSString * _Nullable identityId;
 
 /**
  <p>A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. The ID of the pool to which the identity belongs.</p>
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 @end
 
@@ -945,22 +947,22 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  <p>The name of the dataset from which to unsubcribe.</p>
  */
-@property (nonatomic, strong) NSString *datasetName;
+@property (nonatomic, strong) NSString * _Nullable datasetName;
 
 /**
  <p>The unique ID generated for this device by Cognito.</p>
  */
-@property (nonatomic, strong) NSString *deviceId;
+@property (nonatomic, strong) NSString * _Nullable deviceId;
 
 /**
  <p>Unique ID for this identity.</p>
  */
-@property (nonatomic, strong) NSString *identityId;
+@property (nonatomic, strong) NSString * _Nullable identityId;
 
 /**
  <p>A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. The ID of the pool to which this identity belongs.</p>
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 @end
 
@@ -982,37 +984,37 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  Intended to supply a device ID that will populate the lastModifiedBy field referenced in other methods. The ClientContext field is not yet implemented.
  */
-@property (nonatomic, strong) NSString *clientContext;
+@property (nonatomic, strong) NSString * _Nullable clientContext;
 
 /**
  A string of up to 128 characters. Allowed characters are a-z, A-Z, 0-9, '_' (underscore), '-' (dash), and '.' (dot).
  */
-@property (nonatomic, strong) NSString *datasetName;
+@property (nonatomic, strong) NSString * _Nullable datasetName;
 
 /**
  <p>The unique ID generated for this device by Cognito.</p>
  */
-@property (nonatomic, strong) NSString *deviceId;
+@property (nonatomic, strong) NSString * _Nullable deviceId;
 
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityId;
+@property (nonatomic, strong) NSString * _Nullable identityId;
 
 /**
  A name-spaced GUID (for example, us-east-1:23EC4050-6AEA-7089-A2DD-08002EXAMPLE) created by Amazon Cognito. GUID generation is unique within a region.
  */
-@property (nonatomic, strong) NSString *identityPoolId;
+@property (nonatomic, strong) NSString * _Nullable identityPoolId;
 
 /**
  A list of patch operations.
  */
-@property (nonatomic, strong) NSArray *recordPatches;
+@property (nonatomic, strong) NSArray * _Nullable recordPatches;
 
 /**
  The SyncSessionToken returned by a previous call to ListRecords for this dataset and identity.
  */
-@property (nonatomic, strong) NSString *syncSessionToken;
+@property (nonatomic, strong) NSString * _Nullable syncSessionToken;
 
 @end
 
@@ -1025,6 +1027,8 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  A list of records that have been updated.
  */
-@property (nonatomic, strong) NSArray *records;
+@property (nonatomic, strong) NSArray * _Nullable records;
 
 @end
+
+NS_ASSUME_NONNULL_END

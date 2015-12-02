@@ -10,12 +10,10 @@
 #import "AWSCognito.h"
 #import "CognitoTestUtils.h"
 #import "AWSCognitoSQLiteManager.h"
+#import <objc/runtime.h>
 
 @interface AWSCognitoClientTest : XCTestCase
 @end
-
-
-@import ObjectiveC.runtime;
 
 NSString * const lambda = @"Lambda";
 
@@ -32,7 +30,6 @@ NSDate *_swizzledLastModified;
 
 Method _originalMethod;
 Method _mockMethod;
-
 
 @implementation AWSCognitoSQLiteManager(FailureInjection)
 

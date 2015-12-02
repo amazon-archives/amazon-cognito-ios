@@ -16,6 +16,9 @@
 #import <Foundation/Foundation.h>
 #import <AWSCore/AWSCore.h>
 #import "AWSCognitoSyncModel.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  <fullname>Amazon Cognito Sync</fullname><p>Amazon Cognito Sync provides an AWS service and client library that enable cross-device syncing of application-related user data. High-level client libraries are available for both iOS and Android. You can use these libraries to persist data locally so that it's available even if the device is offline. Developer credentials don't need to be stored on the mobile device to access the service. You can use Amazon Cognito to obtain a normalized user ID and credentials. User data is persisted in a dataset that can store up to 1 MB of key-value pairs, and you can have up to 20 datasets per user identity.</p><p>With Amazon Cognito Sync, the data stored for each identity is accessible only to credentials assigned to that identity. In order to use the Cognito Sync service, you need to make API calls using credentials retrieved with <a href="http://docs.aws.amazon.com/cognitoidentity/latest/APIReference/Welcome.html">Amazon Cognito Identity service</a>.</p><p>If you want to use Cognito Sync in an Android or iOS application, you will probably want to make API calls via the AWS Mobile SDK. To learn more, see the <a href="http://docs.aws.amazon.com/mobile/sdkforandroid/developerguide/cognito-sync.html">Developer Guide for Android</a> and the <a href="http://docs.aws.amazon.com/mobile/sdkforios/developerguide/cognito-sync.html">Developer Guide for iOS</a>.</p>
  */
@@ -187,7 +190,7 @@
  
  @param request A container for the necessary parameters to execute the BulkPublish service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncBulkPublishResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorDuplicateRequest`, `AWSCognitoSyncErrorAlreadyStreamed`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncBulkPublishResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorDuplicateRequest`, `AWSCognitoSyncErrorAlreadyStreamed`.
  
  @see AWSCognitoSyncBulkPublishRequest
  @see AWSCognitoSyncBulkPublishResponse
@@ -199,7 +202,7 @@
  
  @param request A container for the necessary parameters to execute the DeleteDataset service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncDeleteDatasetResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`, `AWSCognitoSyncErrorResourceConflict`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncDeleteDatasetResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`, `AWSCognitoSyncErrorResourceConflict`.
  
  @see AWSCognitoSyncDeleteDatasetRequest
  @see AWSCognitoSyncDeleteDatasetResponse
@@ -211,7 +214,7 @@
  
  @param request A container for the necessary parameters to execute the DescribeDataset service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncDescribeDatasetResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncDescribeDatasetResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`.
  
  @see AWSCognitoSyncDescribeDatasetRequest
  @see AWSCognitoSyncDescribeDatasetResponse
@@ -223,7 +226,7 @@
  
  @param request A container for the necessary parameters to execute the DescribeIdentityPoolUsage service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncDescribeIdentityPoolUsageResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncDescribeIdentityPoolUsageResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`.
  
  @see AWSCognitoSyncDescribeIdentityPoolUsageRequest
  @see AWSCognitoSyncDescribeIdentityPoolUsageResponse
@@ -235,7 +238,7 @@
  
  @param request A container for the necessary parameters to execute the DescribeIdentityUsage service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncDescribeIdentityUsageResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncDescribeIdentityUsageResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`.
  
  @see AWSCognitoSyncDescribeIdentityUsageRequest
  @see AWSCognitoSyncDescribeIdentityUsageResponse
@@ -247,7 +250,7 @@
  
  @param request A container for the necessary parameters to execute the GetBulkPublishDetails service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncGetBulkPublishDetailsResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncGetBulkPublishDetailsResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`.
  
  @see AWSCognitoSyncGetBulkPublishDetailsRequest
  @see AWSCognitoSyncGetBulkPublishDetailsResponse
@@ -259,7 +262,7 @@
  
  @param request A container for the necessary parameters to execute the GetCognitoEvents service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncGetCognitoEventsResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncGetCognitoEventsResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`.
  
  @see AWSCognitoSyncGetCognitoEventsRequest
  @see AWSCognitoSyncGetCognitoEventsResponse
@@ -271,7 +274,7 @@
  
  @param request A container for the necessary parameters to execute the GetIdentityPoolConfiguration service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncGetIdentityPoolConfigurationResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncGetIdentityPoolConfigurationResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`.
  
  @see AWSCognitoSyncGetIdentityPoolConfigurationRequest
  @see AWSCognitoSyncGetIdentityPoolConfigurationResponse
@@ -283,7 +286,7 @@
  
  @param request A container for the necessary parameters to execute the ListDatasets service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncListDatasetsResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncListDatasetsResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`.
  
  @see AWSCognitoSyncListDatasetsRequest
  @see AWSCognitoSyncListDatasetsResponse
@@ -295,7 +298,7 @@
  
  @param request A container for the necessary parameters to execute the ListIdentityPoolUsage service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncListIdentityPoolUsageResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncListIdentityPoolUsageResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`.
  
  @see AWSCognitoSyncListIdentityPoolUsageRequest
  @see AWSCognitoSyncListIdentityPoolUsageResponse
@@ -307,7 +310,7 @@
  
  @param request A container for the necessary parameters to execute the ListRecords service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncListRecordsResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorTooManyRequests`, `AWSCognitoSyncErrorInternalError`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncListRecordsResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorTooManyRequests`, `AWSCognitoSyncErrorInternalError`.
  
  @see AWSCognitoSyncListRecordsRequest
  @see AWSCognitoSyncListRecordsResponse
@@ -319,7 +322,7 @@
  
  @param request A container for the necessary parameters to execute the RegisterDevice service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncRegisterDeviceResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorInvalidConfiguration`, `AWSCognitoSyncErrorTooManyRequests`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncRegisterDeviceResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorInvalidConfiguration`, `AWSCognitoSyncErrorTooManyRequests`.
  
  @see AWSCognitoSyncRegisterDeviceRequest
  @see AWSCognitoSyncRegisterDeviceResponse
@@ -331,7 +334,7 @@
  
  @param request A container for the necessary parameters to execute the SetCognitoEvents service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will be `nil`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will be `nil`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`.
  
  @see AWSCognitoSyncSetCognitoEventsRequest
  */
@@ -342,7 +345,7 @@
  
  @param request A container for the necessary parameters to execute the SetIdentityPoolConfiguration service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncSetIdentityPoolConfigurationResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`, `AWSCognitoSyncErrorLimitExceeded`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncSetIdentityPoolConfigurationResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorTooManyRequests`, `AWSCognitoSyncErrorLimitExceeded`.
  
  @see AWSCognitoSyncSetIdentityPoolConfigurationRequest
  @see AWSCognitoSyncSetIdentityPoolConfigurationResponse
@@ -354,7 +357,7 @@
  
  @param request A container for the necessary parameters to execute the SubscribeToDataset service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncSubscribeToDatasetResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorInvalidConfiguration`, `AWSCognitoSyncErrorTooManyRequests`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncSubscribeToDatasetResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorInvalidConfiguration`, `AWSCognitoSyncErrorTooManyRequests`.
  
  @see AWSCognitoSyncSubscribeToDatasetRequest
  @see AWSCognitoSyncSubscribeToDatasetResponse
@@ -366,7 +369,7 @@
  
  @param request A container for the necessary parameters to execute the UnsubscribeFromDataset service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncUnsubscribeFromDatasetResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorInvalidConfiguration`, `AWSCognitoSyncErrorTooManyRequests`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncUnsubscribeFromDatasetResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorInternalError`, `AWSCognitoSyncErrorInvalidConfiguration`, `AWSCognitoSyncErrorTooManyRequests`.
  
  @see AWSCognitoSyncUnsubscribeFromDatasetRequest
  @see AWSCognitoSyncUnsubscribeFromDatasetResponse
@@ -378,7 +381,7 @@
  
  @param request A container for the necessary parameters to execute the UpdateRecords service method.
  
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncUpdateRecordsResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domian and the following error code: `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorLimitExceeded`, `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorResourceConflict`, `AWSCognitoSyncErrorInvalidLambdaFunctionOutput`, `AWSCognitoSyncErrorLambdaThrottled`, `AWSCognitoSyncErrorTooManyRequests`, `AWSCognitoSyncErrorInternalError`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSCognitoSyncUpdateRecordsResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSCognitoSyncErrorDomain` domain and the following error code: `AWSCognitoSyncErrorInvalidParameter`, `AWSCognitoSyncErrorLimitExceeded`, `AWSCognitoSyncErrorNotAuthorized`, `AWSCognitoSyncErrorResourceNotFound`, `AWSCognitoSyncErrorResourceConflict`, `AWSCognitoSyncErrorInvalidLambdaFunctionOutput`, `AWSCognitoSyncErrorLambdaThrottled`, `AWSCognitoSyncErrorTooManyRequests`, `AWSCognitoSyncErrorInternalError`.
  
  @see AWSCognitoSyncUpdateRecordsRequest
  @see AWSCognitoSyncUpdateRecordsResponse
@@ -386,3 +389,5 @@
 - (AWSTask *)updateRecords:(AWSCognitoSyncUpdateRecordsRequest *)request;
 
 @end
+
+NS_ASSUME_NONNULL_END
