@@ -14,8 +14,6 @@
 #import <AWSCore/AWSSynchronizedMutableDictionary.h>
 #import "AWSCognitoSyncResources.h"
 
-NSString *const AWSCognitoSyncDefinitionFileName = @"cognito-sync-2014-06-30";
-
 @interface AWSCognitoSyncResponseSerializer : AWSJSONResponseSerializer
 
 @end
