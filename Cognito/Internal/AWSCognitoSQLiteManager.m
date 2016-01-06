@@ -1,6 +1,6 @@
-/**
- Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- */
+//
+// Copyright 2014-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+//
 
 
 #import "AWSCognitoSQLiteManager.h"
@@ -265,68 +265,63 @@
     return datasets;
 }
 
-- (BOOL)loadDatasetMetadata:(AWSCognitoDatasetMetadata *)metadata error:(NSError **)error {
-  
-  __block loadedDatasetMetadata = YES;
-  
-  dispatch_sync(self.dispatchQueue, ^{
-    NSString *query = [NSString stringWithFormat:@"SELECT %@, %@, %@, %@, %@, %@ FROM %@ WHERE %@ = ? and %@ = ?",
-                       AWSCognitoLastSyncCount,
-                       AWSCognitoLastModifiedFieldName,
-                       AWSCognitoModifiedByFieldName,
-                       AWSCognitoDatasetCreationDateFieldName,
-                       AWSCognitoDataStorageFieldName,
-                       AWSCognitoRecordCountFieldName,
-                       AWSCognitoDefaultSqliteMetadataTableName,
-                       AWSCognitoTableIdentityKeyName,
-                       AWSCognitoDatasetFieldName];
+- (void)loadDatasetMetadata:(AWSCognitoDatasetMetadata *)metadata error:(NSError **)error {
     
-    AWSLogDebug(@"query = '%@'", query);
-    
-    sqlite3_stmt *statement;
-    if(sqlite3_prepare_v2(self.sqlite, [query UTF8String], -1, &statement, NULL) == SQLITE_OK)
-    {
-      sqlite3_bind_text(statement, 1, [self.identityId UTF8String], -1, SQLITE_TRANSIENT);
-      sqlite3_bind_text(statement, 2, [metadata.name UTF8String], -1, SQLITE_TRANSIENT);
-      
-      if (sqlite3_step(statement) == SQLITE_ROW)
-      {
-        int64_t syncCount = sqlite3_column_int64(statement, 0);
-        int64_t lastMod = sqlite3_column_int64(statement, 1);
-        char *lastModBy = (char *) sqlite3_column_text(statement, 2);
-        int64_t createDate = sqlite3_column_int64(statement, 3);
-        int64_t storage = sqlite3_column_int64(statement, 4);
-        int64_t recordCount = sqlite3_column_int64(statement, 5);
+    dispatch_sync(self.dispatchQueue, ^{
+        NSString *query = [NSString stringWithFormat:@"SELECT %@, %@, %@, %@, %@, %@ FROM %@ WHERE %@ = ? and %@ = ?",
+                           AWSCognitoLastSyncCount,
+                           AWSCognitoLastModifiedFieldName,
+                           AWSCognitoModifiedByFieldName,
+                           AWSCognitoDatasetCreationDateFieldName,
+                           AWSCognitoDataStorageFieldName,
+                           AWSCognitoRecordCountFieldName,
+                           AWSCognitoDefaultSqliteMetadataTableName,
+                           AWSCognitoTableIdentityKeyName,
+                           AWSCognitoDatasetFieldName];
         
-        metadata.lastSyncCount = [NSNumber numberWithLongLong:syncCount];
-        metadata.lastModifiedDate = [AWSCognitoUtil millisSinceEpochToDate:[NSNumber numberWithLongLong:lastMod]];
-        metadata.lastModifiedBy = [NSString stringWithUTF8String:lastModBy];
-        metadata.creationDate = [AWSCognitoUtil millisSinceEpochToDate:[NSNumber numberWithLongLong:createDate]];
-        metadata.dataStorage = [NSNumber numberWithLongLong:storage];
-        metadata.numRecords = [NSNumber numberWithLongLong:recordCount];
-      }
-    }
-    else
-    {
-      AWSLogInfo(@"Error creating query statement: %s", sqlite3_errmsg(self.sqlite));
-      if(error != nil)
-      {
-        *error = [AWSCognitoUtil errorLocalDataStorageFailed:[NSString stringWithFormat:@"%s", sqlite3_errmsg(self.sqlite)]];
-        loadedDatasetMetadata = NO;
-      }
-    }
-    
-    sqlite3_reset(statement);
-    sqlite3_finalize(statement);
-    loadedDatasetMetadata = YES;
-  });
-  return loadedDatasetMetadata;
+        AWSLogDebug(@"query = '%@'", query);
+        
+        sqlite3_stmt *statement;
+        if(sqlite3_prepare_v2(self.sqlite, [query UTF8String], -1, &statement, NULL) == SQLITE_OK)
+        {
+            sqlite3_bind_text(statement, 1, [self.identityId UTF8String], -1, SQLITE_TRANSIENT);
+            sqlite3_bind_text(statement, 2, [metadata.name UTF8String], -1, SQLITE_TRANSIENT);
+            
+            if (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                int64_t syncCount = sqlite3_column_int64(statement, 0);
+                int64_t lastMod = sqlite3_column_int64(statement, 1);
+                char *lastModBy = (char *) sqlite3_column_text(statement, 2);
+                int64_t createDate = sqlite3_column_int64(statement, 3);
+                int64_t storage = sqlite3_column_int64(statement, 4);
+                int64_t recordCount = sqlite3_column_int64(statement, 5);
+                
+                metadata.lastSyncCount = [NSNumber numberWithLongLong:syncCount];
+                metadata.lastModifiedDate = [AWSCognitoUtil millisSinceEpochToDate:[NSNumber numberWithLongLong:lastMod]];
+                metadata.lastModifiedBy = [NSString stringWithUTF8String:lastModBy];
+                metadata.creationDate = [AWSCognitoUtil millisSinceEpochToDate:[NSNumber numberWithLongLong:createDate]];
+                metadata.dataStorage = [NSNumber numberWithLongLong:storage];
+                metadata.numRecords = [NSNumber numberWithLongLong:recordCount];
+            }
+        }
+        else
+        {
+            AWSLogInfo(@"Error creating query statement: %s", sqlite3_errmsg(self.sqlite));
+            if(error != nil)
+            {
+                *error = [AWSCognitoUtil errorLocalDataStorageFailed:[NSString stringWithFormat:@"%s", sqlite3_errmsg(self.sqlite)]];
+            }
+        }
+        
+        sqlite3_reset(statement);
+        sqlite3_finalize(statement);
+    });
 }
 
 - (BOOL)putDatasetMetadata:(NSArray *)datasets error:(NSError **)error {
-  
+    
     __block BOOL success = YES;
-  
+    
     dispatch_sync(self.dispatchQueue, ^{
         NSString *sqlString = [NSString stringWithFormat:@"INSERT INTO %@(%@,%@,%@,%@,%@,%@,%@) VALUES (?,?,?,?,?,?,?)",
                                AWSCognitoDefaultSqliteMetadataTableName,

@@ -13,15 +13,6 @@
 // permissions and limitations under the License.
 //
 
-#ifndef AWSiOSSDKCognitoSync_AWSiOSSDKCognitoSyncTests_Prefix_pch
-#define AWSiOSSDKCognitoSync_AWSiOSSDKCognitoSyncTests_Prefix_pch
-
-#ifdef __OBJC__
 #import <Foundation/Foundation.h>
-#endif
-
-#define AWS_TEST_COGNITO_SQLITE_MANAGER 1
-#define AWS_TEST_COGNITO_CLIENT 1
-#define AWS_TEST_COGNITO_SYNC_SERVICE 1
-
-#endif
+#import <AWSCore/AWSCore.h>
+#import "AWSCognitoSyncService.h"

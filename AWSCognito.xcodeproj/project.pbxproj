@@ -59,6 +59,10 @@
 		CE2369051BF2960200924EBD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2369041BF2960200924EBD /* UIKit.framework */; };
 		CE2369061BF2960700924EBD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2369041BF2960200924EBD /* UIKit.framework */; };
 		CE2EDEAB1BF3E1E700B9F26B /* module.modulemap in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE6552481BEC396200DACBC2 /* module.modulemap */; };
+		CE4B3B191C33209E005CF4C2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4B3B181C33209E005CF4C2 /* Security.framework */; };
+		CE4B3B1A1C3320FB005CF4C2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4B3B181C33209E005CF4C2 /* Security.framework */; };
+		CE4B3B1C1C3321AD005CF4C2 /* AWSGeneralCognitoSyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4B3B1B1C3321AD005CF4C2 /* AWSGeneralCognitoSyncTests.m */; };
+		CE4B3B1F1C3321DC005CF4C2 /* AWSTestUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4B3B1E1C3321DC005CF4C2 /* AWSTestUtility.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,6 +154,11 @@
 		BDF8F65E1B1D4CC700A2CEF9 /* AWSCognitoSyncResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSyncResources.h; sourceTree = "<group>"; };
 		BDF8F65F1B1D4CC700A2CEF9 /* AWSCognitoSyncResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCognitoSyncResources.m; sourceTree = "<group>"; };
 		CE2369041BF2960200924EBD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		CE4B3B181C33209E005CF4C2 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		CE4B3B1B1C3321AD005CF4C2 /* AWSGeneralCognitoSyncTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSGeneralCognitoSyncTests.m; sourceTree = "<group>"; };
+		CE4B3B1D1C3321DC005CF4C2 /* AWSTestUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AWSTestUtility.h; path = ../../AWSCoreTests/AWSTestUtility.h; sourceTree = "<group>"; };
+		CE4B3B1E1C3321DC005CF4C2 /* AWSTestUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AWSTestUtility.m; path = ../../AWSCoreTests/AWSTestUtility.m; sourceTree = "<group>"; };
+		CE4B3B201C332236005CF4C2 /* AWSCognitoSync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSync.h; sourceTree = "<group>"; };
 		CE6552481BEC396200DACBC2 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -158,6 +167,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE4B3B1A1C3320FB005CF4C2 /* Security.framework in Frameworks */,
 				CE2369061BF2960700924EBD /* UIKit.framework in Frameworks */,
 				BD4FF3C11B45D42B00976400 /* libAWSCore.a in Frameworks */,
 				BD4FF3C21B45D42B00976400 /* libz.dylib in Frameworks */,
@@ -178,6 +188,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE4B3B191C33209E005CF4C2 /* Security.framework in Frameworks */,
 				CE2369051BF2960200924EBD /* UIKit.framework in Frameworks */,
 				BD4FF3B71B45D36F00976400 /* libAWSCore.a in Frameworks */,
 				BD810FA01B29163A0055E6CA /* libz.dylib in Frameworks */,
@@ -193,6 +204,7 @@
 		532D70E702F6E1D0BEE95991 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE4B3B181C33209E005CF4C2 /* Security.framework */,
 				CE2369041BF2960200924EBD /* UIKit.framework */,
 				BD4FF3B61B45D36F00976400 /* libAWSCore.a */,
 				BD810F9F1B29163A0055E6CA /* libz.dylib */,
@@ -229,6 +241,7 @@
 				BDCA35A41AC230B400228D15 /* AWSCognitoClientTest.m */,
 				BDCA35A51AC230B400228D15 /* AWSCognitoSyncServiceTests.m */,
 				BDCA35A61AC230B400228D15 /* AWSCognitoTests-Prefix.pch */,
+				CE4B3B1B1C3321AD005CF4C2 /* AWSGeneralCognitoSyncTests.m */,
 				BDCA35A71AC230B400228D15 /* CognitoTestUtils.h */,
 				BDCA35A81AC230B400228D15 /* CognitoTestUtils.m */,
 				BDCA35731AC22D7A00228D15 /* Supporting Files */,
@@ -239,6 +252,8 @@
 		BDCA35731AC22D7A00228D15 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CE4B3B1D1C3321DC005CF4C2 /* AWSTestUtility.h */,
+				CE4B3B1E1C3321DC005CF4C2 /* AWSTestUtility.m */,
 				BDF744F61AC25056000E0FEA /* credentials.json */,
 				BDCA35741AC22D7A00228D15 /* Info.plist */,
 			);
@@ -248,12 +263,13 @@
 		BDCA357D1AC22E4100228D15 /* CognitoSync */ = {
 			isa = PBXGroup;
 			children = (
+				CE4B3B201C332236005CF4C2 /* AWSCognitoSync.h */,
 				BDCA35801AC22E4100228D15 /* AWSCognitoSyncModel.h */,
 				BDCA35811AC22E4100228D15 /* AWSCognitoSyncModel.m */,
-				BDCA357E1AC22E4100228D15 /* AWSCognitoSyncService.h */,
-				BDCA357F1AC22E4100228D15 /* AWSCognitoSyncService.m */,
 				BDF8F65E1B1D4CC700A2CEF9 /* AWSCognitoSyncResources.h */,
 				BDF8F65F1B1D4CC700A2CEF9 /* AWSCognitoSyncResources.m */,
+				BDCA357E1AC22E4100228D15 /* AWSCognitoSyncService.h */,
+				BDCA357F1AC22E4100228D15 /* AWSCognitoSyncService.m */,
 			);
 			path = CognitoSync;
 			sourceTree = SOURCE_ROOT;
@@ -383,7 +399,7 @@
 		BDCA355B1AC22D7A00228D15 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Amazon Web Services";
 				TargetAttributes = {
 					BDCA35621AC22D7A00228D15 = {
@@ -437,6 +453,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD4FF3BD1B45D42B00976400 /* CognitoTestUtils.m in Sources */,
+				CE4B3B1F1C3321DC005CF4C2 /* AWSTestUtility.m in Sources */,
+				CE4B3B1C1C3321AD005CF4C2 /* AWSGeneralCognitoSyncTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

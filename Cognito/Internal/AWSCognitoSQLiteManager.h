@@ -1,6 +1,6 @@
-/**
- Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- */
+//
+// Copyright 2014-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+//
 
 #import <Foundation/Foundation.h>
 
@@ -19,7 +19,7 @@
 - (void)deleteSQLiteDatabase;
 
 - (NSArray *)getDatasets:(NSError **)error;
-- (BOOL)loadDatasetMetadata:(AWSCognitoDatasetMetadata *)dataset error:(NSError **)error;
+- (void)loadDatasetMetadata:(AWSCognitoDatasetMetadata *)dataset error:(NSError **)error;
 - (BOOL)putDatasetMetadata:(NSArray *)datasets error:(NSError **)error;
 - (AWSCognitoRecord *)getRecordById:(NSString *)recordId datasetName:(NSString *)datasetName error:(NSError **)error;
 - (BOOL)putRecord:(AWSCognitoRecord *)record datasetName:(NSString *)datasetName  error:(NSError **)error;
