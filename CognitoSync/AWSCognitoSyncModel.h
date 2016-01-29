@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -405,7 +405,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  <p>The Cognito Events returned from the GetCognitoEvents request</p>
  */
-@property (nonatomic, strong) NSDictionary * _Nullable events;
+@property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable events;
 
 @end
 
@@ -550,7 +550,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  A set of datasets.
  */
-@property (nonatomic, strong) NSArray * _Nullable datasets;
+@property (nonatomic, strong) NSArray<AWSCognitoSyncDataset *> * _Nullable datasets;
 
 /**
  A pagination token for obtaining the next page of results.
@@ -591,7 +591,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  Usage information for the identity pools.
  */
-@property (nonatomic, strong) NSArray * _Nullable identityPoolUsages;
+@property (nonatomic, strong) NSArray<AWSCognitoSyncIdentityPoolUsage *> * _Nullable identityPoolUsages;
 
 /**
  The maximum number of results to be returned.
@@ -683,7 +683,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  Names of merged datasets.
  */
-@property (nonatomic, strong) NSArray * _Nullable mergedDatasetNames;
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable mergedDatasetNames;
 
 /**
  A pagination token for obtaining the next page of results.
@@ -693,7 +693,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  A list of all records.
  */
-@property (nonatomic, strong) NSArray * _Nullable records;
+@property (nonatomic, strong) NSArray<AWSCognitoSyncRecord *> * _Nullable records;
 
 /**
  A token containing a session ID, identity ID, and expiration.
@@ -711,7 +711,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  <p>List of SNS platform application ARNs that could be used by clients.</p>
  */
-@property (nonatomic, strong) NSArray * _Nullable applicationArns;
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable applicationArns;
 
 /**
  <p>A role configured to allow Cognito to call SNS on behalf of the developer.</p>
@@ -844,7 +844,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  <p>The events to configure</p>
  */
-@property (nonatomic, strong) NSDictionary * _Nullable events;
+@property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable events;
 
 /**
  <p>The Cognito Identity Pool to use when configuring Cognito Events</p>
@@ -1009,7 +1009,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  A list of patch operations.
  */
-@property (nonatomic, strong) NSArray * _Nullable recordPatches;
+@property (nonatomic, strong) NSArray<AWSCognitoSyncRecordPatch *> * _Nullable recordPatches;
 
 /**
  The SyncSessionToken returned by a previous call to ListRecords for this dataset and identity.
@@ -1027,7 +1027,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoSyncStreamingStatus) {
 /**
  A list of records that have been updated.
  */
-@property (nonatomic, strong) NSArray * _Nullable records;
+@property (nonatomic, strong) NSArray<AWSCognitoSyncRecord *> * _Nullable records;
 
 @end
 
