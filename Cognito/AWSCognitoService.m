@@ -323,7 +323,12 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 }
 
 -(AWSTask *)subscribeAll {
-    return [self subscribe:[self listDatasets]];
+    NSArray * datasets = [self listDatasets];
+    NSMutableArray * datasetNames = [NSMutableArray new];
+    for (AWSCognitoDatasetMetadata * dataset in datasets) {
+        [datasetNames addObject: dataset.name];
+    }
+    return [self subscribe:datasetNames];
 }
 
 -(AWSTask *)unsubscribe:(NSArray *) datasetNames {
@@ -335,7 +340,12 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 }
 
 -(AWSTask *)unsubscribeAll {
-    return [self unsubscribe:[self listDatasets]];
+    NSArray * datasets = [self listDatasets];
+    NSMutableArray * datasetNames = [NSMutableArray new];
+    for (AWSCognitoDatasetMetadata * dataset in datasets) {
+        [datasetNames addObject:dataset.name];
+    }
+    return [self unsubscribe:datasetNames];
 }
 
 + (AWSCognitoRecordConflictHandler) defaultConflictHandler {
