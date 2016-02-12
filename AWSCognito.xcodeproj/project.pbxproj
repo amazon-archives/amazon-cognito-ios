@@ -63,6 +63,10 @@
 		CE4B3B1A1C3320FB005CF4C2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4B3B181C33209E005CF4C2 /* Security.framework */; };
 		CE4B3B1C1C3321AD005CF4C2 /* AWSGeneralCognitoSyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4B3B1B1C3321AD005CF4C2 /* AWSGeneralCognitoSyncTests.m */; };
 		CE4B3B1F1C3321DC005CF4C2 /* AWSTestUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4B3B1E1C3321DC005CF4C2 /* AWSTestUtility.m */; };
+		CEB209BE1C6D16DF00FC17B9 /* FABAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB209BA1C6D16DF00FC17B9 /* FABAttributes.h */; };
+		CEB209BF1C6D16DF00FC17B9 /* FABKitProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB209BB1C6D16DF00FC17B9 /* FABKitProtocol.h */; };
+		CEB209C01C6D16DF00FC17B9 /* Fabric+FABKits.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB209BC1C6D16DF00FC17B9 /* Fabric+FABKits.h */; };
+		CEB209C11C6D16DF00FC17B9 /* Fabric.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB209BD1C6D16DF00FC17B9 /* Fabric.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +164,10 @@
 		CE4B3B1E1C3321DC005CF4C2 /* AWSTestUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AWSTestUtility.m; path = ../../AWSCoreTests/AWSTestUtility.m; sourceTree = "<group>"; };
 		CE4B3B201C332236005CF4C2 /* AWSCognitoSync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWSCognitoSync.h; sourceTree = "<group>"; };
 		CE6552481BEC396200DACBC2 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		CEB209BA1C6D16DF00FC17B9 /* FABAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FABAttributes.h; sourceTree = "<group>"; };
+		CEB209BB1C6D16DF00FC17B9 /* FABKitProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FABKitProtocol.h; sourceTree = "<group>"; };
+		CEB209BC1C6D16DF00FC17B9 /* Fabric+FABKits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Fabric+FABKits.h"; sourceTree = "<group>"; };
+		CEB209BD1C6D16DF00FC17B9 /* Fabric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fabric.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,6 +296,7 @@
 				BDCA358E1AC22E4100228D15 /* AWSCognitoRecord.m */,
 				BDCA35861AC22E4100228D15 /* AWSCognitoService.h */,
 				BDCA35871AC22E4100228D15 /* AWSCognitoService.m */,
+				CEB209B91C6D16DF00FC17B9 /* Fabric */,
 				BDCA357D1AC22E4100228D15 /* CognitoSync */,
 				BDCA35901AC22E4100228D15 /* Internal */,
 			);
@@ -310,6 +319,17 @@
 			path = Internal;
 			sourceTree = "<group>";
 		};
+		CEB209B91C6D16DF00FC17B9 /* Fabric */ = {
+			isa = PBXGroup;
+			children = (
+				CEB209BA1C6D16DF00FC17B9 /* FABAttributes.h */,
+				CEB209BB1C6D16DF00FC17B9 /* FABKitProtocol.h */,
+				CEB209BC1C6D16DF00FC17B9 /* Fabric+FABKits.h */,
+				CEB209BD1C6D16DF00FC17B9 /* Fabric.h */,
+			);
+			path = Fabric;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -322,10 +342,14 @@
 				BDFC08431AC261140058444D /* AWSCognitoService.h in Headers */,
 				BDFC08441AC261140058444D /* AWSCognitoConflict.h in Headers */,
 				BDFC08451AC261140058444D /* AWSCognitoDataset.h in Headers */,
+				CEB209BF1C6D16DF00FC17B9 /* FABKitProtocol.h in Headers */,
+				CEB209BE1C6D16DF00FC17B9 /* FABAttributes.h in Headers */,
 				BDFC08461AC261140058444D /* AWSCognitoHandlers.h in Headers */,
+				CEB209C01C6D16DF00FC17B9 /* Fabric+FABKits.h in Headers */,
 				BDFC08471AC261140058444D /* AWSCognitoRecord.h in Headers */,
 				BDF8F6601B1D4CC700A2CEF9 /* AWSCognitoSyncResources.h in Headers */,
 				BDFC08481AC261140058444D /* AWSCognito.h in Headers */,
+				CEB209C11C6D16DF00FC17B9 /* Fabric.h in Headers */,
 				BDFC08491AC2612A0058444D /* AWSCognitoConflict_Internal.h in Headers */,
 				BDFC084A1AC2612A0058444D /* AWSCognitoConstants.h in Headers */,
 				BDFC084B1AC2612A0058444D /* AWSCognitoDataset_Internal.h in Headers */,

@@ -420,6 +420,8 @@ Method _mockMethod;
     // call a sync
     [[dataset synchronize] waitUntilFinished];
 
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
+
     XCTAssertTrue(_startReceived, @"Did not get start notification");
     XCTAssertTrue(_endReceived, @"Did not get end notification");
     XCTAssertTrue(_remoteChangeReceived, @"Did not get remote changed notification");

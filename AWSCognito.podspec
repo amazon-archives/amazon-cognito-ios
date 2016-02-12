@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'AWSCognito'
-  s.version      = '2.3.4'
+  s.version      = '2.3.5'
   s.summary      = 'Amazon Cognito SDK for iOS'
 
   s.description  = 'Amazon Cognito offers multi device data synchronization with offline access'
@@ -14,8 +14,9 @@ Pod::Spec.new do |s|
                      :tag => s.version}
   s.requires_arc = true
   s.library      = 'sqlite3'
-  s.dependency 'AWSCore', '2.3.4'
+  s.dependency 'AWSCore', '2.3.5'
 
   s.source_files = 'CognitoSync/*.{h,m}', 'Cognito/*.{h,m}', 'Cognito/**/*.{h,m}'
-  s.public_header_files = "Cognito/*.h",'CognitoSync/*.h'
+  s.public_header_files = 'Cognito/*.h', 'CognitoSync/*.h'
+  s.private_header_files = 'Cognito/Fabric/*.h', 'Cognito/Internal/*.h'
 end
