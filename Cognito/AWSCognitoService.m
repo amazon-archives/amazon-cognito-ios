@@ -44,19 +44,17 @@ static AWSCognitoSyncPlatform _pushPlatform;
 
 @end
 
-@interface AWSService()
+@interface AWSCognitoIdentity()
 
-+ (void)initializeIfNeededWithDefaultRegionType:(AWSRegionType)defaultRegionType
-                      cognitoIdentityRegionType:(AWSRegionType)cognitoIdentityRegionType
-                          cognitoIdentityPoolId:(NSString *)cognitoIdentityPoolId;
-
-+ (AWSRegionType)regionTypeFromString:(NSString *)regionTypeString;
++ (void)internalInitializeIfNeeded;
 
 @end
 
 @implementation AWSCognito
 
 static AWSSynchronizedMutableDictionary *_serviceClients = nil;
+
+#pragma mark - Fabric
 
 + (NSString *)bundleIdentifier {
     return @"com.amazonaws.sdk.ios.AWSCognito";
@@ -67,23 +65,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 }
 
 + (void)initializeIfNeeded {
-    // Retrieves the configuration from info.plist.
-    Class fabricClass = NSClassFromString(@"Fabric");
-    if (fabricClass
-        && [fabricClass respondsToSelector:@selector(configurationDictionaryForKitClass:)]) {
-        NSDictionary *configurationDictionary = [fabricClass configurationDictionaryForKitClass:[self class]];
-        NSString *defaultRegionTypeString = configurationDictionary[@"AWSDefaultRegionType"];
-        AWSRegionType defaultRegionType = [self regionTypeFromString:defaultRegionTypeString];
-        NSString *cognitoIdentityRegionTypeString = configurationDictionary[@"AWSCognitoIdentityRegionType"];
-        AWSRegionType cognitoIdentityRegionType = [self regionTypeFromString:cognitoIdentityRegionTypeString];
-        NSString *cognitoIdentityPoolId = configurationDictionary[@"AWSCognitoIdentityPoolId"];
-
-        [AWSService initializeIfNeededWithDefaultRegionType:defaultRegionType
-                                  cognitoIdentityRegionType:cognitoIdentityRegionType
-                                      cognitoIdentityPoolId:cognitoIdentityPoolId];
-    } else {
-        AWSLogError(@"Fabric is not available.");
-    }
+    [AWSCognitoIdentity internalInitializeIfNeeded];
 }
 
 #pragma mark - Setups
