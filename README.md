@@ -1,3 +1,6 @@
+# [MOVED] AWS SDK for iOS (Amazon Cognito)
+This repository has been merged into AWS SDK for iOS. All the code is moved under aws-sdk-iOS/AWSCognito. Amazon Cognito Sync will continue to be developed and maintained in the master repo. Any future issues regarding Amazon Cognito should be posted at aws-sdk-ios/issues. This repo will be inactive and is pending removal if necessary.
+
 # Version 2 of the AWS SDK for iOS (Amazon Cognito)
 
 ## Requirements
